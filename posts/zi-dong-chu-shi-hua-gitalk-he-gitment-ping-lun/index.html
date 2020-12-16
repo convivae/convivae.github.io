@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"convivae.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="提供一键解决自动初始化Gitalk的教程和相关代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动初始化 Gitalk 和 Gitment 评论">
+<meta property="og:url" content="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="提供一键解决自动初始化Gitalk的教程和相关代码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/init_gitalk.png">
+<meta property="og:image" content="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/init_gitalk01.png">
+<meta property="og:image" content="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/gitalk_error.png">
+<meta property="og:image" content="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/gitalk_error_fix.png">
+<meta property="og:image" content="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/gitalk_error_fix01.png">
+<meta property="article:published_time" content="2019-10-09T07:09:59.000Z">
+<meta property="article:modified_time" content="2020-03-04T16:40:45.219Z">
+<meta property="article:author" content="Convivae">
+<meta property="article:tag" content="Blog">
+<meta property="article:tag" content="Gitalk">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/init_gitalk.png">
+
+<link rel="canonical" href="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>自动初始化 Gitalk 和 Gitment 评论 | blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135890512-1"></script>
+    <script data-pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135890512-1');
+      }
+    </script>
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?690055f3a4ec45764ee4eb21c99fbfec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Convivae">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          自动初始化 Gitalk 和 Gitment 评论
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-09 15:09:59" itemprop="dateCreated datePublished" datetime="2019-10-09T15:09:59+08:00">2019-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-05 00:40:45" itemprop="dateModified" datetime="2020-03-05T00:40:45+08:00">2020-03-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">提供一键解决自动初始化Gitalk的教程和相关代码</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本篇文章是<a target="_blank" rel="noopener" href="https://convivae.github.io/posts/hexo-bo-ke-cai-keng/#toc-heading-11">自动初始化 Gitalk 和 Gitment 评论</a>的解决办法，如果还没配置 Gitalk，建议先看上一篇文章的<a target="_blank" rel="noopener" href="https://convivae.github.io/posts/hexo-bo-ke-cai-keng/#toc-heading-7">添加 Gitalk 的评论插件</a>，再来看这篇文章。</p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>Gitalk配置完成后，启动hexo，打开文章页面，需要登陆 github，一篇一篇文章地点过去，完成初始化后才能使用，操作比较麻烦，下面介绍用 Node.js 来自动初始化 Gitalk 的方法</p>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><h3 id="生成-Sitemap-站点地图"><a href="#生成-Sitemap-站点地图" class="headerlink" title="生成 Sitemap 站点地图"></a>生成 Sitemap 站点地图</h3><p>站点地图是一种文件，您可以通过该文件列出您网站上的网页，从而将您网站内容的组织架构告知Google和其他搜索引擎。搜索引擎网页抓取工具会读取此文件，以便更加智能地抓取您的网站。</p>
+<ul>
+<li>安装插件</li>
+</ul>
+<p>在你的 hexo 根目录，执行下面两个命令来安装针对 google 和百度的插件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在站点根目录下的_config.yml添加如下代码</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sitemap</span></span><br><span class="line"><span class="attr">sitemap:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">sitemap.xml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">baidusitemap:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">baidusitemap.xml</span></span><br></pre></td></tr></table></figure>
+
+<p>现在再执行 <code>hexo generate</code>  或 <code>hexo g</code> 的时候，在博客根目录下的 <code>public</code> 文件夹下面就会生成<code>sitemap.xml</code> 和 <code>baidusitemap.xml</code>。</p>
+<h3 id="获取github接口的调用权限"><a href="#获取github接口的调用权限" class="headerlink" title="获取github接口的调用权限"></a>获取github接口的调用权限</h3><ol>
+<li>创建一个access token，<a target="_blank" rel="noopener" href="https://github.com/settings/tokens">点击链接进入</a></li>
+<li>点击 <code>Generate new token</code> 按钮</li>
+<li>输入一个描述，为 token 添加所有的 repo 权限，然后点击最下方的 <code>Generate token</code> 按钮，就可以生成一个新的 <code>Token</code> 备用</li>
+</ol>
+<p><img data-src="init_gitalk.png" alt="init_gitalk"></p>
+<ol start="4">
+<li>生成的 token，在后面使用</li>
+</ol>
+<p><img data-src="init_gitalk01.png" alt="init_gitalk01"></p>
+<h3 id="脚本文件"><a href="#脚本文件" class="headerlink" title="脚本文件"></a>脚本文件</h3><h4 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h4><p>在你的 hexo 根目录，执行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install request --save</span><br><span class="line">npm install xml-parser --save</span><br><span class="line">npm install yamljs --save</span><br><span class="line">npm install cheerio --save</span><br><span class="line">npm install blueimp-md5 --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建脚本文件"><a href="#创建脚本文件" class="headerlink" title="创建脚本文件"></a>创建脚本文件</h4><p>在站点根目录下创建 <code>comment.js</code> 文件，将下面的代码粘贴进文件中，修改下面代码中的 <code>config</code> 配置项，其中 <code>token</code> 就是上一步中获取的值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">&quot;request&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&quot;url&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> xmlParser = <span class="built_in">require</span>(<span class="string">&quot;xml-parser&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> YAML = <span class="built_in">require</span>(<span class="string">&quot;yamljs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> cheerio = <span class="built_in">require</span>(<span class="string">&quot;cheerio&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//与参考文章不同，新引入了 md5</span></span><br><span class="line"><span class="keyword">const</span> md5 = <span class="built_in">require</span>(<span class="string">&quot;blueimp-md5&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据自己的情况进行配置</span></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    username: <span class="string">&quot;GitHub 用户名&quot;</span>, <span class="comment">// GitHub 用户名</span></span><br><span class="line">    token: <span class="string">&quot;GitHub Token&quot;</span>,  <span class="comment">// GitHub Token</span></span><br><span class="line">    repo: <span class="string">&quot;用户名.github.io&quot;</span>,  <span class="comment">// 存放 issues的git仓库</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// sitemap.xml的路径，commit.js放置在根目录下，无需修改，其他情况自行处理</span></span><br><span class="line">    <span class="comment">// 与参考文章不同，这里的路径改为了 baidusitemap.xml</span></span><br><span class="line">    sitemapUrl: path.resolve(__dirname, <span class="string">&quot;./public/baidusitemap.xml&quot;</span>),</span><br><span class="line">    </span><br><span class="line">    kind: <span class="string">&quot;Gitalk&quot;</span>,  <span class="comment">// &quot;Gitalk&quot; or &quot;Gitment&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> issuesUrl = <span class="string">`https://api.github.com/repos/<span class="subst">$&#123;config.username&#125;</span>/<span class="subst">$&#123;config.repo&#125;</span>/issues?access_token=<span class="subst">$&#123;config.token&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> requestGetOpt = &#123;</span><br><span class="line">    url: <span class="string">`<span class="subst">$&#123;issuesUrl&#125;</span>&amp;page=1&amp;per_page=1000`</span>,</span><br><span class="line">    json: <span class="literal">true</span>,</span><br><span class="line">    headers: &#123;</span><br><span class="line">        <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;github-user&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> requestPostOpt = &#123;</span><br><span class="line">    ...requestGetOpt,</span><br><span class="line">    url:issuesUrl,</span><br><span class="line">    method: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">    form: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;开始初始化评论...&quot;</span>);</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;开始检索链接，请稍等...&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> websiteConfig = YAML.parse(fs.readFileSync(path.resolve(__dirname, <span class="string">&quot;./_config.yml&quot;</span>), <span class="string">&quot;utf8&quot;</span>));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> urls = sitemapXmlReader(config.sitemapUrl);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`共检索到<span class="subst">$&#123;urls.length&#125;</span>个链接`</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;开始获取已经初始化的issues:&quot;</span>);</span><br><span class="line">        <span class="keyword">let</span> issues = <span class="keyword">await</span> send(requestGetOpt);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`已经存在<span class="subst">$&#123;issues.length&#125;</span>个issues`</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> notInitIssueLinks = urls.filter(<span class="function">(<span class="params">link</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> !issues.find(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">                link = removeProtocol(link);</span><br><span class="line">                <span class="keyword">return</span> item.body.includes(link);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">if</span> (notInitIssueLinks.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`本次有<span class="subst">$&#123;notInitIssueLinks.length&#125;</span>个链接需要初始化issue：`</span>);</span><br><span class="line">            <span class="built_in">console</span>.log(notInitIssueLinks);</span><br><span class="line">            <span class="comment">//console.log(&quot;开始提交初始化请求, 大约需要40秒...&quot;);</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;开始提交初始化请求...&quot;</span>);</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 部署好网站后，直接执行start，新增文章可能并不会立即生成评论</span></span><br><span class="line"><span class="comment">             * 经参考文章测试，最少需要等待40秒才可以正确生成</span></span><br><span class="line"><span class="comment">             * 但是我本人测试后发现，新增文章是可以立即生成的，</span></span><br><span class="line"><span class="comment">             * 所以我将下面的40s等待时间改成了4ms</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="keyword">async</span> ()=&gt;&#123;</span><br><span class="line">                <span class="keyword">let</span> initRet = <span class="keyword">await</span> notInitIssueLinks.map(<span class="keyword">async</span> (item) =&gt; &#123;</span><br><span class="line">                    <span class="keyword">let</span> html = <span class="keyword">await</span> send(&#123; ...requestGetOpt, <span class="attr">url</span>: item &#125;);</span><br><span class="line">                    <span class="keyword">let</span> title = cheerio.load(html)(<span class="string">&quot;title&quot;</span>).text();</span><br><span class="line">                    <span class="keyword">let</span> pathLabel = url.parse(item).path;</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment">//与参考文章不同，这里新增一行，将路径名更改为md5值</span></span><br><span class="line">                    pathLabel = md5(pathLabel);</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">let</span> body = <span class="string">`<span class="subst">$&#123;item&#125;</span>&lt;br&gt;&lt;br&gt;<span class="subst">$&#123;websiteConfig.description&#125;</span>`</span>;</span><br><span class="line">                    <span class="keyword">let</span> form = <span class="built_in">JSON</span>.stringify(&#123; body, <span class="attr">labels</span>: [config.kind, pathLabel], title &#125;);</span><br><span class="line">                    <span class="keyword">return</span> send(&#123; ...requestPostOpt, form &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">`已完成<span class="subst">$&#123;initRet.length&#125;</span>个！`</span>);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&quot;可以愉快的发表评论了！&quot;</span>);</span><br><span class="line">            &#125;,<span class="number">4</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;本次发布无新增页面，无需初始化issue!!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`初始化issue出错，错误如下：`</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sitemapXmlReader</span>(<span class="params">file</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> data = fs.readFileSync(file, <span class="string">&quot;utf8&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> sitemap = xmlParser(data);</span><br><span class="line">    <span class="keyword">return</span> sitemap.root.children.map(<span class="function"><span class="keyword">function</span> (<span class="params">url</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> loc = url.children.filter(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> item.name === <span class="string">&quot;loc&quot;</span>;</span><br><span class="line">        &#125;)[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">return</span> loc.content;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeProtocol</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> url.substr(url.indexOf(<span class="string">&quot;:&quot;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        request(options, <span class="function"><span class="keyword">function</span> (<span class="params">error, response, body</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">                resolve(body);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                reject(error);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的脚本在参考文章的基础上稍微做了下修改，与原来的参考文章不同之处已经另起一行单独显示，并在注释中明确标注出来了，下面是这几处不同的地方，需要读者注意一下</p>
+<ol>
+<li>引入 md5</li>
+</ol>
+<p>因为我们在<a target="_blank" rel="noopener" href="https://convivae.github.io/posts/hexo-bo-ke-cai-keng/#toc-heading-7">添加 Gittalk 评论插件</a> 时由于考虑到 label 的长度不能超过 50 个字符，对路径做了 md5 的哈希，而初始化评论就是根据你的 label 值来新开一个 issue</p>
+<p>所以当你在添加 Gitalk 评论时对路径做了 md5 转换，那么这里也需要做一个相同的转换才能与对应的文章匹配，从而可以成功地创建文章对应的 issue，上面代码中引入的 md5 可以在<a target="_blank" rel="noopener" href="https://github.com/blueimp/JavaScript-MD5">这里</a>找到</p>
+<ol>
+<li>修改 <code>sitemap.xml</code> 为 <code>baidu-sitemap.xml</code></li>
+</ol>
+<p>可能是因为我生成的 <code>sitemap.xml</code> 与参考文章作者的并不相同，在 <code>path</code> 为 <code>sitemap.xml</code>，即下面所示的代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sitemap.xml的路径，commit.js放置在根目录下，无需修改，其他情况自行处理</span></span><br><span class="line">sitemapUrl: path.resolve(__dirname, <span class="string">&quot;./public/sitemap.xml&quot;</span>),</span><br></pre></td></tr></table></figure>
+
+<p>时执行后会报错，提示找不到根节点，后来在 debug 过程中发现在  <code>sitemap.xml</code>  中并没有文章的路径，而是主页、关于页、tag 页等页面的路径，后来发现在 <code>baidu-sitemap.xml</code> 中生成了全部文章的路径，并且很好的一点是没有其他页面的路径，这就保证了其他页面不会有对应的 issue，遂改为 <code>baidu-sitemap.xml</code> ，执行成功。</p>
+<p>参考文章的作者其实也指出了这一点：</p>
+<blockquote>
+<p>需要注意的是第一步中的sitemap插件会生成的sitemap.xml会包含<strong>全部的界面</strong>，包括标签页、关于页等，执行上面的代码也会对这些页面生成评论框(也就是issue)</p>
+</blockquote>
+<ol start="3">
+<li>等待时间 40 s</li>
+</ol>
+<p>由于我自己在测试时并没有发现初始化会特别慢，反倒是代码中强制等待 40 s才能结束进程的设计，让我很是心烦，所以把 40000ms 改为了 4ms，看着代码一行一行畅快地执行完成，心里爽多了。</p>
+<ol start="4">
+<li>执行脚本可能会遇到的错误</li>
+</ol>
+<p>我自己执行脚本的时候还发现了其他的错误，也浪费了不少时间，这里拿出来说下</p>
+<ul>
+<li><p>报错信息：</p>
+<p><img data-src="gitalk_error.png" alt="gitalk_error"></p>
+</li>
+<li><p>分析：<br>这是 <code>_config.yml</code> 的部分代码格式出现了问题，报错的具体部分是下图中箭头指向的位置</p>
+<p><img data-src="gitalk_error_fix.png" alt="gitalk_error_fix"></p>
+</li>
+<li><p>解决<br>只要把多余的空格删掉即可，如下图：</p>
+<p><img data-src="gitalk_error_fix01.png" alt="gitalk_error_fix01"></p>
+</li>
+</ul>
+<h4 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h4><p>完成上述操作后，执行下面的命令，就可以部署站点，并初始化所有的评论了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line">node ./comment.js</span><br></pre></td></tr></table></figure>
+
+<p>也可以通过在站点根目录的package.json文件中，新建npm脚本，一个命令搞定清除缓存、生成静态文件、提交git并生成issue的所有操作。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;build&quot;: &quot;hexo generate&quot;,</span><br><span class="line">  &quot;clean&quot;: &quot;hexo clean&quot;,</span><br><span class="line">  &quot;server&quot;: &quot;hexo server&quot;,</span><br><span class="line">  &quot;test&quot;: &quot;hexo clean &amp;&amp; hexo s&quot;,</span><br><span class="line">  &quot;t&quot;: &quot;hexo clean &amp;&amp; hexo s&quot;,</span><br><span class="line">  &quot;deploy&quot;: &quot;hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy &amp;&amp; node ./comment.js&quot;,</span><br><span class="line">  &quot;d&quot;: &quot;hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy &amp;&amp; node ./comment.js&quot;,</span><br><span class="line">  &quot;comment&quot;: &quot;node ./comment.js&quot;,</span><br><span class="line">  &quot;c&quot;: &quot;node ./comment.js&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>完成文章编写，或者其他的更新操作后，直接执行 deploy 即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run deploy</span><br></pre></td></tr></table></figure>
+
+<p>或：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run d</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/daihaoxin/article/details/84958369">nodejs版本的Gitalk/Gitment评论自动初始化</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>坚持原创技术分享，感谢您的支持和鼓励！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/reward/wechat.png" alt="Convivae 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/reward/alipay.jpg" alt="Convivae 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Convivae
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/" title="自动初始化 Gitalk 和 Gitment 评论">https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+              <a href="/tags/Gitalk/" rel="tag"># Gitalk</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/ni-bo-lan-biao-da-shi/" rel="prev" title="逆波兰表达式">
+      <i class="fa fa-chevron-left"></i> 逆波兰表达式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/jdbc-xue-xi-bi-ji-01/" rel="next" title="jdbc学习笔记01">
+      jdbc学习笔记01 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90-Sitemap-%E7%AB%99%E7%82%B9%E5%9C%B0%E5%9B%BE"><span class="nav-number">2.1.</span> <span class="nav-text">生成 Sitemap 站点地图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96github%E6%8E%A5%E5%8F%A3%E7%9A%84%E8%B0%83%E7%94%A8%E6%9D%83%E9%99%90"><span class="nav-number">2.2.</span> <span class="nav-text">获取github接口的调用权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">脚本文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E5%8C%85"><span class="nav-number">2.3.1.</span> <span class="nav-text">安装依赖包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.2.</span> <span class="nav-text">创建脚本文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC"><span class="nav-number">2.3.3.</span> <span class="nav-text">执行脚本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">3.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Convivae"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Convivae</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/convivae" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;convivae" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:convivae@foxmail.com" title="E-Mail → mailto:convivae@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Convivae</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '97d9247a845bcfa08610',
+      clientSecret: '2b28898561d7b4c157429a90df05e008ae641bde',
+      repo        : 'convivae.github.io',
+      owner       : 'convivae',
+      admin       : ['convivae'],
+      id          : 'b5cfe6a86d75986b0ef472e8ec12c693',
+        language: '',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+    </div>
+</body>
+</html>

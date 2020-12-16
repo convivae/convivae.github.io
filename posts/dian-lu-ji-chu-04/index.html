@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"convivae.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="电路原理——电路前四章知识点总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电路基础04">
+<meta property="og:url" content="https://convivae.top/posts/dian-lu-ji-chu-04/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="电路原理——电路前四章知识点总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/01.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/02.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/03.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/04.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/05.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/06.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/07.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/08.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/09.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/10.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/11.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/12.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/13.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/14.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/15.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/16.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/17.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/18.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/19.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/20.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/21.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/22.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/23.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/24.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/25.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/26.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/27.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/28.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/29.png">
+<meta property="og:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/30.png">
+<meta property="article:published_time" content="2020-03-27T05:39:56.000Z">
+<meta property="article:modified_time" content="2020-03-27T06:59:40.812Z">
+<meta property="article:author" content="Convivae">
+<meta property="article:tag" content="电路">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://convivae.top/posts/dian-lu-ji-chu-04/01.png">
+
+<link rel="canonical" href="https://convivae.top/posts/dian-lu-ji-chu-04/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>电路基础04 | blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135890512-1"></script>
+    <script data-pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135890512-1');
+      }
+    </script>
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?690055f3a4ec45764ee4eb21c99fbfec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://convivae.top/posts/dian-lu-ji-chu-04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Convivae">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          电路基础04
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-27 13:39:56 / 修改时间：14:59:40" itemprop="dateCreated datePublished" datetime="2020-03-27T13:39:56+08:00">2020-03-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%B5%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">电路</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">电路原理——电路前四章知识点总结</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="叠加定理"><a href="#叠加定理" class="headerlink" title="叠加定理"></a>叠加定理</h2><ul>
+<li>线性函数的叠加性：</li>
+</ul>
+<p>$$<br>f(ax_1+bx_2)=af(x_1)+bf(x_2)<br>$$</p>
+<ul>
+<li>对于任一线性网络，若同时受到多个独立电源的作用，则这些共同作用的电源在某条支路上所产生的电压或电流，应该等于每个独立电源各自单独作用时，在该支路上所产生的电压或电流分量的代数和。</li>
+</ul>
+<h3 id="例-1"><a href="#例-1" class="headerlink" title="例 1"></a>例 1</h3><p><img data-src="01.png" alt="例题"></p>
+<ul>
+<li>注意<ol>
+<li>只适用于线性电路中求电压、电流，不适用于直接求功率（因为求功率的函数不是线性的）；也不适用于非线性电路</li>
+<li>某个独立电源单独作用时，其余独立电源全为<strong>零</strong>值，电压源用“短路”替代，电流源用“断路”替代</li>
+<li>受控源不可单独作用，当每个独立源作用时均予以保留，将控制量改称为对应的控制分量</li>
+<li>代数和指分量参考方向与总量方向一致取正，不一致取负。</li>
+</ol>
+</li>
+</ul>
+<h3 id="例-2"><a href="#例-2" class="headerlink" title="例 2"></a>例 2</h3><p><img data-src="02.png" alt="例题"></p>
+<p><img data-src="03.png" alt="例题"></p>
+<p><img data-src="04.png" alt="例题"></p>
+<h3 id="例-3"><a href="#例-3" class="headerlink" title="例 3"></a>例 3</h3><p><img data-src="05.png" alt="例题"></p>
+<ul>
+<li>当 $U_{s5}$ 单独作用时，$R_1R_4=R_2R_3$，电桥平衡（$R_6$ 是桥）</li>
+<li>当 $U_{s6}$ 单独作用时，$R_1R_4=R_2R_3$，电桥平衡（$R_5$ 是桥）</li>
+</ul>
+<h3 id="例-4"><a href="#例-4" class="headerlink" title="例 4"></a>例 4</h3><p><img data-src="06.png" alt="例题"></p>
+<p>解：</p>
+<ol>
+<li>设 $u_0=k_1i_s+k_2u_s$，带入求解得：$u_0=15V$</li>
+<li>设 $u_0=k^{‘}_1i_s+k^{‘}_2u_s-12$，带入求解得：$u_0=3V$</li>
+</ol>
+<h3 id="例-5-含受控源电路求解"><a href="#例-5-含受控源电路求解" class="headerlink" title="例 5 含受控源电路求解"></a>例 5 含受控源电路求解</h3><p><img data-src="07.png" alt="例题"></p>
+<p><img data-src="08.png" alt="例题"></p>
+<blockquote>
+<p>注：</p>
+<p>由于 $$U^{‘}<em>{R2}=i</em>{m1}R_2$$，</p>
+<p>故： $$\alpha u^{‘}_{R2}=\alpha R_2i_{m1}$$</p>
+</blockquote>
+<p><img data-src="09.png" alt="例题"></p>
+<h2 id="替代定理"><a href="#替代定理" class="headerlink" title="替代定理"></a>替代定理</h2><p>在任意的<strong>线性或非线性</strong>网络中，若已知第 n 条支路的电压和电流为 $U_n$ 和 $I_n$，则不论该支路是何元件组成，总可以用下列的任何一个元件去替代：</p>
+<ul>
+<li>电压值为 $U_n$ 的理想电压源</li>
+<li>电流值为 $I_n$ 的理想电流源</li>
+<li>电阻值为 $\cfrac{U_n}{I_n}$ 的理想线性电阻元件 $R_n$</li>
+</ul>
+<p>替代后的电路中全部电压和电流都将保持原值不变。</p>
+<h2 id="戴维南定理和诺顿定理"><a href="#戴维南定理和诺顿定理" class="headerlink" title="戴维南定理和诺顿定理"></a>戴维南定理和诺顿定理</h2><p>对于任一<strong>含源线性二端网络</strong>，就其两个端钮而言，都可以用一条最简单支路对外部等效：</p>
+<ol>
+<li><p>戴维南定理：以一个电压源和一个电阻串联的等效电路替代</p>
+<p><img data-src="10.png" alt="戴维南定理"></p>
+<blockquote>
+<p>电压源的电压值等于线性网络的开路电压 $U_{oc}$</p>
+<p>其串联电阻等于该含源线性二端网络中所有独立源为零时，由端钮看进去的等效电阻 $R{eq}$</p>
+</blockquote>
+</li>
+<li><p>诺顿定理：以一个电流源和一个电阻并联的等效电路替代</p>
+<p><img data-src="11.png" alt="诺顿定理"></p>
+<blockquote>
+<p>电流源的电流值等于该含源线性二端网络的短路电流 $I_{sc}$</p>
+<p>其并联电阻的确定同上</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="例-1-1"><a href="#例-1-1" class="headerlink" title="例 1"></a>例 1</h3><p><img data-src="12.png" alt="例题"></p>
+<p>分析：并在 $\cfrac15V$ 电压源的电阻对外电路不起作用，可将其断开；可将原电路分成左右两部分，分别使用戴维南定理求取。</p>
+<ul>
+<li><p>左边电压：</p>
+<p><img data-src="13.png" alt="例题"></p>
+</li>
+<li><p>左边电阻</p>
+<p><img data-src="14.png" alt="例题"></p>
+</li>
+<li><p>左右合并</p>
+<p><img data-src="15.png" alt="例题"></p>
+</li>
+</ul>
+<h3 id="例-2-1"><a href="#例-2-1" class="headerlink" title="例 2"></a>例 2</h3><p><img data-src="16.png" alt="例题"></p>
+<p><img data-src="17.png" alt="例题"></p>
+<h3 id="例-3-1"><a href="#例-3-1" class="headerlink" title="例 3"></a>例 3</h3><p><img data-src="18.png" alt="例题"></p>
+<p>解：根据戴维南定理，将 $R$ 支路以外的其余部分所构成的二端网络，用一个电压源 $U_{oc}$ 和电阻 $R_0$ 相串联去等效代替。 </p>
+<ol>
+<li><p>求 $U_{oc}$：将 $R$ 支路断开，如图 (b) 所示。用节点电位法（取 b 点点位为 0）可求得：<br>$$<br>U_{oc}=\cfrac{\frac{2}{2+2+2}+1}{\frac1{2+2+2}+\frac12}=2V<br>$$</p>
+</li>
+<li><p>求 $R_0$：将两个独立源变为零值，即将 2V 电压源短路，而将 1A 电流源开路，如图 (c)所示。可求得：<br>$$<br>R_0=\cfrac{2\times(2+2+2)}{2+2+2+2}=\cfrac32\Omega=1.5\Omega<br>$$</p>
+</li>
+<li><p>根据所求得的 $U_{oc}$ 和 $R_0$，可作出戴维南等效电路，接上 $R$ 支路如图 (d) 所示，即可求得：<br>$$<br>I=\cfrac23A,U=1V<br>$$</p>
+</li>
+</ol>
+<h3 id="例-4-1"><a href="#例-4-1" class="headerlink" title="例 4"></a>例 4</h3><p><img data-src="19.png" alt="例题"></p>
+<p>解：该题如果只用一次戴维南定理，直接求出 4Ω 电阻支路以左的等效电压源，则计算开路电压将会很麻烦。为此，可以逐次应用戴维南定理。</p>
+<ol>
+<li>先求图 (a) 中 ab 以左的戴维南等效电路。将最左侧电压源等效为电流源，再与 1A 电流源合并，最后再等效为电压源（也可以和例 3 一样，令 $u_b=0$，用节点电位法求取），得：</li>
+</ol>
+<p>$$<br>U_{ab}=4V,R_{ab}=2\Omega<br>$$</p>
+<ol start="2">
+<li><p>这样可得到图 (b)。同理，在图 (b) 中，先求左边两列的等效，得：<br>$$<br>U^{‘}=8V,R^{‘}=6\Omega<br>$$<br>再同理求 cd 以左的戴维南等效电路。于是有：<br>$$<br>U_{cd}=4V,R_{cd}=2\Omega<br>$$</p>
+</li>
+<li><p>得图 (d)。由此可求得：$I=\cfrac4{2+4}=\cfrac23A$</p>
+</li>
+</ol>
+<h2 id="一般方法求等效电阻"><a href="#一般方法求等效电阻" class="headerlink" title="一般方法求等效电阻"></a>一般方法求等效电阻</h2><ol>
+<li>求等效电阻 $R_{eq}$ 时，若电路为纯电阻网络，可以用串、并联化简时，直接用串、并联化简的方法求</li>
+<li>无法用串并联化简时，则用一般方法求</li>
+<li>当电路中含受控源时，则一定要用一般方法求戴维南等效电阻</li>
+</ol>
+<h2 id="利用戴维南定理分析受控源的电路"><a href="#利用戴维南定理分析受控源的电路" class="headerlink" title="利用戴维南定理分析受控源的电路"></a>利用戴维南定理分析受控源的电路</h2><blockquote>
+<p>原则：</p>
+<ul>
+<li>被等效电路内部与负载内部不应有任何联系（控制量为端口 $U$ 或 $I$ 除外）</li>
+<li>求 $R_{eq}$ 要用一般方法</li>
+</ul>
+</blockquote>
+<h3 id="例-1-2"><a href="#例-1-2" class="headerlink" title="例 1"></a>例 1</h3><p><img data-src="20.png" alt="例题"></p>
+<ul>
+<li><p>求 $U_{oc}$</p>
+<p>控制量是被断开断口处的电压，断开断口处的电压即可以看作是负载部分的，也可以看作是被等效部分的</p>
+<p><img data-src="21.png" alt="例题"></p>
+</li>
+</ul>
+<ul>
+<li><p>求 $R_{eq}$</p>
+<ul>
+<li>法一：外加激励法</li>
+</ul>
+<p><img data-src="22.png" alt="例题"></p>
+<ul>
+<li><p>法二：开路短路法</p>
+<p>短路后 $U=0$，即控制量为零，所以受控源的输出量也等于零，受控源是一个受控电流源，输出量为零可视作断路</p>
+</li>
+</ul>
+<p><img data-src="23.png" alt="例题"></p>
+</li>
+<li><p>作戴维南等效电路求电压 $U$</p>
+<p><img data-src="24.png" alt="例题"></p>
+</li>
+</ul>
+<h3 id="例-2-2"><a href="#例-2-2" class="headerlink" title="例 2"></a>例 2</h3><p><img data-src="25.png" alt="例题"></p>
+<blockquote>
+<p>分析：</p>
+<p>断开待求支路，求戴维南等效电路时，会使控制量 $I_1$、被控制量 $2I_1 $ 分属被等效电路与负载两部分</p>
+<p>故需要做控制量转移，图中可以看出 $U=1\Omega\times I$，故 $2I_1$ 可用 $2U$ 代替，这样控制量与被控质量同时属于负载部分。</p>
+</blockquote>
+<ol>
+<li><p>求等效电压</p>
+<ul>
+<li>当 $4V$ 电压源单独作用时：</li>
+</ul>
+<p><img data-src="26.png" alt="例题"></p>
+<ul>
+<li>当 $1A$ 电流源单独作用时：</li>
+</ul>
+<p><img data-src="27.png" alt="例题"></p>
+</li>
+<li><p>求等效电阻</p>
+<p>电桥平衡，$R_{eq}=\cfrac{1+\cfrac{2+2}2}{1+\cfrac{2+2}2+1}=\cfrac34\Omega$</p>
+</li>
+<li><p>求 $U,I$</p>
+<p><img data-src="28.png" alt="例题"></p>
+</li>
+</ol>
+<h2 id="最大功率传输定理（不要求）"><a href="#最大功率传输定理（不要求）" class="headerlink" title="*最大功率传输定理（不要求）"></a>*最大功率传输定理（不要求）</h2><p><img data-src="29.png" alt="大功率传输定理"></p>
+<p><img data-src="30.png" alt="大功率传输定理"></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>坚持原创技术分享，感谢您的支持和鼓励！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/reward/wechat.png" alt="Convivae 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/reward/alipay.jpg" alt="Convivae 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Convivae
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://convivae.top/posts/dian-lu-ji-chu-04/" title="电路基础04">https://convivae.top/posts/dian-lu-ji-chu-04/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%94%B5%E8%B7%AF/" rel="tag"># 电路</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/dian-lu-ji-chu-03/" rel="prev" title="电路基础03">
+      <i class="fa fa-chevron-left"></i> 电路基础03
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/spring-xue-xi-bi-ji-02/" rel="next" title="Spring学习笔记02">
+      Spring学习笔记02 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%A0%E5%8A%A0%E5%AE%9A%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">叠加定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-1"><span class="nav-number">1.1.</span> <span class="nav-text">例 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-2"><span class="nav-number">1.2.</span> <span class="nav-text">例 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-3"><span class="nav-number">1.3.</span> <span class="nav-text">例 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-4"><span class="nav-number">1.4.</span> <span class="nav-text">例 4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-5-%E5%90%AB%E5%8F%97%E6%8E%A7%E6%BA%90%E7%94%B5%E8%B7%AF%E6%B1%82%E8%A7%A3"><span class="nav-number">1.5.</span> <span class="nav-text">例 5 含受控源电路求解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%BF%E4%BB%A3%E5%AE%9A%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">替代定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%B4%E7%BB%B4%E5%8D%97%E5%AE%9A%E7%90%86%E5%92%8C%E8%AF%BA%E9%A1%BF%E5%AE%9A%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">戴维南定理和诺顿定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-1-1"><span class="nav-number">3.1.</span> <span class="nav-text">例 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-2-1"><span class="nav-number">3.2.</span> <span class="nav-text">例 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-3-1"><span class="nav-number">3.3.</span> <span class="nav-text">例 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-4-1"><span class="nav-number">3.4.</span> <span class="nav-text">例 4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%96%B9%E6%B3%95%E6%B1%82%E7%AD%89%E6%95%88%E7%94%B5%E9%98%BB"><span class="nav-number">4.</span> <span class="nav-text">一般方法求等效电阻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E6%88%B4%E7%BB%B4%E5%8D%97%E5%AE%9A%E7%90%86%E5%88%86%E6%9E%90%E5%8F%97%E6%8E%A7%E6%BA%90%E7%9A%84%E7%94%B5%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">利用戴维南定理分析受控源的电路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-1-2"><span class="nav-number">5.1.</span> <span class="nav-text">例 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B-2-2"><span class="nav-number">5.2.</span> <span class="nav-text">例 2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E5%8A%9F%E7%8E%87%E4%BC%A0%E8%BE%93%E5%AE%9A%E7%90%86%EF%BC%88%E4%B8%8D%E8%A6%81%E6%B1%82%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">*最大功率传输定理（不要求）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Convivae"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Convivae</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/convivae" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;convivae" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:convivae@foxmail.com" title="E-Mail → mailto:convivae@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Convivae</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '97d9247a845bcfa08610',
+      clientSecret: '2b28898561d7b4c157429a90df05e008ae641bde',
+      repo        : 'convivae.github.io',
+      owner       : 'convivae',
+      admin       : ['convivae'],
+      id          : '91888520f8165ed8c561c7d8518c8e84',
+        language: '',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+    </div>
+</body>
+</html>
