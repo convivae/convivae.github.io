@@ -221,230 +221,6 @@
       </tags>
   </entry>
   <entry>
-    <title>991数据结构考研复习（八）——内排序</title>
-    <url>/posts/991-shu-ju-jie-gou-kao-yan-fu-xi-ba-nei-pai-xu/</url>
-    <content><![CDATA[<h2 id="八-、内排序"><a href="#八-、内排序" class="headerlink" title="八.、内排序"></a>八.、内排序</h2><ul>
-<li>排序</li>
-</ul>
-<blockquote>
-<p>根据记录关键字值的递增或递减关系将记录的次序重新排列，使得原来一组次序任意的记录转变为按其关键字值有序排列的一组记录</p>
-</blockquote>
-<ul>
-<li>内排序</li>
-</ul>
-<blockquote>
-<p>当待排序的数据量不大时，在排序中将全部信息存放在内存中处理的排序方法</p>
-</blockquote>
-<ul>
-<li>排序的时间效率与排序过程中数据元素之间的比较次数和交换（移动）次数直接相关，尤其是比较次数。</li>
-</ul>
-<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>基本原理：</p>
-<blockquote>
-<p>第 i 趟排序将序列中的第 i+1 个元素插入到一个已经按值有序的子序列，得到一个长度为 i+1 且仍然保持按值有序的子序列。</p>
-</blockquote>
-<p>元素间的比较次数：</p>
-<blockquote>
-<p>最好情况：当原始序列已经按值递增时，对应的每个 i 值只需进行一次元素之间的比较，比较的次数最少，为：n-1，此时不需要移动元素，即 $O(n)$</p>
-<p>最坏情况：原始序列按值递减，对应的每个 i 值都要进行 i - 1 次元素之间的比较，比较的次数最多，为：n(n-1)/2，即 $O(n^2)$</p>
-<p>随机情况：取上述平均值，约为 $n^2 / 4$</p>
-</blockquote>
-<p>排序总趟数：n-1</p>
-<p>排序稳定性：稳定</p>
-<p>链表可行性：适合</p>
-<p>时间复杂度：$O(n^{2}) $</p>
-<p>空间复杂度：只需一个辅助空间 $O(1)$</p>
-<p>核心算法：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, tmp;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        tmp = num[i];</span><br><span class="line">        <span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; num[j] &gt; tmp; j--) &#123;</span><br><span class="line">            num[j + <span class="number">1</span>] = num[j];</span><br><span class="line">        &#125;</span><br><span class="line">        num[j + <span class="number">1</span>] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="折半插入排序"><a href="#折半插入排序" class="headerlink" title="折半插入排序"></a>折半插入排序</h3><p>时间复杂度：</p>
-<blockquote>
-<p>最好的情况下：$O(nlog_2n)$，比简单插入排序要好</p>
-<p>最坏情况下：$O(n^2)$</p>
-</blockquote>
-<p>核心算法：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">half_insert_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, tmp;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        tmp = num[i];</span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>, end = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> mid;</span><br><span class="line">        <span class="keyword">while</span> (start &lt;= end) &#123;</span><br><span class="line">            mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (num[mid] &gt; tmp)</span><br><span class="line">                end = mid - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                start = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= start; j--)</span><br><span class="line">            num[j + <span class="number">1</span>] = num[j];</span><br><span class="line">        num[start] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>基本原理：</p>
-<blockquote>
-<p>第 i 趟排序从序列的后 n-i+1 个元素中选择选择一个最小的元素与该 n-i+1 个元素的前面那个元素交换位置，即与整个序列的第 i 个位置上的元素交换位置。直至 i = n-1 排序结束</p>
-</blockquote>
-<p>元素间的比较次数：</p>
-<blockquote>
-<p>不论元素的初始排列状态如何，第 i 趟排序要找出值最小的元素都需要进行 n - i 次元素之间的比较。整个过程中的比较次数为：$n(n-1)/2$  </p>
-</blockquote>
-<p>元素间的移动（交换）次数：</p>
-<blockquote>
-<p>最好情况（原序列升序）：0 次</p>
-<p>最坏情况：3(n-1) 次，3是交换 k[i] 与 k[d] 的执行次数</p>
-</blockquote>
-<p>排序总趟数：n - 1</p>
-<p>排序稳定性：不稳定</p>
-<p>链表可行性：适合</p>
-<p>时间复杂度：$O(n^2)$</p>
-<p>空间复杂度：$O(1)$</p>
-<p>核心算法：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">select_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, index;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        index = i;</span><br><span class="line">        <span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (num[j] &lt; num[index]) &#123;</span><br><span class="line">                index = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(&amp;num[i], &amp;num[index]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="泡排序"><a href="#泡排序" class="headerlink" title="泡排序"></a>泡排序</h3><p>基本原理：</p>
-<blockquote>
-<p>一趟排序：比较相邻两个元素，若前者大于后者，两者交换（此时最大值被放到了最后）</p>
-<p>此后，再对前 n - 1 个元素进行同样的过程，依次类推，直至某一趟不出现交换动作为止</p>
-</blockquote>
-<p>元素间的比较次数：</p>
-<blockquote>
-<p>最好情况：原始序列为升序，只需经过 1 趟 n - 1次元素比较，此时不需要移动元素，即 $O(n)$</p>
-<p>最坏情况：原始序列为逆序，或者最小值的元素在最后，需要进行 n - 1 趟排序，需要进行 $n(n-1)/2$次元素比较</p>
-<p>相比于插入和选择，需要移动较多次数的元素。</p>
-</blockquote>
-<p>排序总趟数：最多 n - 1，可以更少</p>
-<p>排序稳定性：稳定</p>
-<p>时间复杂度： $O(n^2)$</p>
-<p>空间复杂度：$O(1)$</p>
-<p>核心代码：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubble_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n - i - <span class="number">1</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (num[j] &gt; num[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                swap(&amp;num[j], &amp;num[j + <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="谢尔（Shell）排序"><a href="#谢尔（Shell）排序" class="headerlink" title="谢尔（Shell）排序"></a>谢尔（Shell）排序</h3><p>基本原理：</p>
-<blockquote>
-<p>确定间隔数 gap，将所有位置间隔为gap的元素视为一个子序列，在各个子序列中采用某种方法进行排序；</p>
-<p>缩小间隔数，重新划分子序列并进行排序，直至gap=1</p>
-</blockquote>
-<p>特点：</p>
-<blockquote>
-<p>元素的移动在子序列间跳跃式进行。gap越大，跳跃的跨度越大，很多时候，当gap=1时，序列已经几乎按值有序，不需要进行较多元素的移动。</p>
-</blockquote>
-<p>元素间的比较次数：</p>
-<p>排序总趟数：</p>
-<p>排序稳定性：不稳定</p>
-<p>链表可行性：不适合</p>
-<p>时间复杂度：一般情况下认为在 $O(nlog_2n)$ 与 $O(n^2)$ 之间，回答时回答： $O(nlog_2n)$</p>
-<p>空间复杂度：$O(1)$</p>
-<p>核心代码（子序列中以冒泡排序为例）：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shell_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> gap, i, j;</span><br><span class="line">    <span class="keyword">for</span> (gap = n / <span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n - gap; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n - i - gap; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (num[j] &gt; num[j + gap]) &#123;</span><br><span class="line">                    swap(&amp;num[j], &amp;num[j + gap]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>基本原理：</p>
-<blockquote>
-<p>在当前待排序的序列中选择基准元素，把小于等于基准元素的都移到基准元素的前面，大于基准元素的都移到基准元素的前后面。这样，基准元素位置就找到了</p>
-<p>分别对基准元素前后的两个子序列递归进行上述过程即可</p>
-</blockquote>
-<p>元素间的比较次数：</p>
-<p>排序总趟数：</p>
-<p>排序稳定性：不稳定</p>
-<p>链表可行性：不适合</p>
-<p>时间复杂度：</p>
-<blockquote>
-<p>待排序元素初始有序（升序或降序）情况下，花费时间最长：$n(n-1)/2$ ，$O(n^2)$</p>
-<p>分界元素在正中间：$O(nlog_2n)$</p>
-</blockquote>
-<p>空间复杂度：</p>
-<blockquote>
-<p>最坏情况：分界元素每次都在一边，堆栈的最大递归深度为 $n$，致使空间复杂度为 $O(n)$</p>
-<p>最好情况：分解元素每次都在中间，最小递归深度为：$\lfloor log_2n \rfloor + 1$</p>
-<p>若在一趟排序之后比较两个所划分的子序列的长度，并且先对长度较短的子序列进行快排，此时的堆栈深度为：$O(log_2n)$</p>
-<p>一般情况：$O(log_2n)$</p>
-</blockquote>
-<p>核心代码：</p>
-<ul>
-<li>递归版</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">q_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left &gt;= right)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> i = left, j = right, key = num[left];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; i &amp;&amp; num[j] &gt;= key) &#123;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        num[i] = num[j];</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j &amp;&amp; num[i] &lt;= key) &#123;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        num[j] = num[i];</span><br><span class="line">    &#125;</span><br><span class="line">    num[i] = key;</span><br><span class="line">    q_sort(num, left, i - <span class="number">1</span>);</span><br><span class="line">    q_sort(num, i + <span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 快速排序</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quick_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    q_sort(num, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>非递归版</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">q_sort_use_stack</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> <span class="built_in">stack</span>[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left &gt;= right)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> top = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">stack</span>[top++] = left;</span><br><span class="line">    <span class="built_in">stack</span>[top++] = right;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (top &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        right = <span class="built_in">stack</span>[--top];</span><br><span class="line">        left = <span class="built_in">stack</span>[--top];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i = left, j = right, key = num[left];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">            <span class="keyword">while</span> (j &gt; i &amp;&amp; num[j] &gt;= key) &#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            num[i] = num[j];</span><br><span class="line">            <span class="keyword">while</span> (i &lt; j &amp;&amp; num[i] &lt;= key) &#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            num[j] = num[i];</span><br><span class="line">        &#125;</span><br><span class="line">        num[i] = key;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (i - <span class="number">1</span> &gt; left) &#123;</span><br><span class="line">            <span class="built_in">stack</span>[top++] = left;</span><br><span class="line">            <span class="built_in">stack</span>[top++] = i - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (i + <span class="number">1</span> &lt; right) &#123;</span><br><span class="line">            <span class="built_in">stack</span>[top++] = i + <span class="number">1</span>;</span><br><span class="line">            <span class="built_in">stack</span>[top++] = right;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 快速排序非递归算法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quick_sort_use_stack</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> *<span class="built_in">stack</span> = (<span class="keyword">int</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * n);</span><br><span class="line">    q_sort_use_stack(num, <span class="number">0</span>, n - <span class="number">1</span>, <span class="built_in">stack</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="堆积（Heap）排序"><a href="#堆积（Heap）排序" class="headerlink" title="堆积（Heap）排序"></a>堆积（Heap）排序</h3><p>基本原理：</p>
-<blockquote>
-<p>大顶堆：一棵完全二叉树，其中每个分支节点的值均大于或等于其左子树和右子树（若存在右子树的话）中所有结点的值，并且该完全二叉树的根节点值最大</p>
-<p>排序算法：</p>
-<ol>
-<li>设法构造初始堆积，使得最大值在第一个位置；</li>
-<li>交换第一个与最后一个元素的位置；</li>
-<li>重新把移走最大值后剩余的元素组成的序列转化为堆积</li>
-<li>重复执行第 2 步到第 3 步 n - 1 次</li>
-</ol>
-</blockquote>
-<p>元素间的比较次数：</p>
-<p>排序总趟数：n - 1</p>
-<p>排序稳定性：不稳定</p>
-<p>链表可行性：不适合</p>
-<p>时间复杂度：</p>
-<blockquote>
-<p>将原始序列调整为一个初始堆积：所需时间应是各层上的节点数与该层上节点可移动的最大距离之积的总和，为 2n，这一部分的时间花费：$O(n)$</p>
-<p>将剩下元素重新调整为新堆积：每调用一次 adjust 函数，节点移动的最大距离为这棵完全二叉树的深度：$d=log_2(n+1)$，一共调用了 n + 1 次，这一部分的时间花费：$O(nlog_2n)$</p>
-<p>总时间花费：$O(nlog_2n)$ （无论最好情况还是最坏情况都是这个）</p>
-</blockquote>
-<p>空间复杂度：</p>
-<blockquote>
-<p>只需一个记录大小的复制空间，为 $O(1)$</p>
-</blockquote>
-<p>核心代码：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 调整堆积</span></span><br><span class="line"><span class="comment"> * @param root 根节点所在位置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">adjust</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> root, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> dad = root;</span><br><span class="line">    <span class="keyword">int</span> son = root * <span class="number">2</span> + <span class="number">1</span>;  <span class="comment">//son 为 root 左孩子的序号</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (son &lt;= end) &#123;</span><br><span class="line">        <span class="keyword">if</span> (son + <span class="number">1</span> &lt;= end &amp;&amp; num[son] &lt; num[son + <span class="number">1</span>]) &#123; <span class="comment">//此时右孩子更大一些，选大的</span></span><br><span class="line">            son++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (num[dad] &gt;= num[son])</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        swap(&amp;num[(son - <span class="number">1</span>) / <span class="number">2</span>], &amp;num[son]);</span><br><span class="line">        dad = son;</span><br><span class="line">        son = son * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 堆排序</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heep_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = (n - <span class="number">1</span>) / <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">        adjust(num, i, n - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = n - <span class="number">1</span>; i &gt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">        swap(&amp;num[<span class="number">0</span>], &amp;num[i]);</span><br><span class="line">        adjust(num, <span class="number">0</span>, i - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="二路归并排序"><a href="#二路归并排序" class="headerlink" title="二路归并排序"></a>二路归并排序</h3><p>基本原理：</p>
-<blockquote>
-<p>将初始长度为 n 的原始序列看成是由 n 个长度为 1 的按值有序的子序列组成，并把这些子序列中的相邻子序列两两合并，得到 $\lfloor n/2 \rfloor$ 个长度为 2 的按值有序的子序列；</p>
-<p>继续合并，得到 $\lfloor n/4 \rfloor$ 个长度为 4 的按值有序的子序列；依此类推，最后只剩下一个长度为 n 的子序列，即为最终结果</p>
-</blockquote>
-<p>元素间的比较次数：</p>
-<p>排序总趟数：$\lceil log_2n \rceil$</p>
-<p>排序稳定性：稳定</p>
-<p>链表可行性：适合</p>
-<p>时间复杂度：</p>
-<blockquote>
-<p>等于归并趟数乘以每一趟归并的时间复杂度。子算法 <code>merge_part</code> 时间复杂度为 $O(n)$，因此总的时间复杂度为：$O(nlog_2n)$</p>
-</blockquote>
-<p>空间复杂度：需要用到长度为 n 的辅助空间，为 $O(n)$ ，明显高于前面几种的空间复杂度</p>
-<p>核心代码：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> tmp[], <span class="keyword">int</span> start, <span class="keyword">int</span> mid, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = start, j = mid + <span class="number">1</span>, k = start;</span><br><span class="line">    <span class="keyword">while</span> (i != mid + <span class="number">1</span> &amp;&amp; j != end + <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (num[i] &lt; num[j])</span><br><span class="line">            tmp[k++] = num[i++];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            tmp[k++] = num[j++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i != mid + <span class="number">1</span>)</span><br><span class="line">        tmp[k++] = num[i++];</span><br><span class="line">    <span class="keyword">while</span> (j != end + <span class="number">1</span>)</span><br><span class="line">        tmp[k++] = num[j++];</span><br><span class="line">    <span class="keyword">for</span> (i = start; i &lt;= end; i++)</span><br><span class="line">        num[i] = tmp[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_part</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> tmp[], <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; end) &#123;</span><br><span class="line">        mid = start + (end - start) / <span class="number">2</span>;</span><br><span class="line">        merge_part(num, tmp, start, mid);</span><br><span class="line">        merge_part(num, tmp, mid + <span class="number">1</span>, end);</span><br><span class="line">        merge(num, tmp, start, mid, end);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> *tmp = (<span class="keyword">int</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * n);</span><br><span class="line">    merge_part(num, tmp, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
-<li>稳定性：<ul>
-<li>稳定：插入、冒泡、归并</li>
-<li>不稳定：选择、谢尔、快排、堆排</li>
-</ul>
-</li>
-<li>链表结构的适合度<ul>
-<li>适合：插入、冒泡、归并、选择</li>
-<li>不适合：快排、堆排、谢尔</li>
-</ul>
-</li>
-<li>时间复杂度：<ul>
-<li>$O(n^2)$：插入、冒泡、选择</li>
-<li>$ O(nlog_2n)$：谢尔、快排（最坏情况为 $O(n^2)$）、堆排、归并</li>
-</ul>
-</li>
-<li>空间复杂度：<ul>
-<li>$O(n)$：归并</li>
-<li>$O(log_2n)$：快排</li>
-<li>$O(1)$：插入、谢尔、冒泡、选择、堆排</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>考研</category>
-      </categories>
-      <tags>
-        <tag>考研</tag>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>逆波兰表达式</title>
     <url>/posts/ni-bo-lan-biao-da-shi/</url>
     <content><![CDATA[<p>虽然数据结构比较简单，但是有些题遇到之后直接盲敲也并无十足的把握，往往还需要找些资料理清一下思路才敢去写；</p>
@@ -680,7 +456,7 @@
 <p>其中，n 为该节点中关键字值的个数；</p>
 <p>$key_i(1\le i \le n)$ 为该节点的第 i 个关键字值，并且满足关系 $key_i&lt;key_{i+1}(i=1,2…,n-1)$；</p>
 <p>$p_i(0\le i\le n)$为指向该节点第 i+1 棵子树根节点的指针。$p_i$ 所指的子树中，所有节点的关键字值均小于 $key_{i+1}$ 而大于 $key_i$</p>
-<p><img data-src="991%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%80%83%E7%A0%94%E5%A4%8D%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E5%8F%8A%E6%9F%A5%E6%89%BE/B-%E6%A0%91.jpg" alt="B-树"></p>
+<p><img data-src="B-.jpg" alt="B-"></p>
 <h4 id="B-树-1"><a href="#B-树-1" class="headerlink" title="B+ 树"></a>B+ 树</h4><blockquote>
 <p>B+ 树是 B- 树的一种变形。在 B- 树中，关键字分布在整个 B- 树上，并且在上一层节点出现过的关键字不再出现在最底层的节点中，而 B+ 树则不是这样</p>
 </blockquote>
@@ -699,13 +475,237 @@
 <li><p>所有分支节点可看成是索引的索引，节点中仅包含它的各个子结点（下级索引的索引块）中最大（或最小）关键字值及指向子节点的指针</p>
 </li>
 </ol>
-<p><img data-src="991%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%80%83%E7%A0%94%E5%A4%8D%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E5%8F%8A%E6%9F%A5%E6%89%BE/B+%E6%A0%91.jpg" alt="B+树"></p>
+<p><img data-src="B+.jpg" alt="B+"></p>
 <h4 id="从结构上，B-树与-B-树的区别"><a href="#从结构上，B-树与-B-树的区别" class="headerlink" title="从结构上，B- 树与 B+ 树的区别"></a>从结构上，B- 树与 B+ 树的区别</h4><p>从结构上说，B- 树与 B+　树的主要区别在于：</p>
 <ol>
 <li>只有 B- 树的每个分支节点给出了该分支节点包含的关键字值的个数；</li>
 <li>B- 树的每个分支节点除了包含若干关键字值外，还包含指向这些关键字值对应记录的指针，而 B+ 树只有叶节点包含了指向关键字值对应记录的指针</li>
 <li>B- 树只有一个指向根节点的入口指针，而 B+ 树有两个入口指针，其中一个指向根节点，另一个指向最左边的叶节点，即指向关键字值最小的那个叶节点（所有叶节点被链接一个线性链表）</li>
 </ol>
+]]></content>
+      <categories>
+        <category>考研</category>
+      </categories>
+      <tags>
+        <tag>考研</tag>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>991数据结构考研复习（八）——内排序</title>
+    <url>/posts/991-shu-ju-jie-gou-kao-yan-fu-xi-ba-nei-pai-xu/</url>
+    <content><![CDATA[<h2 id="八-、内排序"><a href="#八-、内排序" class="headerlink" title="八.、内排序"></a>八.、内排序</h2><ul>
+<li>排序</li>
+</ul>
+<blockquote>
+<p>根据记录关键字值的递增或递减关系将记录的次序重新排列，使得原来一组次序任意的记录转变为按其关键字值有序排列的一组记录</p>
+</blockquote>
+<ul>
+<li>内排序</li>
+</ul>
+<blockquote>
+<p>当待排序的数据量不大时，在排序中将全部信息存放在内存中处理的排序方法</p>
+</blockquote>
+<ul>
+<li>排序的时间效率与排序过程中数据元素之间的比较次数和交换（移动）次数直接相关，尤其是比较次数。</li>
+</ul>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><p>基本原理：</p>
+<blockquote>
+<p>第 i 趟排序将序列中的第 i+1 个元素插入到一个已经按值有序的子序列，得到一个长度为 i+1 且仍然保持按值有序的子序列。</p>
+</blockquote>
+<p>元素间的比较次数：</p>
+<blockquote>
+<p>最好情况：当原始序列已经按值递增时，对应的每个 i 值只需进行一次元素之间的比较，比较的次数最少，为：n-1，此时不需要移动元素，即 $O(n)$</p>
+<p>最坏情况：原始序列按值递减，对应的每个 i 值都要进行 i - 1 次元素之间的比较，比较的次数最多，为：n(n-1)/2，即 $O(n^2)$</p>
+<p>随机情况：取上述平均值，约为 $n^2 / 4$</p>
+</blockquote>
+<p>排序总趟数：n-1</p>
+<p>排序稳定性：稳定</p>
+<p>链表可行性：适合</p>
+<p>时间复杂度：$O(n^{2}) $</p>
+<p>空间复杂度：只需一个辅助空间 $O(1)$</p>
+<p>核心算法：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, tmp;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        tmp = num[i];</span><br><span class="line">        <span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; num[j] &gt; tmp; j--) &#123;</span><br><span class="line">            num[j + <span class="number">1</span>] = num[j];</span><br><span class="line">        &#125;</span><br><span class="line">        num[j + <span class="number">1</span>] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="折半插入排序"><a href="#折半插入排序" class="headerlink" title="折半插入排序"></a>折半插入排序</h3><p>时间复杂度：</p>
+<blockquote>
+<p>最好的情况下：$O(nlog_2n)$，比简单插入排序要好</p>
+<p>最坏情况下：$O(n^2)$</p>
+</blockquote>
+<p>核心算法：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">half_insert_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, tmp;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        tmp = num[i];</span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>, end = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> mid;</span><br><span class="line">        <span class="keyword">while</span> (start &lt;= end) &#123;</span><br><span class="line">            mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (num[mid] &gt; tmp)</span><br><span class="line">                end = mid - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                start = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= start; j--)</span><br><span class="line">            num[j + <span class="number">1</span>] = num[j];</span><br><span class="line">        num[start] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>基本原理：</p>
+<blockquote>
+<p>第 i 趟排序从序列的后 n-i+1 个元素中选择选择一个最小的元素与该 n-i+1 个元素的前面那个元素交换位置，即与整个序列的第 i 个位置上的元素交换位置。直至 i = n-1 排序结束</p>
+</blockquote>
+<p>元素间的比较次数：</p>
+<blockquote>
+<p>不论元素的初始排列状态如何，第 i 趟排序要找出值最小的元素都需要进行 n - i 次元素之间的比较。整个过程中的比较次数为：$n(n-1)/2$  </p>
+</blockquote>
+<p>元素间的移动（交换）次数：</p>
+<blockquote>
+<p>最好情况（原序列升序）：0 次</p>
+<p>最坏情况：3(n-1) 次，3是交换 k[i] 与 k[d] 的执行次数</p>
+</blockquote>
+<p>排序总趟数：n - 1</p>
+<p>排序稳定性：不稳定</p>
+<p>链表可行性：适合</p>
+<p>时间复杂度：$O(n^2)$</p>
+<p>空间复杂度：$O(1)$</p>
+<p>核心算法：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">select_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j, index;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        index = i;</span><br><span class="line">        <span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (num[j] &lt; num[index]) &#123;</span><br><span class="line">                index = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(&amp;num[i], &amp;num[index]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="泡排序"><a href="#泡排序" class="headerlink" title="泡排序"></a>泡排序</h3><p>基本原理：</p>
+<blockquote>
+<p>一趟排序：比较相邻两个元素，若前者大于后者，两者交换（此时最大值被放到了最后）</p>
+<p>此后，再对前 n - 1 个元素进行同样的过程，依次类推，直至某一趟不出现交换动作为止</p>
+</blockquote>
+<p>元素间的比较次数：</p>
+<blockquote>
+<p>最好情况：原始序列为升序，只需经过 1 趟 n - 1次元素比较，此时不需要移动元素，即 $O(n)$</p>
+<p>最坏情况：原始序列为逆序，或者最小值的元素在最后，需要进行 n - 1 趟排序，需要进行 $n(n-1)/2$次元素比较</p>
+<p>相比于插入和选择，需要移动较多次数的元素。</p>
+</blockquote>
+<p>排序总趟数：最多 n - 1，可以更少</p>
+<p>排序稳定性：稳定</p>
+<p>时间复杂度： $O(n^2)$</p>
+<p>空间复杂度：$O(1)$</p>
+<p>核心代码：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubble_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n - i - <span class="number">1</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (num[j] &gt; num[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                swap(&amp;num[j], &amp;num[j + <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="谢尔（Shell）排序"><a href="#谢尔（Shell）排序" class="headerlink" title="谢尔（Shell）排序"></a>谢尔（Shell）排序</h3><p>基本原理：</p>
+<blockquote>
+<p>确定间隔数 gap，将所有位置间隔为gap的元素视为一个子序列，在各个子序列中采用某种方法进行排序；</p>
+<p>缩小间隔数，重新划分子序列并进行排序，直至gap=1</p>
+</blockquote>
+<p>特点：</p>
+<blockquote>
+<p>元素的移动在子序列间跳跃式进行。gap越大，跳跃的跨度越大，很多时候，当gap=1时，序列已经几乎按值有序，不需要进行较多元素的移动。</p>
+</blockquote>
+<p>元素间的比较次数：</p>
+<p>排序总趟数：</p>
+<p>排序稳定性：不稳定</p>
+<p>链表可行性：不适合</p>
+<p>时间复杂度：一般情况下认为在 $O(nlog_2n)$ 与 $O(n^2)$ 之间，回答时回答： $O(nlog_2n)$</p>
+<p>空间复杂度：$O(1)$</p>
+<p>核心代码（子序列中以冒泡排序为例）：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shell_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> gap, i, j;</span><br><span class="line">    <span class="keyword">for</span> (gap = n / <span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n - gap; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n - i - gap; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (num[j] &gt; num[j + gap]) &#123;</span><br><span class="line">                    swap(&amp;num[j], &amp;num[j + gap]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>基本原理：</p>
+<blockquote>
+<p>在当前待排序的序列中选择基准元素，把小于等于基准元素的都移到基准元素的前面，大于基准元素的都移到基准元素的前后面。这样，基准元素位置就找到了</p>
+<p>分别对基准元素前后的两个子序列递归进行上述过程即可</p>
+</blockquote>
+<p>元素间的比较次数：</p>
+<p>排序总趟数：</p>
+<p>排序稳定性：不稳定</p>
+<p>链表可行性：不适合</p>
+<p>时间复杂度：</p>
+<blockquote>
+<p>待排序元素初始有序（升序或降序）情况下，花费时间最长：$n(n-1)/2$ ，$O(n^2)$</p>
+<p>分界元素在正中间：$O(nlog_2n)$</p>
+</blockquote>
+<p>空间复杂度：</p>
+<blockquote>
+<p>最坏情况：分界元素每次都在一边，堆栈的最大递归深度为 $n$，致使空间复杂度为 $O(n)$</p>
+<p>最好情况：分解元素每次都在中间，最小递归深度为：$\lfloor log_2n \rfloor + 1$</p>
+<p>若在一趟排序之后比较两个所划分的子序列的长度，并且先对长度较短的子序列进行快排，此时的堆栈深度为：$O(log_2n)$</p>
+<p>一般情况：$O(log_2n)$</p>
+</blockquote>
+<p>核心代码：</p>
+<ul>
+<li>递归版</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">q_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left &gt;= right)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> i = left, j = right, key = num[left];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; i &amp;&amp; num[j] &gt;= key) &#123;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        num[i] = num[j];</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j &amp;&amp; num[i] &lt;= key) &#123;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        num[j] = num[i];</span><br><span class="line">    &#125;</span><br><span class="line">    num[i] = key;</span><br><span class="line">    q_sort(num, left, i - <span class="number">1</span>);</span><br><span class="line">    q_sort(num, i + <span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 快速排序</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quick_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    q_sort(num, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>非递归版</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">q_sort_use_stack</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> <span class="built_in">stack</span>[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left &gt;= right)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> top = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">stack</span>[top++] = left;</span><br><span class="line">    <span class="built_in">stack</span>[top++] = right;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (top &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        right = <span class="built_in">stack</span>[--top];</span><br><span class="line">        left = <span class="built_in">stack</span>[--top];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i = left, j = right, key = num[left];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">            <span class="keyword">while</span> (j &gt; i &amp;&amp; num[j] &gt;= key) &#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            num[i] = num[j];</span><br><span class="line">            <span class="keyword">while</span> (i &lt; j &amp;&amp; num[i] &lt;= key) &#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            num[j] = num[i];</span><br><span class="line">        &#125;</span><br><span class="line">        num[i] = key;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (i - <span class="number">1</span> &gt; left) &#123;</span><br><span class="line">            <span class="built_in">stack</span>[top++] = left;</span><br><span class="line">            <span class="built_in">stack</span>[top++] = i - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (i + <span class="number">1</span> &lt; right) &#123;</span><br><span class="line">            <span class="built_in">stack</span>[top++] = i + <span class="number">1</span>;</span><br><span class="line">            <span class="built_in">stack</span>[top++] = right;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 快速排序非递归算法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quick_sort_use_stack</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> *<span class="built_in">stack</span> = (<span class="keyword">int</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * n);</span><br><span class="line">    q_sort_use_stack(num, <span class="number">0</span>, n - <span class="number">1</span>, <span class="built_in">stack</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="堆积（Heap）排序"><a href="#堆积（Heap）排序" class="headerlink" title="堆积（Heap）排序"></a>堆积（Heap）排序</h3><p>基本原理：</p>
+<blockquote>
+<p>大顶堆：一棵完全二叉树，其中每个分支节点的值均大于或等于其左子树和右子树（若存在右子树的话）中所有结点的值，并且该完全二叉树的根节点值最大</p>
+<p>排序算法：</p>
+<ol>
+<li>设法构造初始堆积，使得最大值在第一个位置；</li>
+<li>交换第一个与最后一个元素的位置；</li>
+<li>重新把移走最大值后剩余的元素组成的序列转化为堆积</li>
+<li>重复执行第 2 步到第 3 步 n - 1 次</li>
+</ol>
+</blockquote>
+<p>元素间的比较次数：</p>
+<p>排序总趟数：n - 1</p>
+<p>排序稳定性：不稳定</p>
+<p>链表可行性：不适合</p>
+<p>时间复杂度：</p>
+<blockquote>
+<p>将原始序列调整为一个初始堆积：所需时间应是各层上的节点数与该层上节点可移动的最大距离之积的总和，为 2n，这一部分的时间花费：$O(n)$</p>
+<p>将剩下元素重新调整为新堆积：每调用一次 adjust 函数，节点移动的最大距离为这棵完全二叉树的深度：$d=log_2(n+1)$，一共调用了 n + 1 次，这一部分的时间花费：$O(nlog_2n)$</p>
+<p>总时间花费：$O(nlog_2n)$ （无论最好情况还是最坏情况都是这个）</p>
+</blockquote>
+<p>空间复杂度：</p>
+<blockquote>
+<p>只需一个记录大小的复制空间，为 $O(1)$</p>
+</blockquote>
+<p>核心代码：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 调整堆积</span></span><br><span class="line"><span class="comment"> * @param root 根节点所在位置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">adjust</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> root, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> dad = root;</span><br><span class="line">    <span class="keyword">int</span> son = root * <span class="number">2</span> + <span class="number">1</span>;  <span class="comment">//son 为 root 左孩子的序号</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (son &lt;= end) &#123;</span><br><span class="line">        <span class="keyword">if</span> (son + <span class="number">1</span> &lt;= end &amp;&amp; num[son] &lt; num[son + <span class="number">1</span>]) &#123; <span class="comment">//此时右孩子更大一些，选大的</span></span><br><span class="line">            son++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (num[dad] &gt;= num[son])</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        swap(&amp;num[(son - <span class="number">1</span>) / <span class="number">2</span>], &amp;num[son]);</span><br><span class="line">        dad = son;</span><br><span class="line">        son = son * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 堆排序</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heep_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = (n - <span class="number">1</span>) / <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">        adjust(num, i, n - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = n - <span class="number">1</span>; i &gt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">        swap(&amp;num[<span class="number">0</span>], &amp;num[i]);</span><br><span class="line">        adjust(num, <span class="number">0</span>, i - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="二路归并排序"><a href="#二路归并排序" class="headerlink" title="二路归并排序"></a>二路归并排序</h3><p>基本原理：</p>
+<blockquote>
+<p>将初始长度为 n 的原始序列看成是由 n 个长度为 1 的按值有序的子序列组成，并把这些子序列中的相邻子序列两两合并，得到 $\lfloor n/2 \rfloor$ 个长度为 2 的按值有序的子序列；</p>
+<p>继续合并，得到 $\lfloor n/4 \rfloor$ 个长度为 4 的按值有序的子序列；依此类推，最后只剩下一个长度为 n 的子序列，即为最终结果</p>
+</blockquote>
+<p>元素间的比较次数：</p>
+<p>排序总趟数：$\lceil log_2n \rceil$</p>
+<p>排序稳定性：稳定</p>
+<p>链表可行性：适合</p>
+<p>时间复杂度：</p>
+<blockquote>
+<p>等于归并趟数乘以每一趟归并的时间复杂度。子算法 <code>merge_part</code> 时间复杂度为 $O(n)$，因此总的时间复杂度为：$O(nlog_2n)$</p>
+</blockquote>
+<p>空间复杂度：需要用到长度为 n 的辅助空间，为 $O(n)$ ，明显高于前面几种的空间复杂度</p>
+<p>核心代码：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> tmp[], <span class="keyword">int</span> start, <span class="keyword">int</span> mid, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = start, j = mid + <span class="number">1</span>, k = start;</span><br><span class="line">    <span class="keyword">while</span> (i != mid + <span class="number">1</span> &amp;&amp; j != end + <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (num[i] &lt; num[j])</span><br><span class="line">            tmp[k++] = num[i++];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            tmp[k++] = num[j++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i != mid + <span class="number">1</span>)</span><br><span class="line">        tmp[k++] = num[i++];</span><br><span class="line">    <span class="keyword">while</span> (j != end + <span class="number">1</span>)</span><br><span class="line">        tmp[k++] = num[j++];</span><br><span class="line">    <span class="keyword">for</span> (i = start; i &lt;= end; i++)</span><br><span class="line">        num[i] = tmp[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_part</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> tmp[], <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid;</span><br><span class="line">    <span class="keyword">if</span> (start &lt; end) &#123;</span><br><span class="line">        mid = start + (end - start) / <span class="number">2</span>;</span><br><span class="line">        merge_part(num, tmp, start, mid);</span><br><span class="line">        merge_part(num, tmp, mid + <span class="number">1</span>, end);</span><br><span class="line">        merge(num, tmp, start, mid, end);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="keyword">int</span> num[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> *tmp = (<span class="keyword">int</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * n);</span><br><span class="line">    merge_part(num, tmp, <span class="number">0</span>, n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>稳定性：<ul>
+<li>稳定：插入、冒泡、归并</li>
+<li>不稳定：选择、谢尔、快排、堆排</li>
+</ul>
+</li>
+<li>链表结构的适合度<ul>
+<li>适合：插入、冒泡、归并、选择</li>
+<li>不适合：快排、堆排、谢尔</li>
+</ul>
+</li>
+<li>时间复杂度：<ul>
+<li>$O(n^2)$：插入、冒泡、选择</li>
+<li>$ O(nlog_2n)$：谢尔、快排（最坏情况为 $O(n^2)$）、堆排、归并</li>
+</ul>
+</li>
+<li>空间复杂度：<ul>
+<li>$O(n)$：归并</li>
+<li>$O(log_2n)$：快排</li>
+<li>$O(1)$：插入、谢尔、冒泡、选择、堆排</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>考研</category>
