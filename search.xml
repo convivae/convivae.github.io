@@ -1216,6 +1216,149 @@
       </tags>
   </entry>
   <entry>
+    <title>电路基础02</title>
+    <url>/posts/dian-lu-ji-chu-02/</url>
+    <content><![CDATA[<h2 id="等效变换的概念"><a href="#等效变换的概念" class="headerlink" title="等效变换的概念"></a>等效变换的概念</h2><p>如果有两个电路N1、N2，其内部结构不同，但从端口看，它们的电压、电流关系相同（方向、大小均相同），则称它们是相互等效的电路，即N1与N2对外电路的影响是相同的。</p>
+<h2 id="电阻的串联、并联和混联"><a href="#电阻的串联、并联和混联" class="headerlink" title="电阻的串联、并联和混联"></a>电阻的串联、并联和混联</h2><ul>
+<li>分压公式：</li>
+</ul>
+<p>$$<br>u_k=\cfrac{R_k}{\sum{R_k}}u<br>$$</p>
+<ul>
+<li>分流公式：</li>
+</ul>
+<p>$$<br>i_k=\cfrac{G_k}{\sum{G_k}}i<br>$$</p>
+<ul>
+<li><p>混联</p>
+<ol>
+<li><p>电路在几何对称的情况下，应首先找出相应的等电位点，然后再进行化简</p>
+</li>
+<li><p>电桥：</p>
+</li>
+</ol>
+<p><img data-src="01.png" alt="电桥"></p>
+<p>平衡条件（平衡时中间桥臂电流电压均为零）：<br>$$<br>\frac{R_1}{R3}=\frac{R_2}{R_4}<br>$$</p>
+</li>
+</ul>
+<p>  一些翻转和变形：</p>
+<p>  <img data-src="02.png" alt="翻转和变形"></p>
+<ul>
+<li><p>分析法：</p>
+<blockquote>
+<p>先判断电桥是否平衡。</p>
+<p>平衡时中间桥臂电压为零可以将其短路（虚短）；平衡时中间桥臂电流为零可以将其断路（虚断）</p>
+<p>而最后的计算结果相同</p>
+<p>如果电桥不平衡，可采用 $Y-\triangle$ 变换的方法分析</p>
+</blockquote>
+</li>
+<li><p>注：平衡电桥只对无源支路成立</p>
+</li>
+</ul>
+<h2 id="电阻的-Y-triangle-（星形-三角形）变换"><a href="#电阻的-Y-triangle-（星形-三角形）变换" class="headerlink" title="电阻的 $Y-\triangle$ （星形-三角形）变换"></a>电阻的 $Y-\triangle$ （星形-三角形）变换</h2><h3 id="三端网络的等效概念"><a href="#三端网络的等效概念" class="headerlink" title="三端网络的等效概念"></a>三端网络的等效概念</h3><p>若两个三端网络与同一个外部电路相接时，电压 $$u_{12}, u_{23}$$ 与电流 $${i_1, i_2}$$ 之间的关系完全相同，则称这两个三端网络对外互为等效</p>
+<p><img data-src="03.png" alt="三端网络"></p>
+<ul>
+<li><p>对 $Y$ 电路<br>$$<br>\left{<br>\begin{aligned}<br>i_1=\frac{R_3}{R_1R_2+R_2R_3+R_3R_1}u_{12}-\frac{R_2}{R_1R_2+R_2R_3+R_3R_1}u_{31} \<br>i_2=\frac{R_1}{R_1R_2+R_2R_3+R_3R_1}u_{23}-\frac{R_3}{R_1R_2+R_2R_3+R_3R_1}u_{12} \<br>i_3=\frac{R_2}{R_1R_2+R_2R_3+R_3R_1}u_{31}-\frac{R_1}{R_1R_2+R_2R_3+R_3R_1}u_{23} \<br>\end{aligned}<br>\right.<br>$$</p>
+</li>
+<li><p>对 $\triangle$ 电路<br>$$<br>\left{<br>\begin{aligned}<br>i^{‘}<em>1=i</em>{12}-i_{31}=\frac1{R_{12}}u_{12}-\frac1{R_{31}}u_{31} \<br>i^{‘}<em>2=i</em>{23}-i_{12}=\frac1{R_{23}}u_{23}-\frac1{R_{12}}u_{12} \<br>i^{‘}<em>3=i</em>{31}-i_{23}=\frac1{R_{31}}u_{31}-\frac1{R_{23}}u_{23} \<br>\end{aligned}<br>\right.<br>$$</p>
+</li>
+</ul>
+<h3 id="等效变换公式：-triangle-rightarrow-Y"><a href="#等效变换公式：-triangle-rightarrow-Y" class="headerlink" title="等效变换公式：$\triangle \rightarrow Y$"></a>等效变换公式：$\triangle \rightarrow Y$</h3><p><img data-src="04.png" alt="三角形-星形"><br>$$<br>\left{<br>\begin{aligned}<br>R_1=\frac{R_{12}R_{31}}{\sum R_{ij}} \<br>R_2=\frac{R_{12}R_{23}}{\sum R_{ij}} \<br>R_3=\frac{R_{23}R_{31}}{\sum R_{ij}} \<br>\end{aligned}<br>\right.<br>$$</p>
+<p>若 $$R_{12}=R_{23}=R_{31}=R$$，则 $$R_1=R_2=R_3=\cfrac R 3$$</p>
+<blockquote>
+<p>分母为 $\triangle$ 形中三个电阻之和</p>
+<p>分子为 $\triangle$ 形中与之对应节点相连的电阻之积</p>
+</blockquote>
+<h3 id="等效变换公式：-Y-rightarrow-triangle"><a href="#等效变换公式：-Y-rightarrow-triangle" class="headerlink" title="等效变换公式：$Y \rightarrow \triangle$"></a>等效变换公式：$Y \rightarrow \triangle$</h3><p><img data-src="05.png" alt="星形-三角形"><br>$$<br>\left{<br>\begin{aligned}<br>R_{12}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{3}} \<br>R_{23}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{1}} \<br>R_{31}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{2}} \<br>\end{aligned}<br>\right.<br>$$</p>
+<p>若 $$R_1=R_2=R_3=R$$，则 $$R_{12}=R_{23}=R_{31}=3R$$</p>
+<blockquote>
+<p>分子为 $Y$ 形中三个电阻两两乘积之和</p>
+<p>分母为 $Y$ 形中与之对应两节点的无关电阻</p>
+</blockquote>
+<h3 id="建议画出该图"><a href="#建议画出该图" class="headerlink" title="建议画出该图"></a>建议画出该图</h3><p><img data-src="06.png" alt="全图"></p>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>求 $R_{ab}$ :</p>
+<p>首先选择比较容易变换的电阻进行变换：（$Y \rightarrow \triangle $）</p>
+<p><img data-src="07.png" alt="例题"><br>$$<br>R_{ab}=\cfrac{1}{\cfrac19+\cfrac13+\cfrac14}\Omega=\cfrac{36}{25}\Omega<br>$$</p>
+<h2 id="理想电压源的串联和并联"><a href="#理想电压源的串联和并联" class="headerlink" title="理想电压源的串联和并联"></a>理想电压源的串联和并联</h2><ul>
+<li><p>理想电压源的<strong>并联</strong>必须是同极性、同数值</p>
+</li>
+<li><p>对外电路进行讨论时，与理想电压源<strong>并联</strong>的元件（支路）对外电路不起作用，对外电路讨论时可<strong>断开</strong></p>
+</li>
+<li><p>计算流过理想电压源支路的电流时，并联支路的作用必须予以保留</p>
+</li>
+</ul>
+<h2 id="理想电流源的串联和并联"><a href="#理想电流源的串联和并联" class="headerlink" title="理想电流源的串联和并联"></a>理想电流源的串联和并联</h2><ul>
+<li>理想电流源的<strong>并联</strong>，同方向（同向上或同向下）相加</li>
+<li>理想电流源的<strong>串联</strong>必须是同方向、同数值</li>
+<li>与理想电流源<strong>串联</strong>的元件（支路）对外电路不起作用，对外电路讨论时可短接</li>
+<li>若求理想电流源的端电压时，串联支路的作用必须予以保留</li>
+</ul>
+<h2 id="实际电源的等效变换"><a href="#实际电源的等效变换" class="headerlink" title="实际电源的等效变换"></a>实际电源的等效变换</h2><p><img data-src="08.png" alt="等效变换"></p>
+<p>等效互换条件：<br>$$<br>\begin{aligned}<br>R_{su}=R_{si}&amp;\overset{\triangle}{=}R_{}s \<br>u_s&amp;=R_si_s \<br>(i_s&amp;=\frac{u_s}{R_s})<br>\end{aligned}<br>$$<br>注意：</p>
+<ul>
+<li>两个条件必须同时满足</li>
+<li>等效变换前后要保持电源方向的一致，即电流源的方向由电压源方向的 $“-“$ 指向 $“+”$</li>
+<li>等效是对外部而言，对内不等效</li>
+</ul>
+<h3 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h3><p>运用电源等效变换方法求 $u$</p>
+<p><img data-src="09.png" alt="例题"></p>
+<p>解：</p>
+<p><img data-src="10.png" alt="例题"></p>
+<p>理想电流源的并联可以等效为一个理想电流源（两个理想电流源的数值和）</p>
+<p><img data-src="11.png" alt="例题"></p>
+<p>再转化为电压源与 $6V$ 的电压源组合：</p>
+<p><img data-src="12.png" alt="例题"></p>
+<p>最终等效电路图：</p>
+<p><img data-src="13.png" alt="例题"><br>$$<br>u=4\times\cfrac{\cfrac{5}{4}+2}{2}=6.5V<br>$$</p>
+<h3 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h3><p>已知：$$U_{s1}=12V,U_{s2}=24V,R_1=R_2=20\Omega,R_3=50\Omega$$</p>
+<p><img data-src="14.png" alt="例题"></p>
+<p><img data-src="15.png" alt="例题"></p>
+<p><img data-src="16.png" alt="例题"></p>
+<h2 id="含受控源电路等效电阻的求取"><a href="#含受控源电路等效电阻的求取" class="headerlink" title="含受控源电路等效电阻的求取"></a>含受控源电路等效电阻的求取</h2><p>名词解释：</p>
+<ul>
+<li><p>输入电阻</p>
+<blockquote>
+<p>一个二端无源网络$N_0$，其端口处的电压与电流之比称之为该无源网络的输入电阻，即：</p>
+<p>$$R_{in}=\dfrac{u}{i}$$</p>
+</blockquote>
+</li>
+</ul>
+<p>一个含受控源的简单二端网络，可以通过与独立源相似的等效变换来化简电路。</p>
+<p><img data-src="17.png" alt="例题"></p>
+<p>注意：</p>
+<p><strong>在化简过程中，必须保留受控源的控制变量支路</strong></p>
+<h3 id="例："><a href="#例：" class="headerlink" title="例："></a>例：</h3><p>求电路的输入电阻：</p>
+<p><img data-src="18.png" alt="例题"></p>
+<p><img data-src="20.png" alt="例题"></p>
+<ul>
+<li>可见：含受控源电路的输入电阻为 “+” 为 “-” 均属正常，一定要注意物理量的方向</li>
+</ul>
+<h2 id="运用等效变换分析含受控源的电阻电路"><a href="#运用等效变换分析含受控源的电阻电路" class="headerlink" title="运用等效变换分析含受控源的电阻电路"></a>运用等效变换分析含受控源的电阻电路</h2><blockquote>
+<p>注意：</p>
+<p>等效变换中控制支路不参与等效变换，予以保留</p>
+</blockquote>
+<h3 id="例1-1"><a href="#例1-1" class="headerlink" title="例1"></a>例1</h3><p><img data-src="21.png" alt="例题"></p>
+<blockquote>
+<p>分析：</p>
+<ul>
+<li>控制支路 $3\Omega$ 不参与等效变换</li>
+<li>其余支路：$6A$ 和 $4A$ 可以等效变换，$9\Omega$ 和右侧的混联电阻可以做等效变换</li>
+</ul>
+</blockquote>
+<p>可得到：</p>
+<p><img data-src="22.png" alt="例题"></p>
+<h3 id="例2-1"><a href="#例2-1" class="headerlink" title="例2"></a>例2</h3><p><img data-src="23.png" alt="例题"></p>
+<h2 id="另外一些例题"><a href="#另外一些例题" class="headerlink" title="另外一些例题"></a>另外一些例题</h2><p><img data-src="24.png" alt="例题"></p>
+<p><img data-src="25.png" alt="例题"></p>
+<p><img data-src="26.png" alt="例题"></p>
+<p><img data-src="27.png" alt="例题"></p>
+]]></content>
+      <categories>
+        <category>电路</category>
+      </categories>
+      <tags>
+        <tag>电路</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>电路基础01</title>
     <url>/posts/dian-lu-ji-chu-01/</url>
     <content><![CDATA[<h2 id="电路与电路模型"><a href="#电路与电路模型" class="headerlink" title="电路与电路模型"></a>电路与电路模型</h2><h3 id="物理公式回顾"><a href="#物理公式回顾" class="headerlink" title="物理公式回顾"></a>物理公式回顾</h3><table>
@@ -1489,149 +1632,6 @@
 </ul>
 <h3 id="电位"><a href="#电位" class="headerlink" title="电位"></a>电位</h3><p>将单位正电荷自电场中某一点 a 移动到参考点（物理学中习惯选无穷远处作为参考点，在电路中习惯设定某点为参考点而不是无穷远处）电场力做功的大小称作 a 的电位。</p>
 <p>计算电路中某一点的电位，实际上是计算该点与参考点之间的电压。同电压一样，电位也是代数量</p>
-]]></content>
-      <categories>
-        <category>电路</category>
-      </categories>
-      <tags>
-        <tag>电路</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>电路基础02</title>
-    <url>/posts/dian-lu-ji-chu-02/</url>
-    <content><![CDATA[<h2 id="等效变换的概念"><a href="#等效变换的概念" class="headerlink" title="等效变换的概念"></a>等效变换的概念</h2><p>如果有两个电路N1、N2，其内部结构不同，但从端口看，它们的电压、电流关系相同（方向、大小均相同），则称它们是相互等效的电路，即N1与N2对外电路的影响是相同的。</p>
-<h2 id="电阻的串联、并联和混联"><a href="#电阻的串联、并联和混联" class="headerlink" title="电阻的串联、并联和混联"></a>电阻的串联、并联和混联</h2><ul>
-<li>分压公式：</li>
-</ul>
-<p>$$<br>u_k=\cfrac{R_k}{\sum{R_k}}u<br>$$</p>
-<ul>
-<li>分流公式：</li>
-</ul>
-<p>$$<br>i_k=\cfrac{G_k}{\sum{G_k}}i<br>$$</p>
-<ul>
-<li><p>混联</p>
-<ol>
-<li><p>电路在几何对称的情况下，应首先找出相应的等电位点，然后再进行化简</p>
-</li>
-<li><p>电桥：</p>
-</li>
-</ol>
-<p><img data-src="01.png" alt="电桥"></p>
-<p>平衡条件（平衡时中间桥臂电流电压均为零）：<br>$$<br>\frac{R_1}{R3}=\frac{R_2}{R_4}<br>$$</p>
-</li>
-</ul>
-<p>  一些翻转和变形：</p>
-<p>  <img data-src="02.png" alt="翻转和变形"></p>
-<ul>
-<li><p>分析法：</p>
-<blockquote>
-<p>先判断电桥是否平衡。</p>
-<p>平衡时中间桥臂电压为零可以将其短路（虚短）；平衡时中间桥臂电流为零可以将其断路（虚断）</p>
-<p>而最后的计算结果相同</p>
-<p>如果电桥不平衡，可采用 $Y-\triangle$ 变换的方法分析</p>
-</blockquote>
-</li>
-<li><p>注：平衡电桥只对无源支路成立</p>
-</li>
-</ul>
-<h2 id="电阻的-Y-triangle-（星形-三角形）变换"><a href="#电阻的-Y-triangle-（星形-三角形）变换" class="headerlink" title="电阻的 $Y-\triangle$ （星形-三角形）变换"></a>电阻的 $Y-\triangle$ （星形-三角形）变换</h2><h3 id="三端网络的等效概念"><a href="#三端网络的等效概念" class="headerlink" title="三端网络的等效概念"></a>三端网络的等效概念</h3><p>若两个三端网络与同一个外部电路相接时，电压 $$u_{12}, u_{23}$$ 与电流 $${i_1, i_2}$$ 之间的关系完全相同，则称这两个三端网络对外互为等效</p>
-<p><img data-src="03.png" alt="三端网络"></p>
-<ul>
-<li><p>对 $Y$ 电路<br>$$<br>\left{<br>\begin{aligned}<br>i_1=\frac{R_3}{R_1R_2+R_2R_3+R_3R_1}u_{12}-\frac{R_2}{R_1R_2+R_2R_3+R_3R_1}u_{31} \<br>i_2=\frac{R_1}{R_1R_2+R_2R_3+R_3R_1}u_{23}-\frac{R_3}{R_1R_2+R_2R_3+R_3R_1}u_{12} \<br>i_3=\frac{R_2}{R_1R_2+R_2R_3+R_3R_1}u_{31}-\frac{R_1}{R_1R_2+R_2R_3+R_3R_1}u_{23} \<br>\end{aligned}<br>\right.<br>$$</p>
-</li>
-<li><p>对 $\triangle$ 电路<br>$$<br>\left{<br>\begin{aligned}<br>i^{‘}<em>1=i</em>{12}-i_{31}=\frac1{R_{12}}u_{12}-\frac1{R_{31}}u_{31} \<br>i^{‘}<em>2=i</em>{23}-i_{12}=\frac1{R_{23}}u_{23}-\frac1{R_{12}}u_{12} \<br>i^{‘}<em>3=i</em>{31}-i_{23}=\frac1{R_{31}}u_{31}-\frac1{R_{23}}u_{23} \<br>\end{aligned}<br>\right.<br>$$</p>
-</li>
-</ul>
-<h3 id="等效变换公式：-triangle-rightarrow-Y"><a href="#等效变换公式：-triangle-rightarrow-Y" class="headerlink" title="等效变换公式：$\triangle \rightarrow Y$"></a>等效变换公式：$\triangle \rightarrow Y$</h3><p><img data-src="04.png" alt="三角形-星形"><br>$$<br>\left{<br>\begin{aligned}<br>R_1=\frac{R_{12}R_{31}}{\sum R_{ij}} \<br>R_2=\frac{R_{12}R_{23}}{\sum R_{ij}} \<br>R_3=\frac{R_{23}R_{31}}{\sum R_{ij}} \<br>\end{aligned}<br>\right.<br>$$</p>
-<p>若 $$R_{12}=R_{23}=R_{31}=R$$，则 $$R_1=R_2=R_3=\cfrac R 3$$</p>
-<blockquote>
-<p>分母为 $\triangle$ 形中三个电阻之和</p>
-<p>分子为 $\triangle$ 形中与之对应节点相连的电阻之积</p>
-</blockquote>
-<h3 id="等效变换公式：-Y-rightarrow-triangle"><a href="#等效变换公式：-Y-rightarrow-triangle" class="headerlink" title="等效变换公式：$Y \rightarrow \triangle$"></a>等效变换公式：$Y \rightarrow \triangle$</h3><p><img data-src="05.png" alt="星形-三角形"><br>$$<br>\left{<br>\begin{aligned}<br>R_{12}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{3}} \<br>R_{23}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{1}} \<br>R_{31}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{2}} \<br>\end{aligned}<br>\right.<br>$$</p>
-<p>若 $$R_1=R_2=R_3=R$$，则 $$R_{12}=R_{23}=R_{31}=3R$$</p>
-<blockquote>
-<p>分子为 $Y$ 形中三个电阻两两乘积之和</p>
-<p>分母为 $Y$ 形中与之对应两节点的无关电阻</p>
-</blockquote>
-<h3 id="建议画出该图"><a href="#建议画出该图" class="headerlink" title="建议画出该图"></a>建议画出该图</h3><p><img data-src="06.png" alt="全图"></p>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>求 $R_{ab}$ :</p>
-<p>首先选择比较容易变换的电阻进行变换：（$Y \rightarrow \triangle $）</p>
-<p><img data-src="07.png" alt="例题"><br>$$<br>R_{ab}=\cfrac{1}{\cfrac19+\cfrac13+\cfrac14}\Omega=\cfrac{36}{25}\Omega<br>$$</p>
-<h2 id="理想电压源的串联和并联"><a href="#理想电压源的串联和并联" class="headerlink" title="理想电压源的串联和并联"></a>理想电压源的串联和并联</h2><ul>
-<li><p>理想电压源的<strong>并联</strong>必须是同极性、同数值</p>
-</li>
-<li><p>对外电路进行讨论时，与理想电压源<strong>并联</strong>的元件（支路）对外电路不起作用，对外电路讨论时可<strong>断开</strong></p>
-</li>
-<li><p>计算流过理想电压源支路的电流时，并联支路的作用必须予以保留</p>
-</li>
-</ul>
-<h2 id="理想电流源的串联和并联"><a href="#理想电流源的串联和并联" class="headerlink" title="理想电流源的串联和并联"></a>理想电流源的串联和并联</h2><ul>
-<li>理想电流源的<strong>并联</strong>，同方向（同向上或同向下）相加</li>
-<li>理想电流源的<strong>串联</strong>必须是同方向、同数值</li>
-<li>与理想电流源<strong>串联</strong>的元件（支路）对外电路不起作用，对外电路讨论时可短接</li>
-<li>若求理想电流源的端电压时，串联支路的作用必须予以保留</li>
-</ul>
-<h2 id="实际电源的等效变换"><a href="#实际电源的等效变换" class="headerlink" title="实际电源的等效变换"></a>实际电源的等效变换</h2><p><img data-src="08.png" alt="等效变换"></p>
-<p>等效互换条件：<br>$$<br>\begin{aligned}<br>R_{su}=R_{si}&amp;\overset{\triangle}{=}R_{}s \<br>u_s&amp;=R_si_s \<br>(i_s&amp;=\frac{u_s}{R_s})<br>\end{aligned}<br>$$<br>注意：</p>
-<ul>
-<li>两个条件必须同时满足</li>
-<li>等效变换前后要保持电源方向的一致，即电流源的方向由电压源方向的 $“-“$ 指向 $“+”$</li>
-<li>等效是对外部而言，对内不等效</li>
-</ul>
-<h3 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h3><p>运用电源等效变换方法求 $u$</p>
-<p><img data-src="09.png" alt="例题"></p>
-<p>解：</p>
-<p><img data-src="10.png" alt="例题"></p>
-<p>理想电流源的并联可以等效为一个理想电流源（两个理想电流源的数值和）</p>
-<p><img data-src="11.png" alt="例题"></p>
-<p>再转化为电压源与 $6V$ 的电压源组合：</p>
-<p><img data-src="12.png" alt="例题"></p>
-<p>最终等效电路图：</p>
-<p><img data-src="13.png" alt="例题"><br>$$<br>u=4\times\cfrac{\cfrac{5}{4}+2}{2}=6.5V<br>$$</p>
-<h3 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h3><p>已知：$$U_{s1}=12V,U_{s2}=24V,R_1=R_2=20\Omega,R_3=50\Omega$$</p>
-<p><img data-src="14.png" alt="例题"></p>
-<p><img data-src="15.png" alt="例题"></p>
-<p><img data-src="16.png" alt="例题"></p>
-<h2 id="含受控源电路等效电阻的求取"><a href="#含受控源电路等效电阻的求取" class="headerlink" title="含受控源电路等效电阻的求取"></a>含受控源电路等效电阻的求取</h2><p>名词解释：</p>
-<ul>
-<li><p>输入电阻</p>
-<blockquote>
-<p>一个二端无源网络$N_0$，其端口处的电压与电流之比称之为该无源网络的输入电阻，即：</p>
-<p>$$R_{in}=\dfrac{u}{i}$$</p>
-</blockquote>
-</li>
-</ul>
-<p>一个含受控源的简单二端网络，可以通过与独立源相似的等效变换来化简电路。</p>
-<p><img data-src="17.png" alt="例题"></p>
-<p>注意：</p>
-<p><strong>在化简过程中，必须保留受控源的控制变量支路</strong></p>
-<h3 id="例："><a href="#例：" class="headerlink" title="例："></a>例：</h3><p>求电路的输入电阻：</p>
-<p><img data-src="18.png" alt="例题"></p>
-<p><img data-src="20.png" alt="例题"></p>
-<ul>
-<li>可见：含受控源电路的输入电阻为 “+” 为 “-” 均属正常，一定要注意物理量的方向</li>
-</ul>
-<h2 id="运用等效变换分析含受控源的电阻电路"><a href="#运用等效变换分析含受控源的电阻电路" class="headerlink" title="运用等效变换分析含受控源的电阻电路"></a>运用等效变换分析含受控源的电阻电路</h2><blockquote>
-<p>注意：</p>
-<p>等效变换中控制支路不参与等效变换，予以保留</p>
-</blockquote>
-<h3 id="例1-1"><a href="#例1-1" class="headerlink" title="例1"></a>例1</h3><p><img data-src="21.png" alt="例题"></p>
-<blockquote>
-<p>分析：</p>
-<ul>
-<li>控制支路 $3\Omega$ 不参与等效变换</li>
-<li>其余支路：$6A$ 和 $4A$ 可以等效变换，$9\Omega$ 和右侧的混联电阻可以做等效变换</li>
-</ul>
-</blockquote>
-<p>可得到：</p>
-<p><img data-src="22.png" alt="例题"></p>
-<h3 id="例2-1"><a href="#例2-1" class="headerlink" title="例2"></a>例2</h3><p><img data-src="23.png" alt="例题"></p>
-<h2 id="另外一些例题"><a href="#另外一些例题" class="headerlink" title="另外一些例题"></a>另外一些例题</h2><p><img data-src="24.png" alt="例题"></p>
-<p><img data-src="25.png" alt="例题"></p>
-<p><img data-src="26.png" alt="例题"></p>
-<p><img data-src="27.png" alt="例题"></p>
 ]]></content>
       <categories>
         <category>电路</category>
