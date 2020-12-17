@@ -102,6 +102,17 @@
   </style>
 </noscript>
 
+  <script type="text/javascript">
+    var OriginTitile = document.title, st;
+    document.addEventListener("visibilitychange", function () {
+        document.hidden ?
+            (document.title = "(つェ⊂) 我藏好了哦~ ", clearTimeout(st))
+            : (document.title = "o(^▽^)o 被你发现啦~ ",
+                st = setTimeout(function () {
+                    document.title = OriginTitile
+                }, 3e3))
+    })
+  </script>
 <link rel="alternate" href="/atom.xml" title="blog" type="application/atom+xml">
 </head>
 
