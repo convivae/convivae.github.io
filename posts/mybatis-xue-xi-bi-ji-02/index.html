@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"convivae.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Mybatis 的 CRUD 以及配置参数的讲解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis学习笔记02">
+<meta property="og:url" content="https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="Mybatis 的 CRUD 以及配置参数的讲解">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/01.png">
+<meta property="og:image" content="https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/02.png">
+<meta property="article:published_time" content="2020-02-05T10:53:01.000Z">
+<meta property="article:modified_time" content="2020-03-04T16:38:25.159Z">
+<meta property="article:author" content="Convivae">
+<meta property="article:tag" content="Mybatis">
+<meta property="article:tag" content="JDBC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/01.png">
+
+<link rel="canonical" href="https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Mybatis学习笔记02 | blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135890512-1"></script>
+    <script data-pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135890512-1');
+      }
+    </script>
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?690055f3a4ec45764ee4eb21c99fbfec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script type="text/javascript">
+    var OriginTitile = document.title, st;
+    document.addEventListener("visibilitychange", function () {
+        document.hidden ?
+            (document.title = "(つェ⊂) 我藏好了哦~ ", clearTimeout(st))
+            : (document.title = "o(^▽^)o 被你发现啦~ ",
+                st = setTimeout(function () {
+                    document.title = OriginTitile
+                }, 3e3))
+    })
+  </script>
+<link rel="alternate" href="/atom.xml" title="blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Convivae">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mybatis学习笔记02
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-05 18:53:01" itemprop="dateCreated datePublished" datetime="2020-02-05T18:53:01+08:00">2020-02-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-05 00:38:25" itemprop="dateModified" datetime="2020-03-05T00:38:25+08:00">2020-03-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mybatis/" itemprop="url" rel="index"><span itemprop="name">Mybatis</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">Mybatis 的 CRUD 以及配置参数的讲解</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Mybatis-开发流程图"><a href="#Mybatis-开发流程图" class="headerlink" title="Mybatis 开发流程图"></a>Mybatis 开发流程图</h2><p><img data-src="01.png" alt="Mybatis 开发流程图"></p>
+<h2 id="基于代理DAO实现CRUD操作（使用xml配置）"><a href="#基于代理DAO实现CRUD操作（使用xml配置）" class="headerlink" title="基于代理DAO实现CRUD操作（使用xml配置）"></a>基于代理DAO实现CRUD操作（使用xml配置）</h2><blockquote>
+<p>使用要求： </p>
+<ol>
+<li>持久层接口和持久层接口的映射配置必须在相同的包下</li>
+<li>持久层映射配置中 mapper 标签的 namespace 属性取值必须是持久层接口的全限定类名</li>
+<li>SQL 语句的配置标签 <code>&lt;select&gt;</code>, <code>&lt;insert&gt;</code>, <code>&lt;delete&gt;</code>, <code>&lt;update&gt;</code> 的 id 属性必须和持久层接口的 方法名相同。 </li>
+</ol>
+</blockquote>
+<h3 id="1-持久层接口中的方法"><a href="#1-持久层接口中的方法" class="headerlink" title="1.  持久层接口中的方法"></a>1.  持久层接口中的方法</h3><p><code>com\conv\dao\IUserDao.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.conv.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.conv.domain.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IUserDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询所有用户</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 保存用户</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">saveUser</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 更新用户</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">updateUser</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  根据id删除用户</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deleteUser</span><span class="params">(Integer id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据id查询用户信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">User <span class="title">findById</span><span class="params">(Integer userId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据名称模糊查询用户信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> username</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">findByName</span><span class="params">(String username)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询总用户数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findTotal</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-用户映射配置文件中的配置"><a href="#2-用户映射配置文件中的配置" class="headerlink" title="2. 用户映射配置文件中的配置"></a>2. 用户映射配置文件中的配置</h3><p><code>com\conv\dao\IUserDao.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--namespace是Dao的全限定类名--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.conv.dao.IUserDao&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置查询所有--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--id是dao的方法名称，不能随便写--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.conv.domain.User&quot;</span>&gt;</span></span><br><span class="line">        select * from user;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--保存用户--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--新增用户后，同时还要返回当前新增用户的 id 值，因为 id 是由数据库的自动增长来实现的，所以就相 当于我们要在新增后将自动增长 auto_increment 的值返回--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;saveUser&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;com.conv.domain.User&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 配置插入操作后，获取插入数据的id --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">selectKey</span> <span class="attr">keyProperty</span>=<span class="string">&quot;id&quot;</span> <span class="attr">keyColumn</span>=<span class="string">&quot;id&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;int&quot;</span> <span class="attr">order</span>=<span class="string">&quot;AFTER&quot;</span>&gt;</span></span><br><span class="line">            select last_insert_id();</span><br><span class="line">        <span class="tag">&lt;/<span class="name">selectKey</span>&gt;</span></span><br><span class="line">        insert into user(username, birthday, sex, address) values (#&#123;username&#125;,#&#123;birthday&#125;,#&#123;sex&#125;,#&#123;address&#125;);</span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--更新用户--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateUser&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;com.conv.domain.User&quot;</span>&gt;</span></span><br><span class="line">        update user set username=#&#123;username&#125;,address=#&#123;address&#125;,sex=#&#123;sex&#125;,birthday=#&#123;birthday&#125; where id = #&#123;id&#125;;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--删除用户--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--parameterType可以写Integer、INT、java.lang.Integer（不区分大小写）--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">&quot;deleteUser&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Integer&quot;</span>&gt;</span></span><br><span class="line">        delete from user where  id = #&#123;uid&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--根据id查询用户--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findById&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Int&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.conv.domain.User&quot;</span>&gt;</span></span><br><span class="line">        select * from user where id = #&#123;uid&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--根据名称模糊查询用户信息--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findByName&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;string&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.conv.domain.User&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 常用  --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--select * from user where username like #&#123;uname&#125;--&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--  不常用，会造成Sql注入 --&gt;</span></span><br><span class="line">        select * from user where username like &#x27;%$&#123;value&#125;%&#x27;;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!--查询总用户数--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findTotal&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;int&quot;</span>&gt;</span></span><br><span class="line">        select count(id) from user ;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>细节：</p>
+<ol>
+<li><p>resultType 属性</p>
+<blockquote>
+<p>用于指定结果集的类型</p>
+</blockquote>
+</li>
+<li><p>parameterType 属性</p>
+<blockquote>
+<p>用于指定传入参数的类型，</p>
+<p>若传入的是基本类型：我们可以直接写类型名称 ，也可以使用包名 . 类名的方式 ，如 Integer 类型，可以写<code>Integer</code>、<code>INT</code>、<code>java.lang.Integer</code>等，不区分大小写</p>
+<p>若传入的是实体类类型，目前我们只能使用全限定类名。 </p>
+<p>究其原因，是 mybaits 在加载时已经把常用的数据类型注册了别名，从而我们在使用时可以不写包名， 而我们的是实体类并没有注册别名，所以必须写全限定类名</p>
+</blockquote>
+</li>
+<li><p>sql 语句中使用<code>#&#123;&#125;</code>字符</p>
+<blockquote>
+<p>它代表占位符，相当于原来 jdbc 部分所学的 <code>?</code>，都是用于执行语句时替换实际的数据。    </p>
+<p>具体的数据是由 <code>#&#123;&#125;</code> 里面的内容决定的。 </p>
+</blockquote>
+</li>
+<li><p><code>#&#123;&#125;</code> 中内容的写法</p>
+<blockquote>
+<p>根据数据类型的不同，写法也有所不同，当保存方法的参数的数据类型是：</p>
+<ol>
+<li>基本类型：此处可以随意写</li>
+<li> User 对象：此处要写 User 对象中的属性名称。 它用的是 ognl 表达式。 </li>
+</ol>
+<p>ognl 表达式：   </p>
+<p>它是 apache 提供的一种表达式语言，全称是：<code>Object Graphic Navigation Language </code> 对象图导航语言   它是按照一定的语法格式来获取数据的。   </p>
+<p>语法格式就是使用  <code>#&#123;对象.对象&#125;</code> 的方式 </p>
+<p>比如：我们获取用户的名称：</p>
+<ul>
+<li>类中的写法：<code>user.getUsername()</code></li>
+<li>ONGL表达式的写法：<code>user.username</code></li>
+</ul>
+<p><code>#&#123;user.username&#125;</code> 它会先去找 user 对象，然后在 user 对象中找到 username 属性，并调用 getUsername()方法把值取出来。</p>
+<p>mybatis 中为什么能直接写 <code>username</code>，而不是 <code>user.</code> 呢？</p>
+<p>但是我们在 parameterType 属性上指定了实体类名称，所以可以省略 user. 而直接写 username。 </p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="3-添加测试类中的测试方法"><a href="#3-添加测试类中的测试方法" class="headerlink" title="3. 添加测试类中的测试方法"></a>3. 添加测试类中的测试方法</h3><p>  <code>com\conv\test\MybatisTest.java</code></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.conv.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MybatisTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> InputStream in;</span><br><span class="line">    <span class="keyword">private</span> SqlSession session;</span><br><span class="line">    IUserDao userDao;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span> <span class="comment">//用于在测试方法执行之前执行</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//1. 读取配置文件，生成字节输入流</span></span><br><span class="line">        in = Resources.getResourceAsStream(<span class="string">&quot;SqlMapConfig.xml&quot;</span>);</span><br><span class="line">        <span class="comment">//2. 获取SqlSessionFactory</span></span><br><span class="line">        SqlSessionFactory factory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</span><br><span class="line">        <span class="comment">//3. 获取SqlSession对象</span></span><br><span class="line">        session = factory.openSession();</span><br><span class="line">        <span class="comment">//4. 获取dao的代理对象</span></span><br><span class="line">        userDao = session.getMapper(IUserDao.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@After</span>  <span class="comment">//用于在测试方法执行之后执行</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 提交事务</span></span><br><span class="line">        <span class="comment">// 若没有此句，打开 Mysql 数据库发现并没有修改任何记录，原因是什么？ </span></span><br><span class="line">        <span class="comment">// 这一点和 jdbc 是一样的，我们在实现增删改时一定要去控制事务的提交</span></span><br><span class="line">        <span class="comment">// 可以使用: session.commit();来实现事务提交</span></span><br><span class="line">        session.commit();</span><br><span class="line">        <span class="comment">// 关闭资源</span></span><br><span class="line">        session.close();</span><br><span class="line">        in.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 测试查询所有</span></span><br><span class="line"><span class="comment">       *</span></span><br><span class="line"><span class="comment">       * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFinfAll</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        List&lt;User&gt; users = userDao.findAll();</span><br><span class="line">        <span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">            System.out.println(user);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 测试新增用户</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSave</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User();</span><br><span class="line">        user.setUsername(<span class="string">&quot;saveuser&quot;</span>);</span><br><span class="line">        user.setAddress(<span class="string">&quot;湖北武汉&quot;</span>);</span><br><span class="line">        user.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">        user.setBirthday(<span class="keyword">new</span> Date());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//执行保存方法</span></span><br><span class="line">        System.out.println(<span class="string">&quot;保存之前：&quot;</span> + user);</span><br><span class="line">        userDao.saveUser(user);</span><br><span class="line">        System.out.println(<span class="string">&quot;保存之后：&quot;</span> + user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 测试更新操作</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User();</span><br><span class="line">        user.setId(<span class="number">51</span>);</span><br><span class="line">        user.setUsername(<span class="string">&quot;testUpdate&quot;</span>);</span><br><span class="line">        user.setAddress(<span class="string">&quot;北京市顺义区&quot;</span>);</span><br><span class="line">        user.setSex(<span class="string">&quot;女&quot;</span>);</span><br><span class="line">        user.setBirthday(<span class="keyword">new</span> Date());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//执行更新方法</span></span><br><span class="line">        userDao.updateUser(user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 测试删除操作</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDelete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//执行更新方法</span></span><br><span class="line">        userDao.deleteUser(<span class="number">71</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 测试查询操作</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindOne</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//执行方法</span></span><br><span class="line">        User user = userDao.findById(<span class="number">51</span>);</span><br><span class="line">        System.out.println(user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 测试模糊查询操作</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindByName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//执行方法</span></span><br><span class="line">        <span class="comment">//        List&lt;User&gt; users = userDao.findByName(&quot;%小%&quot;);</span></span><br><span class="line">        List&lt;User&gt; users = userDao.findByName(<span class="string">&quot;小&quot;</span>);</span><br><span class="line">        users.forEach(System.out::println);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 测试查询总记录条数</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindTotal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//执行方法</span></span><br><span class="line">        <span class="keyword">int</span> count = userDao.findTotal();</span><br><span class="line">        System.out.println(count);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>注意</p>
+<blockquote>
+<p>和 JDBC 一样，我们在实现增删改时一定要去控制事务的提交</p>
+<p>在 mybatis 中可以使用 <code>session.commit();</code> 来实现事务提交</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="模糊查询的两种方法"><a href="#模糊查询的两种方法" class="headerlink" title="模糊查询的两种方法"></a>模糊查询的两种方法</h3>  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--根据名称模糊查询用户信息--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findByName&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;string&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.conv.domain.User&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 常用  --&gt;</span></span><br><span class="line">    select * from user where username like #&#123;uname&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--  不常用，会造成Sql注入 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--select * from user where username like &#x27;%$&#123;value&#125;%&#x27;;--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>结论</p>
+<p>这两种方式的实现效果是一样的，但执行的语句是不一样的。 </p>
+</li>
+</ul>
+<ol>
+<li><p>select * from user where username like #{uname};`</p>
+<p>对应的查询方法需要加上<code>%</code>：</p>
+<p><code>List&lt;User&gt; users = userDao.findByName(&quot;%小%&quot;);</code></p>
+<p>在控制台输出的执行 SQL 语句如下：</p>
+<blockquote>
+<p>Preparing: select * from user where username like ?<br>Parameters: %小%(String)</p>
+</blockquote>
+<p>使用的是 <code>Preparedstatement</code>，不会造成 SQL 注入问题</p>
+</li>
+<li><p><code>select * from user where username like &#39;%$&#123;value&#125;%&#39;;</code></p>
+<p>对应的方法无需加<code>%</code>：</p>
+<p><code>List&lt;User&gt; users = userDao.findByName(&quot;小&quot;); </code></p>
+<p>在控制台输出的执行 SQL 语句如下：</p>
+<blockquote>
+<p>Preparing: select * from user where username like ‘%小%’; </p>
+<p>Parameters: </p>
+</blockquote>
+<p>即直接拼接 SQL，容易造成 SQL 注入问题</p>
+</li>
+<li><p>如图：</p>
+<p><img data-src="02.png" alt="两种方法的比较"></p>
+</li>
+</ol>
+<h4 id="与-的区别"><a href="#与-的区别" class="headerlink" title="#{} 与 ${} 的区别"></a><code>#&#123;&#125;</code> 与 <code>$&#123;&#125;</code> 的区别</h4><ul>
+<li><code>#&#123;&#125;</code> 表示一个占位符号  </li>
+</ul>
+<p>通过 <code>#&#123;&#125;</code> 可以实现 <code>preparedStatement</code> 向占位符中设置值，自动进行 java 类型和 jdbc 类型转换， <code>#&#123;&#125;</code>可以有效防止 sql 注入。 <code>#&#123;&#125;</code> 可以接收简单类型值或 pojo 属性值。 如果 <code>parameterType</code> 传输单个简单类 型值，<code>#&#123;&#125;</code> 括号中可以是 value 或其它名称。</p>
+<ul>
+<li><code>$&#123;&#125;</code> 表示拼接 sql 串 </li>
+</ul>
+<p>通过 <code>$&#123;&#125;</code> 可以将 <code>parameterType</code> 传入的内容拼接在 sql中且不进行 jdbc 类型转换， <code>$&#123;&#125;</code>可以接收简单类型值或 pojo 属性值，如果 <code>parameterType</code> 传输单个简单类型值，**<code>$&#123;&#125;</code> 括号中只能是 value**（源码中指定了读取的 key 的名字就是 <code>value</code>，所以我们在绑定参数时就只能叫 value 的名字 ）</p>
+<h3 id="Mybatis-与-JDBC-编程的比较"><a href="#Mybatis-与-JDBC-编程的比较" class="headerlink" title="Mybatis 与 JDBC 编程的比较"></a>Mybatis 与 JDBC 编程的比较</h3><ol>
+<li><p>数据库链接创建、释放频繁造成系统资源浪费从而影响系统性能，如果使用数据库链接池可解决此问题。 解决：  </p>
+<blockquote>
+<p>在 SqlMapConfig.xml 中配置数据链接池，使用连接池管理数据库链接。 </p>
+</blockquote>
+</li>
+<li><p>Sql 语句写在代码中造成代码不易维护，实际应用 sql 变化的可能较大，sql 变动需要改变 java 代码。</p>
+<p>解决：  </p>
+<blockquote>
+<p>将 Sql 语句配置在 XXXXmapper.xml 文件中与 java 代码分离。 </p>
+</blockquote>
+</li>
+<li><p>向 Sql 语句传参数麻烦，因为 sql 语句的 where 条件不一定，可能多也可能少，占位符需要和参数对应。 解决：  </p>
+<blockquote>
+<p>Mybatis 自动将 java 对象映射至 sql 语句，通过 statement 中的 parameterType 定义输入参数的 类型。</p>
+</blockquote>
+</li>
+<li><p>对结果集解析麻烦，sql 变化导致解析代码变化，且解析前需要遍历，如果能将数据库记录封装成 pojo 对 象解析比较方便。 </p>
+<p>解决：  </p>
+<blockquote>
+<p>Mybatis自动将 sql执行结果映射至 java 对象，通过statement中的resultType 定义输出结果的 类型。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Mybatis-的参数深入"><a href="#Mybatis-的参数深入" class="headerlink" title="Mybatis 的参数深入"></a>Mybatis 的参数深入</h2><h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><blockquote>
+<p>SQL 语句传参，使用标签的 parameterType 属性来设定。</p>
+<p>该属性的取值可以 是基本类型，引用类型（例如:String 类型），还可以是实体类类型（POJO 类）；</p>
+<p>同时也可以使用实体类的包装类，本章节将介绍如何使用实体类的包装类作为参数传递。 </p>
+</blockquote>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>基本类型和 String 我们可以直接写类型名称 ，也可以使用包名 . 类名的方式 ，例如 ：java.lang.String</p>
+<p>实体类类型，目前我们只能使用全限定类名。  </p>
+<p>究其原因，是 mybaits 在加载时已经把常用的数据类型注册了别名，从而我们在使用时可以不写包名， 而我们的是实体类并没有注册别名，<strong>所以必须写全限定类名</strong></p>
+<h3 id="传递-pojo-包装对象"><a href="#传递-pojo-包装对象" class="headerlink" title="传递 pojo 包装对象"></a>传递 pojo 包装对象</h3><blockquote>
+<p>开发中通过 pojo 传递查询条件 ，查询条件是综合的查询条件，不仅包括用户查询条件还包括其它的查询条件（比如将用户购买商品信息也作为查询条件），这时可以使用包装对象传递输入参数。 </p>
+<p> 需求：根据用户名查询用户信息，查询条件放到 QueryVo 的 user 属性中。</p>
+</blockquote>
+<p><code>QueryVo.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.conv.domain;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QueryVo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> User user;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUser</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.user = user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>持久层接口 <code>IUserDao.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 根据 queryVo 中的条件查询用户</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> vo</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">List&lt;User&gt; <span class="title">findUserByVo</span><span class="params">(QueryVo vo)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>持久层接口的映射文件 <code>com\conv\dao\IUserDao.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--根据 queryVo 中的条件查询用户--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findUserByVo&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;com.conv.domain.QueryVo&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.conv.domain.User&quot;</span>&gt;</span></span><br><span class="line">    select * from user where username like #&#123;user.username&#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试包装类作为参数 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 测试使用QureyVo作为查询条件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFindByVo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//执行方法</span></span><br><span class="line">    QueryVo vo = <span class="keyword">new</span> QueryVo();</span><br><span class="line">    User user = <span class="keyword">new</span> User();</span><br><span class="line">    user.setUsername(<span class="string">&quot;%王%&quot;</span>);</span><br><span class="line">    vo.setUser(user);</span><br><span class="line"></span><br><span class="line">    List&lt;User&gt; users = userDao.findUserByVo(vo);</span><br><span class="line"></span><br><span class="line">    users.forEach(System.out::println);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库列名和-pojo-中的属性名不一致的情况"><a href="#数据库列名和-pojo-中的属性名不一致的情况" class="headerlink" title="数据库列名和 pojo 中的属性名不一致的情况"></a>数据库列名和 pojo 中的属性名不一致的情况</h2><blockquote>
+<p>假设数据库中的列名为：</p>
+<p>id, username, birthday, sex, address</p>
+<p>pojo 中的属性名为：</p>
+<p>userId, userName, userBirthday, userSex, userAddress</p>
+</blockquote>
+<h3 id="1-使用别名查询"><a href="#1-使用别名查询" class="headerlink" title="1. 使用别名查询"></a>1. 使用别名查询</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置查询所有操作 --&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.itheima.domain.User&quot;</span>&gt;</span></span><br><span class="line">    select id as userId, username as userName, birthday as userBirthday, sex as userSex, address as userAddress from user</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用-resultMap"><a href="#2-使用-resultMap" class="headerlink" title="2. 使用 resultMap"></a>2. 使用 resultMap</h3><blockquote>
+<p>resultMap 标签可以建立查询的列名和实体类的属性名称不一致时建立对应关系。从而实现封装。 </p>
+<p>在 select 标签中使用 resultMap 属性指定引用即可。</p>
+<p>同时 resultMap 可以实现将查询结果映射为复杂类型的 pojo，比如在查询结果映射对象中包括 pojo 和 list 实现一对一查询和一对多查询。 </p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 建立 User 实体和数据库表的对应关系</span></span><br><span class="line"><span class="comment">type 属性：指定实体类的全限定类名  </span></span><br><span class="line"><span class="comment">id 属性：给定一个唯一标识，是给查询 select 标签引用用的。</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">&quot;com.itheima.domain.User&quot;</span> <span class="attr">id</span>=<span class="string">&quot;userMap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;userId&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span> <span class="attr">property</span>=<span class="string">&quot;userName&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;sex&quot;</span> <span class="attr">property</span>=<span class="string">&quot;userSex&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;address&quot;</span> <span class="attr">property</span>=<span class="string">&quot;userAddress&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;birthday&quot;</span> <span class="attr">property</span>=<span class="string">&quot;userBirthday&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span> </span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">id 标签：用于指定主键字段 </span></span><br><span class="line"><span class="comment">result 标签：用于指定非主键字段 </span></span><br><span class="line"><span class="comment">column 属性：用于指定数据库列名 </span></span><br><span class="line"><span class="comment">property 属性：用于指定实体类属性名称</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>映射配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置查询所有操作 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- resultyMap 属性是上面的 id 属性的值 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findAll&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;userMap&quot;</span>&gt;</span></span><br><span class="line">    select * from user</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试结果 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试查询所有</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFinfAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;User&gt; users = userDao.findAll();</span><br><span class="line">    <span class="keyword">for</span> (User user : users) &#123;</span><br><span class="line">        System.out.println(user);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SqlMapConfig-xml-配置文件"><a href="#SqlMapConfig-xml-配置文件" class="headerlink" title="SqlMapConfig.xml 配置文件"></a>SqlMapConfig.xml 配置文件</h2><h3 id="properties（属性）"><a href="#properties（属性）" class="headerlink" title="properties（属性）"></a>properties（属性）</h3><p>在使用 properties 标签配置时，我们可以采用两种方式指定属性配置。 </p>
+<ol>
+<li>在标签内部配置连接数据库的信息</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driver&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;jdbc:mysql://localhost:3306/learn?serverTimezone=GMT%2B8<span class="symbol">&amp;amp;</span>characterEncoding=utf-8&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;4869&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--配置环境--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">&quot;mysql&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--配置myslq的环境--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">&quot;mysql&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--配置事务的类型--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">&quot;JDBC&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">transactionManager</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--配置数据源（连接池）--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">&quot;POOLED&quot;</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!--配置连接数据库的基本信息--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driver&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;driver&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;url&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;username&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;password&#125;&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过属性引用外部配置文件信息</li>
+</ol>
+<ul>
+<li>在 <code>resources</code>下定义 <code>jdbcConfig.properties</code> 文件</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">driver</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="attr">url</span>=<span class="string">jdbc:mysql://localhost:3306/learn?serverTimezone=GMT%2B8</span></span><br><span class="line"><span class="attr">username</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">password</span>=<span class="string">4869</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li> properties 标签配置</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置连接数据库的信息</span></span><br><span class="line"><span class="comment">    resource 属性：用于指定 properties 配置文件的位置，要求配置文件必须在类路径下</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">&quot;jdbcConfig.properties&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>或：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置连接数据库的信息</span></span><br><span class="line"><span class="comment">    url 属性：</span></span><br><span class="line"><span class="comment">        URL：Uniform Resource Locator 统一资源定位符</span></span><br><span class="line"><span class="comment">            是按照 URL 的写法来写地址（协议 主机 端口 URI）</span></span><br><span class="line"><span class="comment">        URI：Uniform Resource Identifier 统一资源标识符</span></span><br><span class="line"><span class="comment">            它是在应用中可以唯一定位一个资源的位置</span></span><br><span class="line"><span class="comment">        它是可以在 web 应用中唯一定位一个资源的路径</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">properties</span> <span class="attr">url</span>=<span class="string">&quot;file:///E:/MySpace/IntelliJ IDEA/Mybatis_02/src/main/resources/jdbcConfig.properties&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="typeAliases（类型别名）"><a href="#typeAliases（类型别名）" class="headerlink" title="typeAliases（类型别名）"></a>typeAliases（类型别名）</h3><ol>
+<li>typeAlias 单个别名自定义</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--  使用 typeAliases 配置别名，它只能配置 domain 中类的别名 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- typeAlias 用于配置别名，type 属性指定的是实体类全限定类名，alias 属性指定别名，当指定了别名就不再区分大小写 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">type</span>=<span class="string">&quot;com.conv.domain.User&quot;</span> <span class="attr">alias</span>=<span class="string">&quot;user&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>package 批量别名自定义</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--  用于指定要配置别名的包，当指定后，该包下的实体类都会注册别名，并且类名就是别名，不再区分大小写 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;com.conv.domain&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="mappers（映射器）"><a href="#mappers（映射器）" class="headerlink" title="mappers（映射器）"></a>mappers（映射器）</h3><ol>
+<li> <code>&lt;mapper resource=&quot; &quot; /&gt;</code></li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--使用相对于类路径的资源--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">&quot;com/conv/dao/IUserDao.xml&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li> <code>&lt;mapper class=&quot; &quot; /&gt; </code></li>
+</ol>
+<p><strong>注意：此种方法要求 mapper 接口名称和 mapper 映射文件名称相同，且放在同一个目录中</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--使用 mapper 接口类路径--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">class</span>=<span class="string">&quot;com.conv.dao.IUserDao&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li> <code>&lt;package name=&quot;&quot;/&gt; </code></li>
+</ol>
+<p><strong>注意：此种方法要求 mapper 接口名称和 mapper 映射文件名称相同，且放在同一个目录中</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 注册指定包下的所有 mapper 接口 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!--package 标签用于指定dao接口所在的包，</span></span><br><span class="line"><span class="comment">    当指定了之后就不需要再写 mapper 以及 class 或 resource 了--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;com.conv.dao&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>示例</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--指定映射配置文件的位置，映射配置文件指的是每个DAO独立的配置文件</span></span><br><span class="line"><span class="comment">        如果是用注解来配置的话，此处应该使用class属性指定被注解的dao全限定类名</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--xml配置，路径是resource下的路径--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;mapper resource=&quot;com/conv/dao/IUserDao.xml&quot;/&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--使用注解的配置--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;mapper class=&quot;com.conv.dao.IUserDao&quot;/&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--package 标签用于指定dao接口所在的包，</span></span><br><span class="line"><span class="comment">        当指定了之后就不需要再写 mapper 以及 class 或 resource 了--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;com.conv.dao&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="PreparedStatement-对象的执行方法"><a href="#PreparedStatement-对象的执行方法" class="headerlink" title="PreparedStatement 对象的执行方法"></a>PreparedStatement 对象的执行方法</h2><ul>
+<li>execute：它能执行 CRUD 的任意一种语句。<ul>
+<li>返回值是一个 boolean 类型，表示是否有结果集，有结果集是 true，没有结果集是 false</li>
+</ul>
+</li>
+<li>executeUpdate：它只能执行 CUD 语句，查询语句无法执行。<ul>
+<li>返回值是影响数据库记录的行数</li>
+</ul>
+</li>
+<li>executeQuery：它只能执行 SELECT 语句，无法执行增删改<ul>
+<li>执行结果封装到结果集 ResultSet 对象</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>CRUD：</p>
+<p>增加(Create)、读取(Retrieve)、更新(Update)和删除(Delete)</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\mybatis-xue-xi-bi-ji-01\" rel="bookmark">Mybatis学习笔记01</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\mybatis-xue-xi-bi-ji-03\" rel="bookmark">Mybatis学习笔记03</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\mybatis-xue-xi-bi-ji-04\" rel="bookmark">Mybatis学习笔记04</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\jdbc-xue-xi-bi-ji-01\" rel="bookmark">jdbc学习笔记01</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\jdbc-xue-xi-bi-ji-02\" rel="bookmark">jdbc学习笔记02</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>坚持原创技术分享，感谢您的支持和鼓励！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/reward/wechat.png" alt="Convivae 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/reward/alipay.jpg" alt="Convivae 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Convivae
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/" title="Mybatis学习笔记02">https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Mybatis/" rel="tag"># Mybatis</a>
+              <a href="/tags/JDBC/" rel="tag"># JDBC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/mybatis-xue-xi-bi-ji-01/" rel="prev" title="Mybatis学习笔记01">
+      <i class="fa fa-chevron-left"></i> Mybatis学习笔记01
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/mybatis-xue-xi-bi-ji-03/" rel="next" title="Mybatis学习笔记03">
+      Mybatis学习笔记03 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis-%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">Mybatis 开发流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%BB%A3%E7%90%86DAO%E5%AE%9E%E7%8E%B0CRUD%E6%93%8D%E4%BD%9C%EF%BC%88%E4%BD%BF%E7%94%A8xml%E9%85%8D%E7%BD%AE%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">基于代理DAO实现CRUD操作（使用xml配置）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%8C%81%E4%B9%85%E5%B1%82%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">1.  持久层接口中的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%94%A8%E6%88%B7%E6%98%A0%E5%B0%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">2. 用户映射配置文件中的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%B7%BB%E5%8A%A0%E6%B5%8B%E8%AF%95%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">3. 添加测试类中的测试方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">模糊查询的两种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8E-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.4.1.</span> <span class="nav-text">#&amp;#123;&amp;#125; 与 $&amp;#123;&amp;#125; 的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mybatis-%E4%B8%8E-JDBC-%E7%BC%96%E7%A8%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">2.5.</span> <span class="nav-text">Mybatis 与 JDBC 编程的比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis-%E7%9A%84%E5%8F%82%E6%95%B0%E6%B7%B1%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">Mybatis 的参数深入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="nav-number">3.1.</span> <span class="nav-text">使用说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.2.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E9%80%92-pojo-%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.3.</span> <span class="nav-text">传递 pojo 包装对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%97%E5%90%8D%E5%92%8C-pojo-%E4%B8%AD%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D%E4%B8%8D%E4%B8%80%E8%87%B4%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">4.</span> <span class="nav-text">数据库列名和 pojo 中的属性名不一致的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8%E5%88%AB%E5%90%8D%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.1.</span> <span class="nav-text">1. 使用别名查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8-resultMap"><span class="nav-number">4.2.</span> <span class="nav-text">2. 使用 resultMap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SqlMapConfig-xml-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">SqlMapConfig.xml 配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#properties%EF%BC%88%E5%B1%9E%E6%80%A7%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">properties（属性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#typeAliases%EF%BC%88%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">typeAliases（类型别名）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mappers%EF%BC%88%E6%98%A0%E5%B0%84%E5%99%A8%EF%BC%89"><span class="nav-number">5.3.</span> <span class="nav-text">mappers（映射器）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PreparedStatement-%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%89%A7%E8%A1%8C%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">PreparedStatement 对象的执行方法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Convivae"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Convivae</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/convivae" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;convivae" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:convivae@foxmail.com" title="E-Mail → mailto:convivae@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Convivae</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '97d9247a845bcfa08610',
+      clientSecret: '2b28898561d7b4c157429a90df05e008ae641bde',
+      repo        : 'convivae.github.io',
+      owner       : 'convivae',
+      admin       : ['convivae'],
+      id          : '33a2f9a64a06fed86ad7a89ddeaee7ba',
+        language: '',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+    </div>
+</body>
+</html>
