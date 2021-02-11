@@ -6,7 +6,7 @@
   <link href="https://convivae.top/atom.xml" rel="self"/>
   
   <link href="https://convivae.top/"/>
-  <updated>2020-12-16T09:26:13.281Z</updated>
+  <updated>2021-02-11T10:59:56.521Z</updated>
   <id>https://convivae.top/</id>
   
   <author>
@@ -15,6 +15,93 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>重装系统后一些软件的安装与环境配置</title>
+    <link href="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/"/>
+    <id>https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/</id>
+    <published>2021-02-11T05:46:19.000Z</published>
+    <updated>2021-02-11T10:59:56.521Z</updated>
+    
+    
+    <summary type="html">Mark 一些软件的安装与环境配置，本文将持续更新</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>2020年度总结</title>
+    <link href="https://convivae.top/posts/2020-nian-du-zong-jie/"/>
+    <id>https://convivae.top/posts/2020-nian-du-zong-jie/</id>
+    <published>2020-12-31T05:41:46.000Z</published>
+    <updated>2021-02-11T10:52:09.136Z</updated>
+    
+    
+    <summary type="html">2020年，好像经历了很多，也好像什么也没经历。做个总结，为新的一年立几个 flag 吧。还未写完</summary>
+    
+    
+    
+    <category term="年度总结" scheme="https://convivae.top/categories/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/"/>
+    
+    
+    <category term="2020" scheme="https://convivae.top/tags/2020/"/>
+    
+    <category term="年度总结" scheme="https://convivae.top/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>正则表达式总结（二）</title>
+    <link href="https://convivae.top/posts/zheng-ze-biao-da-shi-zong-jie-er/"/>
+    <id>https://convivae.top/posts/zheng-ze-biao-da-shi-zong-jie-er/</id>
+    <published>2020-12-31T02:43:55.000Z</published>
+    <updated>2020-12-31T12:51:10.801Z</updated>
+    
+    
+    <summary type="html">匹配一组字符、使用元字符</summary>
+    
+    
+    
+    <category term="正则表达式" scheme="https://convivae.top/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+    
+    <category term="正则表达式" scheme="https://convivae.top/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>常见应用软件和编程语言中的正则表达式</title>
+    <link href="https://convivae.top/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/"/>
+    <id>https://convivae.top/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/</id>
+    <published>2020-12-29T08:21:11.000Z</published>
+    <updated>2020-12-29T08:21:11.084Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>正则表达式总结（一）</title>
+    <link href="https://convivae.top/posts/zheng-ze-biao-da-shi-zong-jie-yi/"/>
+    <id>https://convivae.top/posts/zheng-ze-biao-da-shi-zong-jie-yi/</id>
+    <published>2020-12-29T06:55:47.000Z</published>
+    <updated>2021-01-17T07:40:20.780Z</updated>
+    
+    
+    <summary type="html">正则表达式简单入门、匹配单个字符</summary>
+    
+    
+    
+    <category term="正则表达式" scheme="https://convivae.top/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+    
+    <category term="正则表达式" scheme="https://convivae.top/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>991数据结构考研复习（七）——文件及查找</title>
@@ -308,117 +395,6 @@
     
     
     <category term="JDBC" scheme="https://convivae.top/tags/JDBC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>jdbc学习笔记01</title>
-    <link href="https://convivae.top/posts/jdbc-xue-xi-bi-ji-01/"/>
-    <id>https://convivae.top/posts/jdbc-xue-xi-bi-ji-01/</id>
-    <published>2020-02-04T12:16:58.000Z</published>
-    <updated>2020-03-04T16:40:12.065Z</updated>
-    
-    
-    <summary type="html">JDBC 入门</summary>
-    
-    
-    
-    <category term="JDBC" scheme="https://convivae.top/categories/JDBC/"/>
-    
-    
-    <category term="JDBC" scheme="https://convivae.top/tags/JDBC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自动初始化 Gitalk 和 Gitment 评论</title>
-    <link href="https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/"/>
-    <id>https://convivae.top/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/</id>
-    <published>2019-10-09T07:09:59.000Z</published>
-    <updated>2020-03-04T16:40:45.219Z</updated>
-    
-    
-    <summary type="html">提供一键解决自动初始化Gitalk的教程和相关代码</summary>
-    
-    
-    
-    <category term="Blog" scheme="https://convivae.top/categories/Blog/"/>
-    
-    
-    <category term="Blog" scheme="https://convivae.top/tags/Blog/"/>
-    
-    <category term="Gitalk" scheme="https://convivae.top/tags/Gitalk/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>逆波兰表达式</title>
-    <link href="https://convivae.top/posts/ni-bo-lan-biao-da-shi/"/>
-    <id>https://convivae.top/posts/ni-bo-lan-biao-da-shi/</id>
-    <published>2019-04-05T03:47:57.000Z</published>
-    <updated>2020-03-04T16:41:23.460Z</updated>
-    
-    
-    <summary type="html">逆波兰表达式</summary>
-    
-    
-    
-    <category term="数据结构" scheme="https://convivae.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-    
-    <category term="栈" scheme="https://convivae.top/tags/%E6%A0%88/"/>
-    
-    <category term="表达式求值" scheme="https://convivae.top/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/"/>
-    
-    <category term="逆波兰表达式" scheme="https://convivae.top/tags/%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo 博客踩坑</title>
-    <link href="https://convivae.top/posts/hexo-bo-ke-cai-keng/"/>
-    <id>https://convivae.top/posts/hexo-bo-ke-cai-keng/</id>
-    <published>2019-03-29T06:47:40.000Z</published>
-    <updated>2020-03-04T16:41:43.366Z</updated>
-    
-    
-    <summary type="html">记录一些搭建hexo博客过程中踩过的坑，撰写本文时使用的主题为beantech，可能有部分信息会过时，自取所需</summary>
-    
-    
-    
-    <category term="Blog" scheme="https://convivae.top/categories/Blog/"/>
-    
-    <category term="Hexo" scheme="https://convivae.top/categories/Blog/Hexo/"/>
-    
-    
-    <category term="Blog" scheme="https://convivae.top/tags/Blog/"/>
-    
-    <category term="Gitalk" scheme="https://convivae.top/tags/Gitalk/"/>
-    
-    <category term="TOC" scheme="https://convivae.top/tags/TOC/"/>
-    
-    <category term="JS" scheme="https://convivae.top/tags/JS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>再探编码</title>
-    <link href="https://convivae.top/posts/zai-tan-bian-ma/"/>
-    <id>https://convivae.top/posts/zai-tan-bian-ma/</id>
-    <published>2019-03-24T02:32:49.000Z</published>
-    <updated>2020-03-04T16:41:05.718Z</updated>
-    
-    
-    <summary type="html">计算机的各种编码总结</summary>
-    
-    
-    
-    <category term="编码" scheme="https://convivae.top/categories/%E7%BC%96%E7%A0%81/"/>
-    
-    
-    <category term="C++" scheme="https://convivae.top/tags/C/"/>
-    
-    <category term="编码" scheme="https://convivae.top/tags/%E7%BC%96%E7%A0%81/"/>
     
   </entry>
   

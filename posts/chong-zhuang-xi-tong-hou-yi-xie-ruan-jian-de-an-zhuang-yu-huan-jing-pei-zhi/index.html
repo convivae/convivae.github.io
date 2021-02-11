@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"convivae.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Mark 一些软件的安装与环境配置，本文将持续更新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重装系统后一些软件的安装与环境配置">
+<meta property="og:url" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="Mark 一些软件的安装与环境配置，本文将持续更新">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211144741685.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211144909446.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211145430566.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211150937665.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211151810530.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211152831704.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211162119313.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211162236180.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211162627719.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/console.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211163623992.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211170130539.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211170815254.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211171245855.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211171450158.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211173258946.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211180129178.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211181035633.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/Snipaste_2021-02-11_18-15-57.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211182154052.png">
+<meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211182210574.png">
+<meta property="article:published_time" content="2021-02-11T05:46:19.000Z">
+<meta property="article:modified_time" content="2021-02-11T10:59:56.521Z">
+<meta property="article:author" content="Convivae">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211144741685.png">
+
+<link rel="canonical" href="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>重装系统后一些软件的安装与环境配置 | blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135890512-1"></script>
+    <script data-pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135890512-1');
+      }
+    </script>
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?690055f3a4ec45764ee4eb21c99fbfec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script type="text/javascript">
+    var OriginTitile = document.title, st;
+    document.addEventListener("visibilitychange", function () {
+        document.hidden ?
+            (document.title = "(つェ⊂) 我藏好了哦~ ", clearTimeout(st))
+            : (document.title = "o(^▽^)o 被你发现啦~ ",
+                st = setTimeout(function () {
+                    document.title = OriginTitile
+                }, 3e3))
+    })
+  </script>
+<link rel="alternate" href="/atom.xml" title="blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Convivae">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          重装系统后一些软件的安装与环境配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-11 13:46:19 / 修改时间：18:59:56" itemprop="dateCreated datePublished" datetime="2021-02-11T13:46:19+08:00">2021-02-11</time>
+            </span>
+
+          
+            <div class="post-description">Mark 一些软件的安装与环境配置，本文将持续更新</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="基本配置情况"><a href="#基本配置情况" class="headerlink" title="基本配置情况"></a>基本配置情况</h1><p>首先码一下我的机器配置：</p>
+<p>系统：Windows 10</p>
+<p>CPU：i5-9300H</p>
+<p>内存：32GB</p>
+<p>GPU：RTX 2060</p>
+<p>磁盘：一块 512GB 的三星 PM981A 固态（C盘分128GB，剩余容量为D盘） + 一块 1TB 西数机械硬盘（E盘）</p>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><p>首先是磁盘的分配：</p>
+<ul>
+<li>C盘不用去管它，尽量不把数据存进去</li>
+<li>D盘用来安装软件。由于D盘是固态，可以用来安装软件或者游戏，不会损失性能。安装软件时选择自定义安装，手动指定安装位置。这很简单，只需要把安装位置中的<code>C:</code>改为<code>d:</code>即可，不用做其他操作。另外，编程环境也适合放在这里。</li>
+<li>E盘用来存放软件产生的数据，比如微信和QQ的聊天数据以及各种下载的数据（包括浏览器，迅雷，百度网盘等下载的数据）</li>
+</ul>
+<p>然后是根据磁盘的分配得到的文件目录（目录名特别是编程相关的尽量别出现汉字）：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">D:/</span><br><span class="line">├── CodeEnv  <span class="regexp">//</span>存放基本的编程环境</span><br><span class="line">│   ├── Anaconda3  <span class="regexp">//</span>Python环境</span><br><span class="line">│   ├── mingw64  <span class="regexp">//</span>C和C++环境</span><br><span class="line">│   ├── jdk-<span class="number">11.0</span>.<span class="number">10</span>  <span class="regexp">//</span>Java环境</span><br><span class="line">│   ├── apache-maven-<span class="number">3.6</span>.<span class="number">3</span>  <span class="regexp">//m</span>aven</span><br><span class="line">│   ├── mysql-<span class="number">8.0</span>.<span class="number">23</span>-winx64  <span class="regexp">//my</span>sql</span><br><span class="line">│   ├── MongoDB  <span class="regexp">//</span>MongoDB</span><br><span class="line">│   ├── Redis-x64-<span class="number">5.0</span>.<span class="number">10</span>  <span class="regexp">//</span>Redis</span><br><span class="line">│   ├── etc...</span><br><span class="line">├── Program Files  <span class="regexp">//</span><span class="number">64</span>位软件安装位置</span><br><span class="line">├── Program Files (x86)  <span class="regexp">//</span><span class="number">32</span>位软件安装位置</span><br><span class="line"></span><br><span class="line">E:/</span><br><span class="line">├── MySpace  <span class="regexp">//</span>存放各类项目文件</span><br><span class="line">│   ├── AndroidStudio  <span class="regexp">//</span>Android Studio的项目文件</span><br><span class="line">│   ├── Clion</span><br><span class="line">│   ├── IntelliJ IDEA</span><br><span class="line">│   ├── Pycharm</span><br><span class="line">│   ├── VS</span><br><span class="line">│   ├── WebStorm</span><br><span class="line">│   ├── etc...</span><br><span class="line">├── TencentFiles  <span class="regexp">//</span>存放QQ和微信的聊天文件</span><br><span class="line">│   ├── QQ</span><br><span class="line">│   ├── WeChat</span><br><span class="line">├── Browser  <span class="regexp">//</span>存放各个浏览器的下载文件</span><br><span class="line">├── ThunderFiles  <span class="regexp">//</span>迅雷下载文件</span><br><span class="line">├── BaiduNetdiskDownload  <span class="regexp">//</span>百度网盘下载文件</span><br><span class="line">├── VirtualMachine  <span class="regexp">//</span>虚拟机文件</span><br><span class="line">├── etc...</span><br></pre></td></tr></table></figure>
+
+<p>另外，我们平时习惯在桌面上存放各种资料，而桌面一般都位于C盘，为了减少C盘的使用，下面我们将桌面移动到D盘：</p>
+<p>首先打开此电脑（Win+E键快捷打开）：</p>
+<ul>
+<li>在 查看–&gt;选项–&gt;打开文件资源管理器时打开选择：此电脑（这一步非必须，个人习惯）</li>
+</ul>
+<p><img data-src="image-20210211144741685.png" alt="image-20210211144741685"></p>
+<p><img data-src="image-20210211144909446.png" alt="image-20210211144909446"></p>
+<ul>
+<li><p>打开此电脑（Win+E键快捷打开），右键“桌面”–&gt;属性–&gt;位置–&gt;<code>C</code>改为<code>D</code>–&gt;敲三下回车键</p>
+<p><img data-src="image-20210211145430566.png" alt="image-20210211145430566"></p>
+</li>
+<li><p>其他的文件夹同理也可以移动到D盘</p>
+</li>
+</ul>
+<h1 id="编程环境"><a href="#编程环境" class="headerlink" title="编程环境"></a>编程环境</h1><h2 id="C-C"><a href="#C-C" class="headerlink" title="C/C++"></a>C/C++</h2><p>我使用的编译器是Mingw-64自带的gcc，但是其<a target="_blank" rel="noopener" href="http://www.mingw-w64.org/">官网</a>以及<a target="_blank" rel="noopener" href="http://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/">SourceForge</a>更新较慢，因此我采用的是<a target="_blank" rel="noopener" href="http://winlibs.com/">WinLibs</a>，其<a target="_blank" rel="noopener" href="http://winlibs.com/#download-release">download 页面</a>提供 GCC + MinGW-w64 以及 GCC + LLVM/Clang/LLD/LLDB + MinGW-w64 的下载，版本较新，可以自取所需。</p>
+<p>下载后解压至 <code>D:\CodeEnv</code>目录下，并将<code>D:\CodeEnv\mingw64\bin</code>添加进 环境变量–&gt;系统变量–&gt;Path目录下即可。可使用 <code>gcc --version</code> 和 <code>g++ --version</code> 进行验证：</p>
+<p><img data-src="image-20210211150937665.png" alt="image-20210211150937665"></p>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><p>下载页面：<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-downloads.html">JDK下载</a>，我一般选择的是 <a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html">JDK11</a>，选择后缀名为<code>*_windows-x64_bin.zip</code>进行下载，然后同样解压至<code>D:\CodeEnv</code>目录下，将<code>D:\CodeEnv\jdk-11.0.10\bin</code>添加进 环境变量–&gt;系统变量–&gt;Path目录下，将 <code>D:\CodeEnv\jdk-11.0.10</code> 设置为新的系统变量 <code>JAVA_HOME</code>即可。可使用 <code>java --version</code> 进行验证：</p>
+<p><img data-src="image-20210211151810530.png" alt="image-20210211151810530"></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><p>我使用的是Anaconda用来管理Python，下载页面是<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">清华大学开源镜像站</a>，速度会快一些。由于它也是编程环境，所以我将其安装在<code>D:\CodeEnv\Anaconda3</code>目录下。</p>
+<p>安装完成后按照<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">镜像使用帮助</a>的步骤更改<code>.condarc</code>文件进行换源，换成国内源将会大大提高下载Python包的速度。</p>
+<p>然后同样将<code>D:\CodeEnv\Anaconda3</code>添加进 环境变量–&gt;系统变量–&gt;Path 目录下，可使用 <code>python --version</code> 进行验证：</p>
+<p><img data-src="image-20210211152831704.png" alt="image-20210211152831704"></p>
+<h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">Mysql 下载</a></p>
+<p><img data-src="image-20210211162119313.png" alt="image-20210211162119313"></p>
+<p>选择第一个，然后不用登录，点击 <code>No thanks, just start my download.</code></p>
+<p><img data-src="image-20210211162236180.png" alt="image-20210211162236180"></p>
+<p>同样解压至 <code>D:\CodeEnv</code>。</p>
+<p>使用管理员打开命令行（右键开始菜单，选择Windows PowerShell（管理员））</p>
+<p><img data-src="image-20210211162627719.png" alt="image-20210211162627719"></p>
+<p>依次执行下面的命令（<code>mysql-8.0.23-winx64</code>这个文件夹根据你自己的版本来改动）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> d:</span><br><span class="line"><span class="built_in">cd</span> D:\CodeEnv\mysql-8.0.23-winx64\bin	<span class="comment">#根据自己的文件夹进行调整</span></span><br><span class="line">.\mysqld --initialize --console  <span class="comment">#执行后最后一行有一个密码，一定要记住这个密码</span></span><br><span class="line">.\mysqld install  <span class="comment">#安装 mysql</span></span><br><span class="line">net start mysql  <span class="comment">#启动 mysql</span></span><br><span class="line">.\mysql -u root -p  <span class="comment">#进入 mysql 数据库，这里输入上面记住的密码（建议复制粘贴）</span></span><br><span class="line">ALTER USER root@localhost IDENTIFIED  BY <span class="string">&#x27;1234&#x27;</span>;  <span class="comment">#修改密码为 1234</span></span><br><span class="line"><span class="built_in">exit</span>  <span class="comment">#或 quit</span></span><br></pre></td></tr></table></figure>
+
+<p>如图：</p>
+<p><img data-src="console.png" alt="console"></p>
+<p>此时 mysql 就已经安装好了，并且登录密码也改为了 <code>1234</code>.</p>
+<p>接下来设置一下环境变量，将 <code>D:\CodeEnv\mysql-8.0.23-winx64\bin</code> 添加进 环境变量–&gt;系统变量–&gt;Path目录下，这样随意打开一个命令行窗口都可以通过 <code>mysql -u root -p</code>来登录 mysql 数据库了。</p>
+<p><img data-src="image-20210211163623992.png" alt="image-20210211163623992"></p>
+<p>最后一步，关闭 mysql 的开机自启动。安装 mysql 服务之后，默认服务启动方式是自动启动，每次开机时，mysql 服务会自动启动，这样会消耗电脑内存，导致电脑运行缓慢。而我们并不是每次开机都需要使用 mysql 的。</p>
+<p>首先打开服务列表：快捷键 Win+R 输入 <code>services.msc</code>（或者 右击我的电脑-&gt;管理-&gt;点击左侧服务和应用程序-&gt;服务），在服务列表里找到 Mysql，右键–&gt;属性，将启动类型改为手动。</p>
+<p><img data-src="image-20210211170130539.png" alt="image-20210211170130539"></p>
+<p>此时 mysql 就不会随着开机自启动，若想启动 mysql，只需使用管理员打开命令行窗口，输入<code>net start mysql</code>即可，关闭 mysql 服务可使用命令 <code>net stop mysql</code>。</p>
+<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">maven 下载</a> </p>
+<p><img data-src="image-20210211170815254.png" alt="image-20210211170815254"></p>
+<p>选择最后一项，同样解压至 <code>D:\CodeEnv</code>，将 <code>D:\CodeEnv\apache-maven-3.6.3</code> 设置为新的系统变量 <code>MAVEN_HOME</code>。</p>
+<p>然后对 maven 进行一些设置，打开<code>D:\CodeEnv\apache-maven-3.6.3\conf\settings.xml</code>，找到被注释掉的 <code>localRepository</code>，在下面加一行</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>D:\CodeEnv\MavenRepository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>表示设置本地仓库位置为 <code>D:\CodeEnv\MavenRepository</code>，之后下载的 jar 包会保存在这里。</p>
+<p><img data-src="image-20210211171245855.png" alt="image-20210211171245855"></p>
+<p>然后找到 <code>&lt;mirrors&gt;</code> 标签，在标签内加入：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>aliyunmaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>阿里云公共仓库<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://maven.aliyun.com/repository/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="image-20210211171450158.png" alt="image-20210211171450158"></p>
+<p>换成国内<a target="_blank" rel="noopener" href="https://maven.aliyun.com/mvn/guide">阿里</a>的源，下载速度会有所提升。</p>
+<p>另，maven 的 jar 包可在 <a target="_blank" rel="noopener" href="https://mvnrepository.com/">Maven Repository</a> 中找到</p>
+<h2 id="MongoDb"><a href="#MongoDb" class="headerlink" title="MongoDb"></a>MongoDb</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://www.mongodb.com/try/download/community">MongoDB Community Server</a>，选择 zip 包进行下载：</p>
+<p><img data-src="image-20210211173258946.png" alt="image-20210211173258946"></p>
+<p>同样，将其解压至 <code>D:\CodeEnv</code>，并将 <code>D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3\bin</code>添加进 环境变量–&gt;系统变量–&gt;Path 目录下。</p>
+<p>在<code>D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3</code>目录下新建两个文件夹<code>db</code> 和 <code>log</code>，创建数据库和日志文件的目录。然后在该目录下创建一个配置文件 <code>mongod.cfg</code>，其中指定 <code>systemLog.path</code> 和 <code>storage.dbPath</code>。具体配置内容如下：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">systemLog</span>:</span><br><span class="line">    <span class="attribute">destination</span>: file</span><br><span class="line">    <span class="attribute">path</span>: D:\CodeEnv\mongodb-win<span class="number">32</span>-x<span class="number">86</span>_<span class="number">64</span>-windows-<span class="number">4</span>.<span class="number">4</span>.<span class="number">3</span>\log\mongod.log</span><br><span class="line"><span class="attribute">storage</span>:</span><br><span class="line">    <span class="attribute">dbPath</span>: D:\CodeEnv\mongodb-win<span class="number">32</span>-x<span class="number">86</span>_<span class="number">64</span>-windows-<span class="number">4</span>.<span class="number">4</span>.<span class="number">3</span>\db</span><br></pre></td></tr></table></figure>
+
+<p>注意这些路径都是绝对路径，使用相对路径会报错。</p>
+<p>接下来安装 MongoDB 服务，使用管理员打开命令行窗口（右键开始菜单，选择Windows PowerShell（管理员）），通过执行mongod.exe，使用–install选项来安装服务，使用–config选项来指定之前创建的配置文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> d:</span><br><span class="line"><span class="built_in">cd</span> D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3\bin</span><br><span class="line">.\mongod --config <span class="string">&quot;D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3\mongod.cfg&quot;</span> --install</span><br></pre></td></tr></table></figure>
+
+<p>启动 MongoDB 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net start mongodb</span><br></pre></td></tr></table></figure>
+
+<p>和 Mysql 一样，MongoDB 服务也是默认自启动的，也可以通过服务列表（快捷键 Win+R 输入 <code>services.msc</code>）来关闭它的自启动。之后通过管理员命令窗口输入 <code>net start mongodb</code> 和 <code>net stop mongodb</code> 来控制 MongoDB 服务的开启和关闭。</p>
+<p>可以输入 <code>mongo</code> 来进入数据库的Shell界面：</p>
+<p><img data-src="image-20210211180129178.png" alt="image-20210211180129178"></p>
+<h1 id="软件的配置"><a href="#软件的配置" class="headerlink" title="软件的配置"></a>软件的配置</h1><h2 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h2><p>设置中把文件的存储位置改到E盘自己设置的目录下：</p>
+<p><img data-src="image-20210211181035633.png" alt="image-20210211181035633"></p>
+<p>这样，微信的所有聊天文件都在E盘了，要找一些文件的时候可以直接去这个路径下面去找。</p>
+<h2 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h2><p>安装时自定义保存目录即可。</p>
+<p><img data-src="Snipaste_2021-02-11_18-15-57.png" alt="Snipaste_2021-02-11_18-15-57"></p>
+<p>该目录也可以在进入软件后自行设置。</p>
+<h2 id="关于重置电脑"><a href="#关于重置电脑" class="headerlink" title="关于重置电脑"></a>关于重置电脑</h2><p>有些人认为重置电脑就意味着所有文件都删除，这是不对的。Win10可以仅仅删除C盘（安装了Windows的驱动器盘）的内容，这就意味着虽然所有的软件都被删除了，但是软件的数据（包括浏览器等的下载数据和聊天数据）只要不在C盘，就可以被保留下来。</p>
+<p><img data-src="image-20210211182154052.png" alt="image-20210211182154052"></p>
+<p><img data-src="image-20210211182210574.png" alt="image-20210211182210574"></p>
+<p>所以微信和QQ的重要聊天数据请不要放在C盘，这样即使重置系统，所有的聊天记录也不会消失。</p>
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>坚持原创技术分享，感谢您的支持和鼓励！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/reward/wechat.png" alt="Convivae 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/reward/alipay.jpg" alt="Convivae 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Convivae
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/" title="重装系统后一些软件的安装与环境配置">https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/2020-nian-du-zong-jie/" rel="prev" title="2020年度总结">
+      <i class="fa fa-chevron-left"></i> 2020年度总结
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E6%83%85%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">基本配置情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">编程环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-C"><span class="nav-number">3.1.</span> <span class="nav-text">C&#x2F;C++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">3.2.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">3.3.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql"><span class="nav-number">3.4.</span> <span class="nav-text">Mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maven"><span class="nav-number">3.5.</span> <span class="nav-text">maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDb"><span class="nav-number">3.6.</span> <span class="nav-text">MongoDb</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">软件的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E4%BF%A1"><span class="nav-number">4.1.</span> <span class="nav-text">微信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QQ"><span class="nav-number">4.2.</span> <span class="nav-text">QQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E9%87%8D%E7%BD%AE%E7%94%B5%E8%84%91"><span class="nav-number">4.3.</span> <span class="nav-text">关于重置电脑</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Convivae"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Convivae</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/convivae" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;convivae" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:convivae@foxmail.com" title="E-Mail → mailto:convivae@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i></a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Convivae</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '97d9247a845bcfa08610',
+      clientSecret: '2b28898561d7b4c157429a90df05e008ae641bde',
+      repo        : 'convivae.github.io',
+      owner       : 'convivae',
+      admin       : ['convivae'],
+      id          : '4d97102470907d8f63b1853c6977706b',
+        language: '',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+    </div>
+</body>
+</html>
