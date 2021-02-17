@@ -6,7 +6,7 @@
   <link href="https://convivae.top/atom.xml" rel="self"/>
   
   <link href="https://convivae.top/"/>
-  <updated>2021-02-17T10:51:09.549Z</updated>
+  <updated>2021-02-17T12:07:39.485Z</updated>
   <id>https://convivae.top/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于炒股这件小事</title>
+    <link href="https://convivae.top/posts/guan-yu-chao-gu-zhe-jian-xiao-shi/"/>
+    <id>https://convivae.top/posts/guan-yu-chao-gu-zhe-jian-xiao-shi/</id>
+    <published>2021-02-17T11:57:30.000Z</published>
+    <updated>2021-02-17T12:07:39.485Z</updated>
+    
+    
+    <summary type="html">看了B站up的一个视频做的一点摘抄，视频链接：https://www.bilibili.com/video/av713956648</summary>
+    
+    
+    
+    <category term="生活" scheme="https://convivae.top/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>重装系统后一些软件的安装与环境配置</title>
@@ -374,25 +391,6 @@
     
     
     <category term="Mybatis" scheme="https://convivae.top/tags/Mybatis/"/>
-    
-    <category term="JDBC" scheme="https://convivae.top/tags/JDBC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>jdbc学习笔记02</title>
-    <link href="https://convivae.top/posts/jdbc-xue-xi-bi-ji-02/"/>
-    <id>https://convivae.top/posts/jdbc-xue-xi-bi-ji-02/</id>
-    <published>2020-02-04T12:17:09.000Z</published>
-    <updated>2020-03-04T16:39:55.355Z</updated>
-    
-    
-    <summary type="html">数据库连接池、JDBC Template</summary>
-    
-    
-    
-    <category term="JDBC" scheme="https://convivae.top/categories/JDBC/"/>
-    
     
     <category term="JDBC" scheme="https://convivae.top/tags/JDBC/"/>
     
