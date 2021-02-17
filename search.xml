@@ -9,218 +9,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>再探编码</title>
-    <url>/posts/zai-tan-bian-ma/</url>
-    <content><![CDATA[<h2 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h2><p>本文转载自 <a target="_blank" rel="noopener" href="https://ihomura.cn/2018/06/26/%E5%86%8D%E6%8E%A2%E7%BC%96%E7%A0%81/#more">澪同学的博客</a></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>计算机发展本身就是多元化的，而且标准或者说字符集具有地域性，再加上计算机系统的历史遗留性（没错，那边的 Windows 说的就是你），我觉得编码一直是一个很难的问题。</p>
-<a id="more"></a>
-
-<p>在我的博客还是 WordPress 的时候我曾经写过一篇讲编码的文章，但是实际上那时候我也是一知半解，写出来的东西也是浅薄无趣的。</p>
-<p>然而学CS，一知半解是最恐怖的，正好最近就在各种踩坑，所以不如一次弄明白算了，也算是解决长久以来的一块心病了。</p>
-<p>所以本文会尝试去理清各种字符集以及编码之间的关系，如果有任何错误还请指出。</p>
-<h3 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h3><p>字符集简单来说就是一个映射，通常情况下是一个整数到某个特定的字符的双射，比如在 ASCII 字符集中，’A’ 对应的是 65， 反过来 65 也对应的是 ‘A’。</p>
-<p>字符集概念很简单，但是有两个问题。</p>
-<ul>
-<li>我知道一个字符集中 65 对应 ‘A’，反之亦然，那我可以确定它是 ASCII 吗？</li>
-<li>我在 C++ 中写了 <code>char a = &#39;A&#39;</code> 然后发现变量 a 的值真的是 65，那是不是所有字符集中字符都是由它相对应的整数表示？</li>
-</ul>
-<p>对于第一个问题，答案当然是否。因为字符集一般都是向前兼容的，比如 Unicode 中 ‘A’ 也是 65。</p>
-<p>对于第二个问题，答案也是否。因为当字符集太大的时候，如果都这样表示，那么会浪费相当大的空间，我们在后面的 UTF 会看到如何解决这个问题。</p>
-<p>简单概括下，字符集就是字符和整数的映射，它不代表计算机内部的实际编码表示。</p>
-<h3 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h3><p>ASCII 全称 American Standard Code for Information Interchange，它只有 8bit 长，但是实际上编码只用了 7bit，还有一位一般是用来奇偶校验（因为很多电子通信也用 ASCII）。</p>
-<p>具体的 ASCII 表这里不再给出，只强调一点就是绝大部分字符集和编码方式都是兼容 ASCII 的。</p>
-<h3 id="Extend-ASCII-扩展-ASCII"><a href="#Extend-ASCII-扩展-ASCII" class="headerlink" title="Extend ASCII(扩展 ASCII)"></a>Extend ASCII(扩展 ASCII)</h3><p>当计算机走向世界的时候，人们首先发现的问题就是 ASCII 不够用了。</p>
-<p>但是正如我之前说过的，编码具有很强的历史性，改变编码方式很难一次到位，所以扩展 ASCII 就出现了，它的做法很简单：把原来 ASCII 中不参与编码的最高位拿出来用于编码，这样原来 ASCII 范围 0～127 就变成了扩展 ASCII 的0～255。</p>
-<p>但是这里有个问题是扩展 ASCII 不像 ASCII 那样只有一个标准，也就是说扩展 ASCII 实际上有很多种，不过最后被采用的是 ISO 8859，由于 Windows 中实现要比最终标准化早一些，所以 Windows 中对应的 Windows-1252 实际上是 ISO 8859 的超集。</p>
-<p>到这里问题还不大，但是 Windows 为自己埋下了祸根。</p>
-<h3 id="ANSI"><a href="#ANSI" class="headerlink" title="ANSI"></a>ANSI</h3><p>首先这里要纠正一个错误的认知：没有任何一种编码方式/字符集叫做 ANSI。</p>
-<p>ANSI 已经很累了，不想再背锅了。</p>
-<p>ANSI 全称是 American National Standards Institute，是一个标准化组织，比如上面的 ISO 8859 就是它跟 ISO 一起提出来的。</p>
-<p>那么当我们在谈 ANSI 编码的时候，我们在谈什么？</p>
-<h3 id="Windows-Code-Page-Windows-代码页"><a href="#Windows-Code-Page-Windows-代码页" class="headerlink" title="Windows Code Page(Windows 代码页)"></a>Windows Code Page(Windows 代码页)</h3><p>实际上，一般说 ANSI 编码实际上想提到的就是 Windows 代码页。</p>
-<p>换句话说，我们在说 ANSI 编码的时候，很大可能想表达的是某个国家特定的字符集和它所代表的代码页。</p>
-<p>比如中文系统使用的 GBK 在 Windows 中的代码页是 cp936，一般我们在中国说 ANSI 编码可能指的就是 GBK，而上面的 Windows-1252 就是代码页 cp1252，表示的就是相应的扩展 ASCII。</p>
-<p>但是代码页可以说是 Windows 中最致命的残留之一，这个问题直到 Windows10 1803 才有了一定程度的解决，但是由于 Windows 高度的向前兼容性，这个问题恐怕在不久的将来还会一直存在，除非 NT 推倒重来。</p>
-<p>这里引用 cppreference 的一段话来说明这个问题</p>
-<blockquote>
-<p><code>wchar_t</code> - type for wide character representation (see wide strings). Required to be large enough to represent any supported character code point (32 bits on systems that support<br>Unicode. A notable exception is Windows, where wchar_t is 16 bits and holds UTF-16 code units) It has the same size, signedness, and alignment as one of the integer types, but is a<br>distinct type.</p>
-</blockquote>
-<p>这里 <code>wchar_t</code> 在 Windows 上只有 16bit 的根源就在于代码页的设计。</p>
-<p>在微软最初的设计里，代码页只有两种 Single-Byte Character Set(SBCS) 和 Double-Byte Character Set(DBCS)，比如上面的 cp1252 就是一个 SBCS，中文系统使用的 cp936 就是一个 DBCS。</p>
-<p>当然现在微软也有 UTF-8 编码的代码页，不过那都是后话了。</p>
-<h3 id="国标"><a href="#国标" class="headerlink" title="国标"></a>国标</h3><h4 id="GB2312"><a href="#GB2312" class="headerlink" title="GB2312"></a>GB2312</h4><p>扩展 ASCII 还是太少了，比如中文，255 个字怎么可能够用嘛，隔壁同源的日文也是同理。</p>
-<p>所以国家这时候就开始着手设计自己的字符集了，第一个国标就是 GB2312。</p>
-<p>GB2312 采用两个字节编码，收录了绝大多数常用的汉字。</p>
-<h4 id="GBK"><a href="#GBK" class="headerlink" title="GBK"></a>GBK</h4><p>但是 GB2312 只收录了约 7000 个汉字，甚至连朱镕基的“镕”都没有，而且台湾港澳台使用的字体也没有收录，所以就有了 GBK，即 “GB2312扩”。</p>
-<p>它仍然采用两个字节编码，兼容 GB2312 的同时收录了日本、台湾和韩国等通用字符集的汉字。</p>
-<p>Windows 中的 936 号代码页实际上几乎就是 GBK。</p>
-<p>但是随着计算机技术的发展，GBK 仍然无法满足需要，而且 GBK 实际上并不是国家标准，所以后来接盘的是 GB18030，这里我们先停下来，看一看隔壁的 Unicode。</p>
-<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>随着 Internet 的发展，编码的问题愈发突出，如何让文本能正确的显示在显示器上成了一个难题，Unicode 就是在这种背景下出现的。</p>
-<p>最新的 Unicode 标注一共收录了约 14 万个字符，基本涵盖了世界上绝大数语言。</p>
-<p>从 Unicode 起，另外一个问题提了出来：有了字符集，如何编码让它更适合计算机使用或者网络传输呢？</p>
-<p>之前的单字节和双字节编码因为占用空间少，所以直接不加任何编码就可以使用，但是 Unicode 可是有 14 万个，如果还采用<strong>定长编码</strong>的话至少需要 18bit 才能保证一一对应，这样的话对于之前 ASCII 中就有的字符来说有 11bit 就被浪费了，显然是不合理的。</p>
-<p>所以这里字符集和编码方式就必须分开考虑了，这也是为什么会有 Unicode Transformation Format(UTF) 一说了。</p>
-<p>简单来说，Unicode 还是那个 Unicode，但是编码方式会有很多种。</p>
-<h3 id="UTF-7"><a href="#UTF-7" class="headerlink" title="UTF-7"></a>UTF-7</h3><p>UTF-7 已经不属于 Unicode 标准了，但是它还属于 RFC 标准。</p>
-<p>简单来说，UTF-7 对于 ASCII 不做改变，但是对于非 ASCII 字符采用 base64 编码后在首位加上 + 和 - 用于区分，这样编码出的字符串中所有字符就是标准 ASCII 了。</p>
-<p>如果做过 XSS 或者 SQL 注入的应该对 UTF-7 有印象。</p>
-<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h3><p>UTF-8 是最常用的编码，也是 Web 中几乎统治性的编码方式。</p>
-<p>UTF-8 是一种变长编码方式，它兼容 ASCII 最小可以用 1byte 表示，同时最多可以用 4byte 表示所有的 Unicode 字符。</p>
-<p>UTF-8 编码方式其实很好理解，对于某个字符首先取出它的二进制表示：</p>
-<ul>
-<li>如果小于等于 7 位（ASCII），那么直接表示为 0xxxxxxx</li>
-<li>如果小于等于 11 位但是大于 7 位，那么表示为 110 xxxxx 10 xxxxxx</li>
-<li>如果小于等于 16 位但是大于 11 位，那么表示为 1110 xxxx 10 xxxxxx 10 xxxxxx</li>
-<li>如果小于等于 21 位但是大于 16 位，那么表示为 11110 xxx 10 xxxxxx 10 xxxxxx 10 xxxxxx</li>
-</ul>
-<p>刚才提到过，最新的 Unicode 标准只要 18bit 就可以全部表示，所以 UTF-8 目前是可以表示 Unicode 全部字符的。</p>
-<p>这里举个例子，中文的“中”字，它的 Unicode 为 \u4e2d，也就是 0b100 111000 101101，长度为 15 位，需要三个字节。</p>
-<p>所以编码为 UTF-8 后为 0b1110<strong>0100</strong> 10<strong>111000</strong> 10<strong>101101</strong>，也就是 0xe4 0xb8 0xad 即 \xe4\xb8\xad。</p>
-<p>下面我们可以用 Python 验证下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&gt;&gt; <span class="string">&#x27;\u4e2d&#x27;</span> <span class="comment"># &#x27;中&#x27;</span></span><br><span class="line"><span class="string">&#x27;中&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\u4e2d&#x27;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>) <span class="comment"># 编码为 UTF-8</span></span><br><span class="line"><span class="string">b&#x27;\xe4\xb8\xad&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>那么为什么 UTF-8 能得到这么广泛的应用呢？</p>
-<ul>
-<li>体积小：相对定长编码来说节省了很多空间。</li>
-<li>兼容性：完全兼容 ASCII 的编码方式。</li>
-<li>易检测：我们可以看到 UTF-8 四个字节的开头各不相同，而且无论怎么编码都不会冲突，只要根据头部第一个字节就可以知道后面一共有多少字节。</li>
-<li>计算快：从 UTF-8 到 Unicode 只用移位就可以完成，这对于计算机来说是相当高效的。</li>
-</ul>
-<h3 id="GB18030"><a href="#GB18030" class="headerlink" title="GB18030"></a>GB18030</h3><p>好了，到这里我们就要说回 GB 了。</p>
-<p>之前提到过接替 GBK 并且真正成为国标的是 GB18030，但是不同的是 GB18030 也采用的变长编码，并且跟 Unicode 完全兼容，也就是说实际上 GB18030 也是一种 UTF。</p>
-<p>GB18030 在 2byte 编码的时候跟 GBK 完全一致，但是在 4byte 编码的时候比较复杂，这里偷懒不展开了。<del>（翻译一下：都用 UTF-8 不就完了）</del></p>
-<h3 id="UTF-16"><a href="#UTF-16" class="headerlink" title="UTF_16"></a>UTF_16</h3><p>在说 UTF-16 之前，不得不提的是 UCS-2。</p>
-<p>UCS-2 是一个定长编码，它用 2byte 直接表示 Unicode —— 这当然是不够的，所以 UTF-16 就是为了补充 UCS-2 出现的。</p>
-<p>UTF-16 同样是变长编码，但是它以 2byte 为一个单位。</p>
-<ul>
-<li>对于小于 2byte 就可以表示的 Unicode 它与 UCS-2 相同。</li>
-<li>对于大于 2byte 才能表示的 Unicode，它的编码稍微有些复杂。</li>
-</ul>
-<p>对于某个要编码的字符，假设它的 Unicode 编码为 U。</p>
-<p>首先把 U 减去 0x10000 得到 U’，因为 Unicode 目前最长为 18bit，所以这时候 U’ 一定小于 20bit，分别对高 10bit 和低 10bit 做如下处理：</p>
-<ul>
-<li>对于高 10bit，把它加上 0xD800 得到 UTF-16 编码的高 2byte，同时注意到一个 Unicode 目前最长为 18bit，所以减去 0x10000 后高 10bit 中最多只有低 8bit 不为 0，这样高 2byte 一定以 0b110110 开头。</li>
-<li>对于低 10bit，把它加上 0xDC00 得到 UTF-16 编码的低 2byte，由于 0xC 对应的二进制为 0b1100，所以低 2byte 一定以 0b110111 开头。</li>
-</ul>
-<p>因此一个 4byte 编码的 UTF-16 中 2byte 的最小值为 0xDC800 而最大值为 0xDFFF，为了避免一个 4byte 编码的 UTF-16 被误认为两个 2byte 的 UTF-16，Unicode 规定 0xD800 - 0xDFFF 不对应任何单个的 Unicode 字符，被称为“代理区”。</p>
-<p>比如某个字符的 Unicode 为 U = 0x12345 （哎呀，反正打出来也是个’口’），然后我们可以得到 U’ = U - 0x10000 = 0x02345 = 0b1000 1101000101，低 10bit 为 0x345，高 10bit 为 0x8。</p>
-<p>所以可以得到高 2byte 为 0xD800 + 0x8 = 0xD808，低 2byte 为 0xDC00 + 0x2345 = 0xff45，拼在一起就是 0xd808df45，下面就用 Python 验证下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\U00012345&#x27;</span>.encode(<span class="string">&#x27;utf-16be&#x27;</span>).<span class="built_in">hex</span>()</span><br><span class="line"><span class="string">&#x27;d808df45&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\U00012345&#x27;</span>.encode(<span class="string">&#x27;utf-16&#x27;</span>).<span class="built_in">hex</span>()</span><br><span class="line"><span class="string">&#x27;fffe08d845df&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>当然这里还有另一个问题就是大小端问题，虽然 RFC 建议在没有 BOM 的时候默认为大端序，但实际上很多应用（包括系统）默认都是小端序。对于 UTF-16 来说，UTF-16BE 代表大端序，UTF-16LE 代表小端序。</p>
-<p>很多操作系统比如 Windows 采用 UTF-16 作为内码，但是 UTF-16 实际上由于 corner case 过多，很多库并没有做很好的测试，因此很可能出现安全性问题。（实际上已经有相应的 CVE 了）</p>
-<h3 id="UTF-32"><a href="#UTF-32" class="headerlink" title="UTF-32"></a>UTF-32</h3><p>最后出场的是 UTF-32，从它的名字上我觉得就可以明白它是怎么编码了——没错，4 字节定长编码，简单暴力。</p>
-<p>不过正如之前所说，这样会浪费大量的空间，因此 UTF-32 的应用非常少。</p>
-<p>做个小验证吧，仍然是之前的“中”</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\u4e2d&#x27;</span></span><br><span class="line"><span class="string">&#x27;中&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\u4e2d&#x27;</span>.encode(<span class="string">&#x27;utf-32be&#x27;</span>).<span class="built_in">hex</span>()</span><br><span class="line"><span class="string">&#x27;00004e2d&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>大小端序的问题也不再赘述。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>编码是真的很复杂，不过当你决定把它研究透的时候，一切都清晰明了了起来。</p>
-<p>个人觉得最重要还是要理解字符集和编码方式的关系，也就是 Unicode 跟 UTF 的关系，因为这部分可能是最让人迷惑的。</p>
-<p>编码问题作为一个困扰我很久的“恶龙”，如今能“斩掉”还是很爽的。</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/ASCII">ASCII</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/701882/what-is-ansi-format">what is ansi format</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_code_page">Windows Code Page</a><br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/desktop/Intl/code-pages">code pages</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/American_National_Standards_Institute">American National Standards Institute</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/International_Organization_for_Standardization">International Organization for Standardization</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unicode">Unicode</a><br><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/types">Fundamental types</a><br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/GB_2312">GB2312</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/GB_18030">GB18030</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/UTF-8">UTF8</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/UTF-16">UTF16</a></p>
-]]></content>
-      <categories>
-        <category>编码</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>编码</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自动初始化 Gitalk 和 Gitment 评论</title>
-    <url>/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/</url>
-    <content><![CDATA[<p>本篇文章是<a target="_blank" rel="noopener" href="https://convivae.github.io/posts/hexo-bo-ke-cai-keng/#toc-heading-11">自动初始化 Gitalk 和 Gitment 评论</a>的解决办法，如果还没配置 Gitalk，建议先看上一篇文章的<a target="_blank" rel="noopener" href="https://convivae.github.io/posts/hexo-bo-ke-cai-keng/#toc-heading-7">添加 Gitalk 的评论插件</a>，再来看这篇文章。</p>
-<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>Gitalk配置完成后，启动hexo，打开文章页面，需要登陆 github，一篇一篇文章地点过去，完成初始化后才能使用，操作比较麻烦，下面介绍用 Node.js 来自动初始化 Gitalk 的方法</p>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><h3 id="生成-Sitemap-站点地图"><a href="#生成-Sitemap-站点地图" class="headerlink" title="生成 Sitemap 站点地图"></a>生成 Sitemap 站点地图</h3><p>站点地图是一种文件，您可以通过该文件列出您网站上的网页，从而将您网站内容的组织架构告知Google和其他搜索引擎。搜索引擎网页抓取工具会读取此文件，以便更加智能地抓取您的网站。</p>
-<ul>
-<li>安装插件</li>
-</ul>
-<p>在你的 hexo 根目录，执行下面两个命令来安装针对 google 和百度的插件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在站点根目录下的_config.yml添加如下代码</li>
-</ul>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># sitemap</span></span><br><span class="line"><span class="attr">sitemap:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">sitemap.xml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">baidusitemap:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">baidusitemap.xml</span></span><br></pre></td></tr></table></figure>
-
-<p>现在再执行 <code>hexo generate</code>  或 <code>hexo g</code> 的时候，在博客根目录下的 <code>public</code> 文件夹下面就会生成<code>sitemap.xml</code> 和 <code>baidusitemap.xml</code>。</p>
-<h3 id="获取github接口的调用权限"><a href="#获取github接口的调用权限" class="headerlink" title="获取github接口的调用权限"></a>获取github接口的调用权限</h3><ol>
-<li>创建一个access token，<a target="_blank" rel="noopener" href="https://github.com/settings/tokens">点击链接进入</a></li>
-<li>点击 <code>Generate new token</code> 按钮</li>
-<li>输入一个描述，为 token 添加所有的 repo 权限，然后点击最下方的 <code>Generate token</code> 按钮，就可以生成一个新的 <code>Token</code> 备用</li>
-</ol>
-<p><img data-src="init_gitalk.png" alt="init_gitalk"></p>
-<ol start="4">
-<li>生成的 token，在后面使用</li>
-</ol>
-<p><img data-src="init_gitalk01.png" alt="init_gitalk01"></p>
-<h3 id="脚本文件"><a href="#脚本文件" class="headerlink" title="脚本文件"></a>脚本文件</h3><h4 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h4><p>在你的 hexo 根目录，执行下面的命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install request --save</span><br><span class="line">npm install xml-parser --save</span><br><span class="line">npm install yamljs --save</span><br><span class="line">npm install cheerio --save</span><br><span class="line">npm install blueimp-md5 --save</span><br></pre></td></tr></table></figure>
-
-<h4 id="创建脚本文件"><a href="#创建脚本文件" class="headerlink" title="创建脚本文件"></a>创建脚本文件</h4><p>在站点根目录下创建 <code>comment.js</code> 文件，将下面的代码粘贴进文件中，修改下面代码中的 <code>config</code> 配置项，其中 <code>token</code> 就是上一步中获取的值</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">&quot;request&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&quot;url&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> xmlParser = <span class="built_in">require</span>(<span class="string">&quot;xml-parser&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> YAML = <span class="built_in">require</span>(<span class="string">&quot;yamljs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> cheerio = <span class="built_in">require</span>(<span class="string">&quot;cheerio&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//与参考文章不同，新引入了 md5</span></span><br><span class="line"><span class="keyword">const</span> md5 = <span class="built_in">require</span>(<span class="string">&quot;blueimp-md5&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据自己的情况进行配置</span></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    username: <span class="string">&quot;GitHub 用户名&quot;</span>, <span class="comment">// GitHub 用户名</span></span><br><span class="line">    token: <span class="string">&quot;GitHub Token&quot;</span>,  <span class="comment">// GitHub Token</span></span><br><span class="line">    repo: <span class="string">&quot;用户名.github.io&quot;</span>,  <span class="comment">// 存放 issues的git仓库</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// sitemap.xml的路径，commit.js放置在根目录下，无需修改，其他情况自行处理</span></span><br><span class="line">    <span class="comment">// 与参考文章不同，这里的路径改为了 baidusitemap.xml</span></span><br><span class="line">    sitemapUrl: path.resolve(__dirname, <span class="string">&quot;./public/baidusitemap.xml&quot;</span>),</span><br><span class="line">    </span><br><span class="line">    kind: <span class="string">&quot;Gitalk&quot;</span>,  <span class="comment">// &quot;Gitalk&quot; or &quot;Gitment&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> issuesUrl = <span class="string">`https://api.github.com/repos/<span class="subst">$&#123;config.username&#125;</span>/<span class="subst">$&#123;config.repo&#125;</span>/issues?access_token=<span class="subst">$&#123;config.token&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> requestGetOpt = &#123;</span><br><span class="line">    url: <span class="string">`<span class="subst">$&#123;issuesUrl&#125;</span>&amp;page=1&amp;per_page=1000`</span>,</span><br><span class="line">    json: <span class="literal">true</span>,</span><br><span class="line">    headers: &#123;</span><br><span class="line">        <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;github-user&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> requestPostOpt = &#123;</span><br><span class="line">    ...requestGetOpt,</span><br><span class="line">    url:issuesUrl,</span><br><span class="line">    method: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">    form: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;开始初始化评论...&quot;</span>);</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;开始检索链接，请稍等...&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> websiteConfig = YAML.parse(fs.readFileSync(path.resolve(__dirname, <span class="string">&quot;./_config.yml&quot;</span>), <span class="string">&quot;utf8&quot;</span>));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> urls = sitemapXmlReader(config.sitemapUrl);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`共检索到<span class="subst">$&#123;urls.length&#125;</span>个链接`</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;开始获取已经初始化的issues:&quot;</span>);</span><br><span class="line">        <span class="keyword">let</span> issues = <span class="keyword">await</span> send(requestGetOpt);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`已经存在<span class="subst">$&#123;issues.length&#125;</span>个issues`</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> notInitIssueLinks = urls.filter(<span class="function">(<span class="params">link</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> !issues.find(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">                link = removeProtocol(link);</span><br><span class="line">                <span class="keyword">return</span> item.body.includes(link);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">if</span> (notInitIssueLinks.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`本次有<span class="subst">$&#123;notInitIssueLinks.length&#125;</span>个链接需要初始化issue：`</span>);</span><br><span class="line">            <span class="built_in">console</span>.log(notInitIssueLinks);</span><br><span class="line">            <span class="comment">//console.log(&quot;开始提交初始化请求, 大约需要40秒...&quot;);</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;开始提交初始化请求...&quot;</span>);</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 部署好网站后，直接执行start，新增文章可能并不会立即生成评论</span></span><br><span class="line"><span class="comment">             * 经参考文章测试，最少需要等待40秒才可以正确生成</span></span><br><span class="line"><span class="comment">             * 但是我本人测试后发现，新增文章是可以立即生成的，</span></span><br><span class="line"><span class="comment">             * 所以我将下面的40s等待时间改成了4ms</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="keyword">async</span> ()=&gt;&#123;</span><br><span class="line">                <span class="keyword">let</span> initRet = <span class="keyword">await</span> notInitIssueLinks.map(<span class="keyword">async</span> (item) =&gt; &#123;</span><br><span class="line">                    <span class="keyword">let</span> html = <span class="keyword">await</span> send(&#123; ...requestGetOpt, <span class="attr">url</span>: item &#125;);</span><br><span class="line">                    <span class="keyword">let</span> title = cheerio.load(html)(<span class="string">&quot;title&quot;</span>).text();</span><br><span class="line">                    <span class="keyword">let</span> pathLabel = url.parse(item).path;</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment">//与参考文章不同，这里新增一行，将路径名更改为md5值</span></span><br><span class="line">                    pathLabel = md5(pathLabel);</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">let</span> body = <span class="string">`<span class="subst">$&#123;item&#125;</span>&lt;br&gt;&lt;br&gt;<span class="subst">$&#123;websiteConfig.description&#125;</span>`</span>;</span><br><span class="line">                    <span class="keyword">let</span> form = <span class="built_in">JSON</span>.stringify(&#123; body, <span class="attr">labels</span>: [config.kind, pathLabel], title &#125;);</span><br><span class="line">                    <span class="keyword">return</span> send(&#123; ...requestPostOpt, form &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">`已完成<span class="subst">$&#123;initRet.length&#125;</span>个！`</span>);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&quot;可以愉快的发表评论了！&quot;</span>);</span><br><span class="line">            &#125;,<span class="number">4</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;本次发布无新增页面，无需初始化issue!!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`初始化issue出错，错误如下：`</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sitemapXmlReader</span>(<span class="params">file</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> data = fs.readFileSync(file, <span class="string">&quot;utf8&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> sitemap = xmlParser(data);</span><br><span class="line">    <span class="keyword">return</span> sitemap.root.children.map(<span class="function"><span class="keyword">function</span> (<span class="params">url</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> loc = url.children.filter(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> item.name === <span class="string">&quot;loc&quot;</span>;</span><br><span class="line">        &#125;)[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">return</span> loc.content;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeProtocol</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> url.substr(url.indexOf(<span class="string">&quot;:&quot;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        request(options, <span class="function"><span class="keyword">function</span> (<span class="params">error, response, body</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">                resolve(body);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                reject(error);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面的脚本在参考文章的基础上稍微做了下修改，与原来的参考文章不同之处已经另起一行单独显示，并在注释中明确标注出来了，下面是这几处不同的地方，需要读者注意一下</p>
-<ol>
-<li>引入 md5</li>
-</ol>
-<p>因为我们在<a target="_blank" rel="noopener" href="https://convivae.github.io/posts/hexo-bo-ke-cai-keng/#toc-heading-7">添加 Gittalk 评论插件</a> 时由于考虑到 label 的长度不能超过 50 个字符，对路径做了 md5 的哈希，而初始化评论就是根据你的 label 值来新开一个 issue</p>
-<p>所以当你在添加 Gitalk 评论时对路径做了 md5 转换，那么这里也需要做一个相同的转换才能与对应的文章匹配，从而可以成功地创建文章对应的 issue，上面代码中引入的 md5 可以在<a target="_blank" rel="noopener" href="https://github.com/blueimp/JavaScript-MD5">这里</a>找到</p>
-<ol>
-<li>修改 <code>sitemap.xml</code> 为 <code>baidu-sitemap.xml</code></li>
-</ol>
-<p>可能是因为我生成的 <code>sitemap.xml</code> 与参考文章作者的并不相同，在 <code>path</code> 为 <code>sitemap.xml</code>，即下面所示的代码：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// sitemap.xml的路径，commit.js放置在根目录下，无需修改，其他情况自行处理</span></span><br><span class="line">sitemapUrl: path.resolve(__dirname, <span class="string">&quot;./public/sitemap.xml&quot;</span>),</span><br></pre></td></tr></table></figure>
-
-<p>时执行后会报错，提示找不到根节点，后来在 debug 过程中发现在  <code>sitemap.xml</code>  中并没有文章的路径，而是主页、关于页、tag 页等页面的路径，后来发现在 <code>baidu-sitemap.xml</code> 中生成了全部文章的路径，并且很好的一点是没有其他页面的路径，这就保证了其他页面不会有对应的 issue，遂改为 <code>baidu-sitemap.xml</code> ，执行成功。</p>
-<p>参考文章的作者其实也指出了这一点：</p>
-<blockquote>
-<p>需要注意的是第一步中的sitemap插件会生成的sitemap.xml会包含<strong>全部的界面</strong>，包括标签页、关于页等，执行上面的代码也会对这些页面生成评论框(也就是issue)</p>
-</blockquote>
-<ol start="3">
-<li>等待时间 40 s</li>
-</ol>
-<p>由于我自己在测试时并没有发现初始化会特别慢，反倒是代码中强制等待 40 s才能结束进程的设计，让我很是心烦，所以把 40000ms 改为了 4ms，看着代码一行一行畅快地执行完成，心里爽多了。</p>
-<ol start="4">
-<li>执行脚本可能会遇到的错误</li>
-</ol>
-<p>我自己执行脚本的时候还发现了其他的错误，也浪费了不少时间，这里拿出来说下</p>
-<ul>
-<li><p>报错信息：</p>
-<p><img data-src="gitalk_error.png" alt="gitalk_error"></p>
-</li>
-<li><p>分析：<br>这是 <code>_config.yml</code> 的部分代码格式出现了问题，报错的具体部分是下图中箭头指向的位置</p>
-<p><img data-src="gitalk_error_fix.png" alt="gitalk_error_fix"></p>
-</li>
-<li><p>解决<br>只要把多余的空格删掉即可，如下图：</p>
-<p><img data-src="gitalk_error_fix01.png" alt="gitalk_error_fix01"></p>
-</li>
-</ul>
-<h4 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h4><p>完成上述操作后，执行下面的命令，就可以部署站点，并初始化所有的评论了。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line">node ./comment.js</span><br></pre></td></tr></table></figure>
-
-<p>也可以通过在站点根目录的package.json文件中，新建npm脚本，一个命令搞定清除缓存、生成静态文件、提交git并生成issue的所有操作。</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;build&quot;: &quot;hexo generate&quot;,</span><br><span class="line">  &quot;clean&quot;: &quot;hexo clean&quot;,</span><br><span class="line">  &quot;server&quot;: &quot;hexo server&quot;,</span><br><span class="line">  &quot;test&quot;: &quot;hexo clean &amp;&amp; hexo s&quot;,</span><br><span class="line">  &quot;t&quot;: &quot;hexo clean &amp;&amp; hexo s&quot;,</span><br><span class="line">  &quot;deploy&quot;: &quot;hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy &amp;&amp; node ./comment.js&quot;,</span><br><span class="line">  &quot;d&quot;: &quot;hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy &amp;&amp; node ./comment.js&quot;,</span><br><span class="line">  &quot;comment&quot;: &quot;node ./comment.js&quot;,</span><br><span class="line">  &quot;c&quot;: &quot;node ./comment.js&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
-<p>完成文章编写，或者其他的更新操作后，直接执行 deploy 即可。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm run deploy</span><br></pre></td></tr></table></figure>
-
-<p>或：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm run d</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/daihaoxin/article/details/84958369">nodejs版本的Gitalk/Gitment评论自动初始化</a></p>
-]]></content>
-      <categories>
-        <category>Blog</category>
-      </categories>
-      <tags>
-        <tag>Blog</tag>
-        <tag>Gitalk</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>逆波兰表达式</title>
     <url>/posts/ni-bo-lan-biao-da-shi/</url>
     <content><![CDATA[<p>虽然数据结构比较简单，但是有些题遇到之后直接盲敲也并无十足的把握，往往还需要找些资料理清一下思路才敢去写；</p>
@@ -374,18 +162,123 @@
       </tags>
   </entry>
   <entry>
-    <title>2020年度总结</title>
-    <url>/posts/2020-nian-du-zong-jie/</url>
-    <content><![CDATA[<hr>
-<p>还没写完TAT，写完再放出</p>
-<hr>
+    <title>再探编码</title>
+    <url>/posts/zai-tan-bian-ma/</url>
+    <content><![CDATA[<h2 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h2><p>本文转载自 <a target="_blank" rel="noopener" href="https://ihomura.cn/2018/06/26/%E5%86%8D%E6%8E%A2%E7%BC%96%E7%A0%81/#more">澪同学的博客</a></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>计算机发展本身就是多元化的，而且标准或者说字符集具有地域性，再加上计算机系统的历史遗留性（没错，那边的 Windows 说的就是你），我觉得编码一直是一个很难的问题。</p>
+<a id="more"></a>
+
+<p>在我的博客还是 WordPress 的时候我曾经写过一篇讲编码的文章，但是实际上那时候我也是一知半解，写出来的东西也是浅薄无趣的。</p>
+<p>然而学CS，一知半解是最恐怖的，正好最近就在各种踩坑，所以不如一次弄明白算了，也算是解决长久以来的一块心病了。</p>
+<p>所以本文会尝试去理清各种字符集以及编码之间的关系，如果有任何错误还请指出。</p>
+<h3 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h3><p>字符集简单来说就是一个映射，通常情况下是一个整数到某个特定的字符的双射，比如在 ASCII 字符集中，’A’ 对应的是 65， 反过来 65 也对应的是 ‘A’。</p>
+<p>字符集概念很简单，但是有两个问题。</p>
+<ul>
+<li>我知道一个字符集中 65 对应 ‘A’，反之亦然，那我可以确定它是 ASCII 吗？</li>
+<li>我在 C++ 中写了 <code>char a = &#39;A&#39;</code> 然后发现变量 a 的值真的是 65，那是不是所有字符集中字符都是由它相对应的整数表示？</li>
+</ul>
+<p>对于第一个问题，答案当然是否。因为字符集一般都是向前兼容的，比如 Unicode 中 ‘A’ 也是 65。</p>
+<p>对于第二个问题，答案也是否。因为当字符集太大的时候，如果都这样表示，那么会浪费相当大的空间，我们在后面的 UTF 会看到如何解决这个问题。</p>
+<p>简单概括下，字符集就是字符和整数的映射，它不代表计算机内部的实际编码表示。</p>
+<h3 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h3><p>ASCII 全称 American Standard Code for Information Interchange，它只有 8bit 长，但是实际上编码只用了 7bit，还有一位一般是用来奇偶校验（因为很多电子通信也用 ASCII）。</p>
+<p>具体的 ASCII 表这里不再给出，只强调一点就是绝大部分字符集和编码方式都是兼容 ASCII 的。</p>
+<h3 id="Extend-ASCII-扩展-ASCII"><a href="#Extend-ASCII-扩展-ASCII" class="headerlink" title="Extend ASCII(扩展 ASCII)"></a>Extend ASCII(扩展 ASCII)</h3><p>当计算机走向世界的时候，人们首先发现的问题就是 ASCII 不够用了。</p>
+<p>但是正如我之前说过的，编码具有很强的历史性，改变编码方式很难一次到位，所以扩展 ASCII 就出现了，它的做法很简单：把原来 ASCII 中不参与编码的最高位拿出来用于编码，这样原来 ASCII 范围 0～127 就变成了扩展 ASCII 的0～255。</p>
+<p>但是这里有个问题是扩展 ASCII 不像 ASCII 那样只有一个标准，也就是说扩展 ASCII 实际上有很多种，不过最后被采用的是 ISO 8859，由于 Windows 中实现要比最终标准化早一些，所以 Windows 中对应的 Windows-1252 实际上是 ISO 8859 的超集。</p>
+<p>到这里问题还不大，但是 Windows 为自己埋下了祸根。</p>
+<h3 id="ANSI"><a href="#ANSI" class="headerlink" title="ANSI"></a>ANSI</h3><p>首先这里要纠正一个错误的认知：没有任何一种编码方式/字符集叫做 ANSI。</p>
+<p>ANSI 已经很累了，不想再背锅了。</p>
+<p>ANSI 全称是 American National Standards Institute，是一个标准化组织，比如上面的 ISO 8859 就是它跟 ISO 一起提出来的。</p>
+<p>那么当我们在谈 ANSI 编码的时候，我们在谈什么？</p>
+<h3 id="Windows-Code-Page-Windows-代码页"><a href="#Windows-Code-Page-Windows-代码页" class="headerlink" title="Windows Code Page(Windows 代码页)"></a>Windows Code Page(Windows 代码页)</h3><p>实际上，一般说 ANSI 编码实际上想提到的就是 Windows 代码页。</p>
+<p>换句话说，我们在说 ANSI 编码的时候，很大可能想表达的是某个国家特定的字符集和它所代表的代码页。</p>
+<p>比如中文系统使用的 GBK 在 Windows 中的代码页是 cp936，一般我们在中国说 ANSI 编码可能指的就是 GBK，而上面的 Windows-1252 就是代码页 cp1252，表示的就是相应的扩展 ASCII。</p>
+<p>但是代码页可以说是 Windows 中最致命的残留之一，这个问题直到 Windows10 1803 才有了一定程度的解决，但是由于 Windows 高度的向前兼容性，这个问题恐怕在不久的将来还会一直存在，除非 NT 推倒重来。</p>
+<p>这里引用 cppreference 的一段话来说明这个问题</p>
+<blockquote>
+<p><code>wchar_t</code> - type for wide character representation (see wide strings). Required to be large enough to represent any supported character code point (32 bits on systems that support<br>Unicode. A notable exception is Windows, where wchar_t is 16 bits and holds UTF-16 code units) It has the same size, signedness, and alignment as one of the integer types, but is a<br>distinct type.</p>
+</blockquote>
+<p>这里 <code>wchar_t</code> 在 Windows 上只有 16bit 的根源就在于代码页的设计。</p>
+<p>在微软最初的设计里，代码页只有两种 Single-Byte Character Set(SBCS) 和 Double-Byte Character Set(DBCS)，比如上面的 cp1252 就是一个 SBCS，中文系统使用的 cp936 就是一个 DBCS。</p>
+<p>当然现在微软也有 UTF-8 编码的代码页，不过那都是后话了。</p>
+<h3 id="国标"><a href="#国标" class="headerlink" title="国标"></a>国标</h3><h4 id="GB2312"><a href="#GB2312" class="headerlink" title="GB2312"></a>GB2312</h4><p>扩展 ASCII 还是太少了，比如中文，255 个字怎么可能够用嘛，隔壁同源的日文也是同理。</p>
+<p>所以国家这时候就开始着手设计自己的字符集了，第一个国标就是 GB2312。</p>
+<p>GB2312 采用两个字节编码，收录了绝大多数常用的汉字。</p>
+<h4 id="GBK"><a href="#GBK" class="headerlink" title="GBK"></a>GBK</h4><p>但是 GB2312 只收录了约 7000 个汉字，甚至连朱镕基的“镕”都没有，而且台湾港澳台使用的字体也没有收录，所以就有了 GBK，即 “GB2312扩”。</p>
+<p>它仍然采用两个字节编码，兼容 GB2312 的同时收录了日本、台湾和韩国等通用字符集的汉字。</p>
+<p>Windows 中的 936 号代码页实际上几乎就是 GBK。</p>
+<p>但是随着计算机技术的发展，GBK 仍然无法满足需要，而且 GBK 实际上并不是国家标准，所以后来接盘的是 GB18030，这里我们先停下来，看一看隔壁的 Unicode。</p>
+<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>随着 Internet 的发展，编码的问题愈发突出，如何让文本能正确的显示在显示器上成了一个难题，Unicode 就是在这种背景下出现的。</p>
+<p>最新的 Unicode 标注一共收录了约 14 万个字符，基本涵盖了世界上绝大数语言。</p>
+<p>从 Unicode 起，另外一个问题提了出来：有了字符集，如何编码让它更适合计算机使用或者网络传输呢？</p>
+<p>之前的单字节和双字节编码因为占用空间少，所以直接不加任何编码就可以使用，但是 Unicode 可是有 14 万个，如果还采用<strong>定长编码</strong>的话至少需要 18bit 才能保证一一对应，这样的话对于之前 ASCII 中就有的字符来说有 11bit 就被浪费了，显然是不合理的。</p>
+<p>所以这里字符集和编码方式就必须分开考虑了，这也是为什么会有 Unicode Transformation Format(UTF) 一说了。</p>
+<p>简单来说，Unicode 还是那个 Unicode，但是编码方式会有很多种。</p>
+<h3 id="UTF-7"><a href="#UTF-7" class="headerlink" title="UTF-7"></a>UTF-7</h3><p>UTF-7 已经不属于 Unicode 标准了，但是它还属于 RFC 标准。</p>
+<p>简单来说，UTF-7 对于 ASCII 不做改变，但是对于非 ASCII 字符采用 base64 编码后在首位加上 + 和 - 用于区分，这样编码出的字符串中所有字符就是标准 ASCII 了。</p>
+<p>如果做过 XSS 或者 SQL 注入的应该对 UTF-7 有印象。</p>
+<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h3><p>UTF-8 是最常用的编码，也是 Web 中几乎统治性的编码方式。</p>
+<p>UTF-8 是一种变长编码方式，它兼容 ASCII 最小可以用 1byte 表示，同时最多可以用 4byte 表示所有的 Unicode 字符。</p>
+<p>UTF-8 编码方式其实很好理解，对于某个字符首先取出它的二进制表示：</p>
+<ul>
+<li>如果小于等于 7 位（ASCII），那么直接表示为 0xxxxxxx</li>
+<li>如果小于等于 11 位但是大于 7 位，那么表示为 110 xxxxx 10 xxxxxx</li>
+<li>如果小于等于 16 位但是大于 11 位，那么表示为 1110 xxxx 10 xxxxxx 10 xxxxxx</li>
+<li>如果小于等于 21 位但是大于 16 位，那么表示为 11110 xxx 10 xxxxxx 10 xxxxxx 10 xxxxxx</li>
+</ul>
+<p>刚才提到过，最新的 Unicode 标准只要 18bit 就可以全部表示，所以 UTF-8 目前是可以表示 Unicode 全部字符的。</p>
+<p>这里举个例子，中文的“中”字，它的 Unicode 为 \u4e2d，也就是 0b100 111000 101101，长度为 15 位，需要三个字节。</p>
+<p>所以编码为 UTF-8 后为 0b1110<strong>0100</strong> 10<strong>111000</strong> 10<strong>101101</strong>，也就是 0xe4 0xb8 0xad 即 \xe4\xb8\xad。</p>
+<p>下面我们可以用 Python 验证下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&gt;&gt; <span class="string">&#x27;\u4e2d&#x27;</span> <span class="comment"># &#x27;中&#x27;</span></span><br><span class="line"><span class="string">&#x27;中&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\u4e2d&#x27;</span>.encode(<span class="string">&#x27;utf-8&#x27;</span>) <span class="comment"># 编码为 UTF-8</span></span><br><span class="line"><span class="string">b&#x27;\xe4\xb8\xad&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么为什么 UTF-8 能得到这么广泛的应用呢？</p>
+<ul>
+<li>体积小：相对定长编码来说节省了很多空间。</li>
+<li>兼容性：完全兼容 ASCII 的编码方式。</li>
+<li>易检测：我们可以看到 UTF-8 四个字节的开头各不相同，而且无论怎么编码都不会冲突，只要根据头部第一个字节就可以知道后面一共有多少字节。</li>
+<li>计算快：从 UTF-8 到 Unicode 只用移位就可以完成，这对于计算机来说是相当高效的。</li>
+</ul>
+<h3 id="GB18030"><a href="#GB18030" class="headerlink" title="GB18030"></a>GB18030</h3><p>好了，到这里我们就要说回 GB 了。</p>
+<p>之前提到过接替 GBK 并且真正成为国标的是 GB18030，但是不同的是 GB18030 也采用的变长编码，并且跟 Unicode 完全兼容，也就是说实际上 GB18030 也是一种 UTF。</p>
+<p>GB18030 在 2byte 编码的时候跟 GBK 完全一致，但是在 4byte 编码的时候比较复杂，这里偷懒不展开了。<del>（翻译一下：都用 UTF-8 不就完了）</del></p>
+<h3 id="UTF-16"><a href="#UTF-16" class="headerlink" title="UTF_16"></a>UTF_16</h3><p>在说 UTF-16 之前，不得不提的是 UCS-2。</p>
+<p>UCS-2 是一个定长编码，它用 2byte 直接表示 Unicode —— 这当然是不够的，所以 UTF-16 就是为了补充 UCS-2 出现的。</p>
+<p>UTF-16 同样是变长编码，但是它以 2byte 为一个单位。</p>
+<ul>
+<li>对于小于 2byte 就可以表示的 Unicode 它与 UCS-2 相同。</li>
+<li>对于大于 2byte 才能表示的 Unicode，它的编码稍微有些复杂。</li>
+</ul>
+<p>对于某个要编码的字符，假设它的 Unicode 编码为 U。</p>
+<p>首先把 U 减去 0x10000 得到 U’，因为 Unicode 目前最长为 18bit，所以这时候 U’ 一定小于 20bit，分别对高 10bit 和低 10bit 做如下处理：</p>
+<ul>
+<li>对于高 10bit，把它加上 0xD800 得到 UTF-16 编码的高 2byte，同时注意到一个 Unicode 目前最长为 18bit，所以减去 0x10000 后高 10bit 中最多只有低 8bit 不为 0，这样高 2byte 一定以 0b110110 开头。</li>
+<li>对于低 10bit，把它加上 0xDC00 得到 UTF-16 编码的低 2byte，由于 0xC 对应的二进制为 0b1100，所以低 2byte 一定以 0b110111 开头。</li>
+</ul>
+<p>因此一个 4byte 编码的 UTF-16 中 2byte 的最小值为 0xDC800 而最大值为 0xDFFF，为了避免一个 4byte 编码的 UTF-16 被误认为两个 2byte 的 UTF-16，Unicode 规定 0xD800 - 0xDFFF 不对应任何单个的 Unicode 字符，被称为“代理区”。</p>
+<p>比如某个字符的 Unicode 为 U = 0x12345 （哎呀，反正打出来也是个’口’），然后我们可以得到 U’ = U - 0x10000 = 0x02345 = 0b1000 1101000101，低 10bit 为 0x345，高 10bit 为 0x8。</p>
+<p>所以可以得到高 2byte 为 0xD800 + 0x8 = 0xD808，低 2byte 为 0xDC00 + 0x2345 = 0xff45，拼在一起就是 0xd808df45，下面就用 Python 验证下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\U00012345&#x27;</span>.encode(<span class="string">&#x27;utf-16be&#x27;</span>).<span class="built_in">hex</span>()</span><br><span class="line"><span class="string">&#x27;d808df45&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\U00012345&#x27;</span>.encode(<span class="string">&#x27;utf-16&#x27;</span>).<span class="built_in">hex</span>()</span><br><span class="line"><span class="string">&#x27;fffe08d845df&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>当然这里还有另一个问题就是大小端问题，虽然 RFC 建议在没有 BOM 的时候默认为大端序，但实际上很多应用（包括系统）默认都是小端序。对于 UTF-16 来说，UTF-16BE 代表大端序，UTF-16LE 代表小端序。</p>
+<p>很多操作系统比如 Windows 采用 UTF-16 作为内码，但是 UTF-16 实际上由于 corner case 过多，很多库并没有做很好的测试，因此很可能出现安全性问题。（实际上已经有相应的 CVE 了）</p>
+<h3 id="UTF-32"><a href="#UTF-32" class="headerlink" title="UTF-32"></a>UTF-32</h3><p>最后出场的是 UTF-32，从它的名字上我觉得就可以明白它是怎么编码了——没错，4 字节定长编码，简单暴力。</p>
+<p>不过正如之前所说，这样会浪费大量的空间，因此 UTF-32 的应用非常少。</p>
+<p>做个小验证吧，仍然是之前的“中”</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\u4e2d&#x27;</span></span><br><span class="line"><span class="string">&#x27;中&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;\u4e2d&#x27;</span>.encode(<span class="string">&#x27;utf-32be&#x27;</span>).<span class="built_in">hex</span>()</span><br><span class="line"><span class="string">&#x27;00004e2d&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>大小端序的问题也不再赘述。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>编码是真的很复杂，不过当你决定把它研究透的时候，一切都清晰明了了起来。</p>
+<p>个人觉得最重要还是要理解字符集和编码方式的关系，也就是 Unicode 跟 UTF 的关系，因为这部分可能是最让人迷惑的。</p>
+<p>编码问题作为一个困扰我很久的“恶龙”，如今能“斩掉”还是很爽的。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/ASCII">ASCII</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/701882/what-is-ansi-format">what is ansi format</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_code_page">Windows Code Page</a><br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/desktop/Intl/code-pages">code pages</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/American_National_Standards_Institute">American National Standards Institute</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/International_Organization_for_Standardization">International Organization for Standardization</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unicode">Unicode</a><br><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/types">Fundamental types</a><br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/GB_2312">GB2312</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/GB_18030">GB18030</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/UTF-8">UTF8</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/UTF-16">UTF16</a></p>
 ]]></content>
       <categories>
-        <category>年度总结</category>
+        <category>编码</category>
       </categories>
       <tags>
-        <tag>2020</tag>
-        <tag>年度总结</tag>
+        <tag>C++</tag>
+        <tag>编码</tag>
       </tags>
   </entry>
   <entry>
@@ -731,57 +624,95 @@
       </tags>
   </entry>
   <entry>
-    <title>BUAA-北航-自动评教代码</title>
-    <url>/posts/buaa-bei-hang-zi-dong-ping-jiao-dai-ma/</url>
-    <content><![CDATA[<ul>
-<li><p>修复了<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IBSLGi9LfI75wQ3O7vHI4w">参考代码</a>中卡在<code>是否推荐</code>这一步无法继续运行的 Bug</p>
+    <title>自动初始化 Gitalk 和 Gitment 评论</title>
+    <url>/posts/zi-dong-chu-shi-hua-gitalk-he-gitment-ping-lun/</url>
+    <content><![CDATA[<p>本篇文章是<a target="_blank" rel="noopener" href="https://convivae.github.io/posts/hexo-bo-ke-cai-keng/#toc-heading-11">自动初始化 Gitalk 和 Gitment 评论</a>的解决办法，如果还没配置 Gitalk，建议先看上一篇文章的<a target="_blank" rel="noopener" href="https://convivae.github.io/posts/hexo-bo-ke-cai-keng/#toc-heading-7">添加 Gitalk 的评论插件</a>，再来看这篇文章。</p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>Gitalk配置完成后，启动hexo，打开文章页面，需要登陆 github，一篇一篇文章地点过去，完成初始化后才能使用，操作比较麻烦，下面介绍用 Node.js 来自动初始化 Gitalk 的方法</p>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><h3 id="生成-Sitemap-站点地图"><a href="#生成-Sitemap-站点地图" class="headerlink" title="生成 Sitemap 站点地图"></a>生成 Sitemap 站点地图</h3><p>站点地图是一种文件，您可以通过该文件列出您网站上的网页，从而将您网站内容的组织架构告知Google和其他搜索引擎。搜索引擎网页抓取工具会读取此文件，以便更加智能地抓取您的网站。</p>
+<ul>
+<li>安装插件</li>
+</ul>
+<p>在你的 hexo 根目录，执行下面两个命令来安装针对 google 和百度的插件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在站点根目录下的_config.yml添加如下代码</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># sitemap</span></span><br><span class="line"><span class="attr">sitemap:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">sitemap.xml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">baidusitemap:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">baidusitemap.xml</span></span><br></pre></td></tr></table></figure>
+
+<p>现在再执行 <code>hexo generate</code>  或 <code>hexo g</code> 的时候，在博客根目录下的 <code>public</code> 文件夹下面就会生成<code>sitemap.xml</code> 和 <code>baidusitemap.xml</code>。</p>
+<h3 id="获取github接口的调用权限"><a href="#获取github接口的调用权限" class="headerlink" title="获取github接口的调用权限"></a>获取github接口的调用权限</h3><ol>
+<li>创建一个access token，<a target="_blank" rel="noopener" href="https://github.com/settings/tokens">点击链接进入</a></li>
+<li>点击 <code>Generate new token</code> 按钮</li>
+<li>输入一个描述，为 token 添加所有的 repo 权限，然后点击最下方的 <code>Generate token</code> 按钮，就可以生成一个新的 <code>Token</code> 备用</li>
+</ol>
+<p><img data-src="init_gitalk.png" alt="init_gitalk"></p>
+<ol start="4">
+<li>生成的 token，在后面使用</li>
+</ol>
+<p><img data-src="init_gitalk01.png" alt="init_gitalk01"></p>
+<h3 id="脚本文件"><a href="#脚本文件" class="headerlink" title="脚本文件"></a>脚本文件</h3><h4 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h4><p>在你的 hexo 根目录，执行下面的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install request --save</span><br><span class="line">npm install xml-parser --save</span><br><span class="line">npm install yamljs --save</span><br><span class="line">npm install cheerio --save</span><br><span class="line">npm install blueimp-md5 --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建脚本文件"><a href="#创建脚本文件" class="headerlink" title="创建脚本文件"></a>创建脚本文件</h4><p>在站点根目录下创建 <code>comment.js</code> 文件，将下面的代码粘贴进文件中，修改下面代码中的 <code>config</code> 配置项，其中 <code>token</code> 就是上一步中获取的值</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">&quot;request&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&quot;url&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> xmlParser = <span class="built_in">require</span>(<span class="string">&quot;xml-parser&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> YAML = <span class="built_in">require</span>(<span class="string">&quot;yamljs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> cheerio = <span class="built_in">require</span>(<span class="string">&quot;cheerio&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//与参考文章不同，新引入了 md5</span></span><br><span class="line"><span class="keyword">const</span> md5 = <span class="built_in">require</span>(<span class="string">&quot;blueimp-md5&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据自己的情况进行配置</span></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    username: <span class="string">&quot;GitHub 用户名&quot;</span>, <span class="comment">// GitHub 用户名</span></span><br><span class="line">    token: <span class="string">&quot;GitHub Token&quot;</span>,  <span class="comment">// GitHub Token</span></span><br><span class="line">    repo: <span class="string">&quot;用户名.github.io&quot;</span>,  <span class="comment">// 存放 issues的git仓库</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// sitemap.xml的路径，commit.js放置在根目录下，无需修改，其他情况自行处理</span></span><br><span class="line">    <span class="comment">// 与参考文章不同，这里的路径改为了 baidusitemap.xml</span></span><br><span class="line">    sitemapUrl: path.resolve(__dirname, <span class="string">&quot;./public/baidusitemap.xml&quot;</span>),</span><br><span class="line">    </span><br><span class="line">    kind: <span class="string">&quot;Gitalk&quot;</span>,  <span class="comment">// &quot;Gitalk&quot; or &quot;Gitment&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> issuesUrl = <span class="string">`https://api.github.com/repos/<span class="subst">$&#123;config.username&#125;</span>/<span class="subst">$&#123;config.repo&#125;</span>/issues?access_token=<span class="subst">$&#123;config.token&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> requestGetOpt = &#123;</span><br><span class="line">    url: <span class="string">`<span class="subst">$&#123;issuesUrl&#125;</span>&amp;page=1&amp;per_page=1000`</span>,</span><br><span class="line">    json: <span class="literal">true</span>,</span><br><span class="line">    headers: &#123;</span><br><span class="line">        <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;github-user&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> requestPostOpt = &#123;</span><br><span class="line">    ...requestGetOpt,</span><br><span class="line">    url:issuesUrl,</span><br><span class="line">    method: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">    form: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;开始初始化评论...&quot;</span>);</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;开始检索链接，请稍等...&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> websiteConfig = YAML.parse(fs.readFileSync(path.resolve(__dirname, <span class="string">&quot;./_config.yml&quot;</span>), <span class="string">&quot;utf8&quot;</span>));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> urls = sitemapXmlReader(config.sitemapUrl);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`共检索到<span class="subst">$&#123;urls.length&#125;</span>个链接`</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;开始获取已经初始化的issues:&quot;</span>);</span><br><span class="line">        <span class="keyword">let</span> issues = <span class="keyword">await</span> send(requestGetOpt);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`已经存在<span class="subst">$&#123;issues.length&#125;</span>个issues`</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> notInitIssueLinks = urls.filter(<span class="function">(<span class="params">link</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> !issues.find(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">                link = removeProtocol(link);</span><br><span class="line">                <span class="keyword">return</span> item.body.includes(link);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">if</span> (notInitIssueLinks.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`本次有<span class="subst">$&#123;notInitIssueLinks.length&#125;</span>个链接需要初始化issue：`</span>);</span><br><span class="line">            <span class="built_in">console</span>.log(notInitIssueLinks);</span><br><span class="line">            <span class="comment">//console.log(&quot;开始提交初始化请求, 大约需要40秒...&quot;);</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;开始提交初始化请求...&quot;</span>);</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 部署好网站后，直接执行start，新增文章可能并不会立即生成评论</span></span><br><span class="line"><span class="comment">             * 经参考文章测试，最少需要等待40秒才可以正确生成</span></span><br><span class="line"><span class="comment">             * 但是我本人测试后发现，新增文章是可以立即生成的，</span></span><br><span class="line"><span class="comment">             * 所以我将下面的40s等待时间改成了4ms</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="keyword">async</span> ()=&gt;&#123;</span><br><span class="line">                <span class="keyword">let</span> initRet = <span class="keyword">await</span> notInitIssueLinks.map(<span class="keyword">async</span> (item) =&gt; &#123;</span><br><span class="line">                    <span class="keyword">let</span> html = <span class="keyword">await</span> send(&#123; ...requestGetOpt, <span class="attr">url</span>: item &#125;);</span><br><span class="line">                    <span class="keyword">let</span> title = cheerio.load(html)(<span class="string">&quot;title&quot;</span>).text();</span><br><span class="line">                    <span class="keyword">let</span> pathLabel = url.parse(item).path;</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment">//与参考文章不同，这里新增一行，将路径名更改为md5值</span></span><br><span class="line">                    pathLabel = md5(pathLabel);</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">let</span> body = <span class="string">`<span class="subst">$&#123;item&#125;</span>&lt;br&gt;&lt;br&gt;<span class="subst">$&#123;websiteConfig.description&#125;</span>`</span>;</span><br><span class="line">                    <span class="keyword">let</span> form = <span class="built_in">JSON</span>.stringify(&#123; body, <span class="attr">labels</span>: [config.kind, pathLabel], title &#125;);</span><br><span class="line">                    <span class="keyword">return</span> send(&#123; ...requestPostOpt, form &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">`已完成<span class="subst">$&#123;initRet.length&#125;</span>个！`</span>);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&quot;可以愉快的发表评论了！&quot;</span>);</span><br><span class="line">            &#125;,<span class="number">4</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;本次发布无新增页面，无需初始化issue!!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`初始化issue出错，错误如下：`</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sitemapXmlReader</span>(<span class="params">file</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> data = fs.readFileSync(file, <span class="string">&quot;utf8&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> sitemap = xmlParser(data);</span><br><span class="line">    <span class="keyword">return</span> sitemap.root.children.map(<span class="function"><span class="keyword">function</span> (<span class="params">url</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> loc = url.children.filter(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> item.name === <span class="string">&quot;loc&quot;</span>;</span><br><span class="line">        &#125;)[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">return</span> loc.content;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeProtocol</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> url.substr(url.indexOf(<span class="string">&quot;:&quot;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        request(options, <span class="function"><span class="keyword">function</span> (<span class="params">error, response, body</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">                resolve(body);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                reject(error);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的脚本在参考文章的基础上稍微做了下修改，与原来的参考文章不同之处已经另起一行单独显示，并在注释中明确标注出来了，下面是这几处不同的地方，需要读者注意一下</p>
+<ol>
+<li>引入 md5</li>
+</ol>
+<p>因为我们在<a target="_blank" rel="noopener" href="https://convivae.github.io/posts/hexo-bo-ke-cai-keng/#toc-heading-7">添加 Gittalk 评论插件</a> 时由于考虑到 label 的长度不能超过 50 个字符，对路径做了 md5 的哈希，而初始化评论就是根据你的 label 值来新开一个 issue</p>
+<p>所以当你在添加 Gitalk 评论时对路径做了 md5 转换，那么这里也需要做一个相同的转换才能与对应的文章匹配，从而可以成功地创建文章对应的 issue，上面代码中引入的 md5 可以在<a target="_blank" rel="noopener" href="https://github.com/blueimp/JavaScript-MD5">这里</a>找到</p>
+<ol>
+<li>修改 <code>sitemap.xml</code> 为 <code>baidu-sitemap.xml</code></li>
+</ol>
+<p>可能是因为我生成的 <code>sitemap.xml</code> 与参考文章作者的并不相同，在 <code>path</code> 为 <code>sitemap.xml</code>，即下面所示的代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// sitemap.xml的路径，commit.js放置在根目录下，无需修改，其他情况自行处理</span></span><br><span class="line">sitemapUrl: path.resolve(__dirname, <span class="string">&quot;./public/sitemap.xml&quot;</span>),</span><br></pre></td></tr></table></figure>
+
+<p>时执行后会报错，提示找不到根节点，后来在 debug 过程中发现在  <code>sitemap.xml</code>  中并没有文章的路径，而是主页、关于页、tag 页等页面的路径，后来发现在 <code>baidu-sitemap.xml</code> 中生成了全部文章的路径，并且很好的一点是没有其他页面的路径，这就保证了其他页面不会有对应的 issue，遂改为 <code>baidu-sitemap.xml</code> ，执行成功。</p>
+<p>参考文章的作者其实也指出了这一点：</p>
+<blockquote>
+<p>需要注意的是第一步中的sitemap插件会生成的sitemap.xml会包含<strong>全部的界面</strong>，包括标签页、关于页等，执行上面的代码也会对这些页面生成评论框(也就是issue)</p>
+</blockquote>
+<ol start="3">
+<li>等待时间 40 s</li>
+</ol>
+<p>由于我自己在测试时并没有发现初始化会特别慢，反倒是代码中强制等待 40 s才能结束进程的设计，让我很是心烦，所以把 40000ms 改为了 4ms，看着代码一行一行畅快地执行完成，心里爽多了。</p>
+<ol start="4">
+<li>执行脚本可能会遇到的错误</li>
+</ol>
+<p>我自己执行脚本的时候还发现了其他的错误，也浪费了不少时间，这里拿出来说下</p>
+<ul>
+<li><p>报错信息：</p>
+<p><img data-src="gitalk_error.png" alt="gitalk_error"></p>
 </li>
-<li><p>适用于北航教务系统，校内网和VPN均可使用</p>
+<li><p>分析：<br>这是 <code>_config.yml</code> 的部分代码格式出现了问题，报错的具体部分是下图中箭头指向的位置</p>
+<p><img data-src="gitalk_error_fix.png" alt="gitalk_error_fix"></p>
 </li>
-<li><p>截止本文发出前该代码仍可正常使用</p>
+<li><p>解决<br>只要把多余的空格删掉即可，如下图：</p>
+<p><img data-src="gitalk_error_fix01.png" alt="gitalk_error_fix01"></p>
 </li>
 </ul>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">javascript: <span class="function"><span class="keyword">function</span> <span class="title">judge</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    doc = <span class="built_in">window</span>.top.document.getElementById(<span class="string">&quot;iframename&quot;</span>).contentWindow;</span><br><span class="line">    doc.alert = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    doc.confirm = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> arr = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span> (arr[<span class="number">0</span>] === arr[<span class="number">1</span>] &amp;&amp; arr[<span class="number">2</span>] === arr[<span class="number">3</span>] &amp;&amp; arr[<span class="number">4</span>] === arr[<span class="number">5</span>] &amp;&amp; arr[<span class="number">1</span>] === arr[<span class="number">2</span>]) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">            arr[i] = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    a = doc.$(<span class="string">&quot;input[name^=tabmapzb]&quot;</span>);</span><br><span class="line">    b = doc.$(<span class="string">&quot;span.yellow&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (a.length !== <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">            a[arr[i] + i * <span class="number">5</span>].click();</span><br><span class="line">        &#125;</span><br><span class="line">        doc.$(<span class="string">&quot;#sftj&quot;</span>).get(<span class="number">0</span>).selectedIndex = <span class="number">1</span>;</span><br><span class="line">        doc.tj();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        b[<span class="number">1</span>].firstElementChild.click();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">doc = <span class="built_in">window</span>.top.document.getElementById(<span class="string">&quot;iframename&quot;</span>).contentWindow;</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="string">&quot;doc.$.onload = judge()&quot;</span>, <span class="number">1400</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h4><p>完成上述操作后，执行下面的命令，就可以部署站点，并初始化所有的评论了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br><span class="line">node ./comment.js</span><br></pre></td></tr></table></figure>
 
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ol>
-<li><p>使用 <strong>Chrome</strong> 浏览器打开评教页面</p>
-<blockquote>
-<p>打开教务管理系统 –&gt; 教学评价 –&gt; 学生评教 –&gt; 开始评教</p>
-</blockquote>
-</li>
-<li><p>将此时浏览器地址栏的内容清空，并将上述代码复制到地址栏，并在代码的最开始加上</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">javascript:</span><br></pre></td></tr></table></figure>
+<p>也可以通过在站点根目录的package.json文件中，新建npm脚本，一个命令搞定清除缓存、生成静态文件、提交git并生成issue的所有操作。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;build&quot;: &quot;hexo generate&quot;,</span><br><span class="line">  &quot;clean&quot;: &quot;hexo clean&quot;,</span><br><span class="line">  &quot;server&quot;: &quot;hexo server&quot;,</span><br><span class="line">  &quot;test&quot;: &quot;hexo clean &amp;&amp; hexo s&quot;,</span><br><span class="line">  &quot;t&quot;: &quot;hexo clean &amp;&amp; hexo s&quot;,</span><br><span class="line">  &quot;deploy&quot;: &quot;hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy &amp;&amp; node ./comment.js&quot;,</span><br><span class="line">  &quot;d&quot;: &quot;hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy &amp;&amp; node ./comment.js&quot;,</span><br><span class="line">  &quot;comment&quot;: &quot;node ./comment.js&quot;,</span><br><span class="line">  &quot;c&quot;: &quot;node ./comment.js&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
-<p>回车即可。</p>
-<p>注意：代码最开始虽然有<code>javascript:</code>，但是复制过去后就没了，所以需要我们手动加上</p>
-</li>
-</ol>
-<h2 id="代码说明与自定义"><a href="#代码说明与自定义" class="headerlink" title="代码说明与自定义"></a>代码说明与自定义</h2><ol>
-<li><p>评教的效果是从前三项 <code>优秀</code>、<code>良好</code>、<code>中等</code>三者中随机生成的，而且保证不会出现全选一个等级的情况（全选一个等级是提交不上的）</p>
-<p>如果需要修改，可把代码第12行</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">arr[i] = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>完成文章编写，或者其他的更新操作后，直接执行 deploy 即可。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm run deploy</span><br></pre></td></tr></table></figure>
 
-<p>中的<code>3</code> 改成 <code>n(1 &lt; n &lt;= 5)</code>，意思是从前 <code>n</code>项中随机生成</p>
-</li>
-<li><p>是否推荐选的是 <code>是</code></p>
-<p>需要修改的话在第21行</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">doc.$(<span class="string">&quot;#sftj&quot;</span>).get(<span class="number">0</span>).selectedIndex = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>或：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm run d</span><br></pre></td></tr></table></figure>
 
-<p><code>0</code> 改为 <code>1</code> 表示选择不推荐</p>
-</li>
-<li><p>用完记得关闭评教页面</p>
-</li>
-<li><p>别的浏览器大概支持吧（选的课太少了，没机会试了_(:з)∠)_）</p>
-</li>
-</ol>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IBSLGi9LfI75wQ3O7vHI4w">分享一份自动评教代码</a></p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/daihaoxin/article/details/84958369">nodejs版本的Gitalk/Gitment评论自动初始化</a></p>
 ]]></content>
       <categories>
-        <category>评教</category>
+        <category>Blog</category>
       </categories>
       <tags>
-        <tag>评教</tag>
-        <tag>BUAA</tag>
+        <tag>Blog</tag>
+        <tag>Gitalk</tag>
       </tags>
   </entry>
   <entry>
@@ -945,6 +876,60 @@
       <tags>
         <tag>Mybatis</tag>
         <tag>JDBC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BUAA-北航-自动评教代码</title>
+    <url>/posts/buaa-bei-hang-zi-dong-ping-jiao-dai-ma/</url>
+    <content><![CDATA[<ul>
+<li><p>修复了<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IBSLGi9LfI75wQ3O7vHI4w">参考代码</a>中卡在<code>是否推荐</code>这一步无法继续运行的 Bug</p>
+</li>
+<li><p>适用于北航教务系统，校内网和VPN均可使用</p>
+</li>
+<li><p>截止本文发出前该代码仍可正常使用</p>
+</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">javascript: <span class="function"><span class="keyword">function</span> <span class="title">judge</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    doc = <span class="built_in">window</span>.top.document.getElementById(<span class="string">&quot;iframename&quot;</span>).contentWindow;</span><br><span class="line">    doc.alert = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    doc.confirm = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> arr = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span> (arr[<span class="number">0</span>] === arr[<span class="number">1</span>] &amp;&amp; arr[<span class="number">2</span>] === arr[<span class="number">3</span>] &amp;&amp; arr[<span class="number">4</span>] === arr[<span class="number">5</span>] &amp;&amp; arr[<span class="number">1</span>] === arr[<span class="number">2</span>]) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">            arr[i] = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    a = doc.$(<span class="string">&quot;input[name^=tabmapzb]&quot;</span>);</span><br><span class="line">    b = doc.$(<span class="string">&quot;span.yellow&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (a.length !== <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">            a[arr[i] + i * <span class="number">5</span>].click();</span><br><span class="line">        &#125;</span><br><span class="line">        doc.$(<span class="string">&quot;#sftj&quot;</span>).get(<span class="number">0</span>).selectedIndex = <span class="number">1</span>;</span><br><span class="line">        doc.tj();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        b[<span class="number">1</span>].firstElementChild.click();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">doc = <span class="built_in">window</span>.top.document.getElementById(<span class="string">&quot;iframename&quot;</span>).contentWindow;</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="string">&quot;doc.$.onload = judge()&quot;</span>, <span class="number">1400</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ol>
+<li><p>使用 <strong>Chrome</strong> 浏览器打开评教页面</p>
+<blockquote>
+<p>打开教务管理系统 –&gt; 教学评价 –&gt; 学生评教 –&gt; 开始评教</p>
+</blockquote>
+</li>
+<li><p>将此时浏览器地址栏的内容清空，并将上述代码复制到地址栏，并在代码的最开始加上</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">javascript:</span><br></pre></td></tr></table></figure>
+
+<p>回车即可。</p>
+<p>注意：代码最开始虽然有<code>javascript:</code>，但是复制过去后就没了，所以需要我们手动加上</p>
+</li>
+</ol>
+<h2 id="代码说明与自定义"><a href="#代码说明与自定义" class="headerlink" title="代码说明与自定义"></a>代码说明与自定义</h2><ol>
+<li><p>评教的效果是从前三项 <code>优秀</code>、<code>良好</code>、<code>中等</code>三者中随机生成的，而且保证不会出现全选一个等级的情况（全选一个等级是提交不上的）</p>
+<p>如果需要修改，可把代码第12行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">arr[i] = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>中的<code>3</code> 改成 <code>n(1 &lt; n &lt;= 5)</code>，意思是从前 <code>n</code>项中随机生成</p>
+</li>
+<li><p>是否推荐选的是 <code>是</code></p>
+<p>需要修改的话在第21行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">doc.$(<span class="string">&quot;#sftj&quot;</span>).get(<span class="number">0</span>).selectedIndex = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>0</code> 改为 <code>1</code> 表示选择不推荐</p>
+</li>
+<li><p>用完记得关闭评教页面</p>
+</li>
+<li><p>别的浏览器大概支持吧（选的课太少了，没机会试了_(:з)∠)_）</p>
+</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IBSLGi9LfI75wQ3O7vHI4w">分享一份自动评教代码</a></p>
+]]></content>
+      <categories>
+        <category>评教</category>
+      </categories>
+      <tags>
+        <tag>评教</tag>
+        <tag>BUAA</tag>
       </tags>
   </entry>
   <entry>
@@ -1426,6 +1411,11 @@
       </tags>
   </entry>
   <entry>
+    <title>常见应用软件和编程语言中的正则表达式</title>
+    <url>/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>jdbc学习笔记02</title>
     <url>/posts/jdbc-xue-xi-bi-ji-02/</url>
     <content><![CDATA[<h2 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h2><h3 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h3><blockquote>
@@ -1602,144 +1592,6 @@
       <tags>
         <tag>JDBC</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>正则表达式总结（一）</title>
-    <url>/posts/zheng-ze-biao-da-shi-zong-jie-yi/</url>
-    <content><![CDATA[<h1 id="正则表达式入门"><a href="#正则表达式入门" class="headerlink" title="正则表达式入门"></a>正则表达式入门</h1><h2 id="如何使用正则表达式"><a href="#如何使用正则表达式" class="headerlink" title="如何使用正则表达式"></a>如何使用正则表达式</h2><p>搜索和替换是正则表达式的两种基本用途，下面是两个例子：</p>
-<ul>
-<li>搜索</li>
-</ul>
-<blockquote>
-<p>假设一个需求是要把 <code>car</code>、<code>CAR</code>、<code>Car</code> 或 <code>CaR</code> 都找出来，同时要确保 <code>scar</code>、<code>carry</code> 和 <code>incarcerate</code> 之类的单词不会被匹配到。</p>
-</blockquote>
-<p>那么对应的语句为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">\b[Cc][Aa][Rr]\b</span><br></pre></td></tr></table></figure>
-
-<p>当然，一些高级的编辑器提供了不区分大小写以及 <code>Match Only Whole World</code> （仅匹配整个单词）的选项，但还有许多编辑器不具备这一功能，而你往往无法正在你编辑的文档里做出这种调整。使用正则表达式而不是纯文本 <code>car</code> 就可以解决这个问题。</p>
-<ul>
-<li>替换</li>
-</ul>
-<blockquote>
-<p>把 URL 地址字符串替换为真正可点击的 URL。<br>例如：原始的 URL 为：<code>https://convivae.top/</code><br>替换后的结果为</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">https://convivae.top</span>&gt;</span>https://convivae.top/<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</blockquote>
-<p>这需要先把相关文本里的 URL 地址字符串找出来（比如说搜索以 <code>http://</code> 或 <code>https://</code> 开头、以句号、逗号、空白字符结尾的字符串），再把找到的 URL 地址字符串替换为 html 语言的 <code>&lt;A HREF=...&gt;...&lt;/A&gt;</code> 元素。</p>
-<h2 id="什么是正则表达式"><a href="#什么是正则表达式" class="headerlink" title="什么是正则表达式"></a>什么是正则表达式</h2><p>定义：简单地说，正则表达式是用来匹配和处理文本的字符串。</p>
-<p>正则表达式并不是一种完备的程序设计语言，甚至都算不上是一种直接安装并运行的程序。更准确地说，正则表达式语言是内置于其它语言或软件产品里的“迷你”语言。现在几乎所有的语言或工具都支持正则表达式，但是正则表达式与你正在使用的语言或工具可以说毫无相似之处。正则表达式虽然也被称为一种语言，但它与人们对语言的印象相去甚远。</p>
-<p>说完这些掌故，我们再来看一些例子，它们都是合法的正则表达式：</p>
-<ul>
-<li><code>Ben</code></li>
-<li><code>.</code></li>
-<li><code>www\.convivae\.com</code></li>
-<li><code>[a-zA-Z0-9_.]*</code></li>
-<li><code>&lt;[Hh]1&gt;.*&lt;/[Hh]1&gt;</code></li>
-<li><code>\r\n\r\n</code></li>
-<li><code>\d&#123;3,3&#125;-\d&#123;3,3&#125;-\d&#123;4,4&#125;</code></li>
-</ul>
-<p>请注意，语法是正则表达式最容易掌握的部分，真正的挑战是学会如何运用那些语法把实际问题分解为一系列正则表达式并最终解决。与学习其他程序设计语言一样，只靠读书是学不会如何灵活运用语法正则的，你必须通过亲身实践才能真正掌握它们。</p>
-<h2 id="使用正则表达式"><a href="#使用正则表达式" class="headerlink" title="使用正则表达式"></a>使用正则表达式</h2><ul>
-<li>正则表达式的使用方法和具体功能，在不同的应用程序/语言中各有不同。</li>
-<li>并非所有的正则表达式实现都是一样的。在不同的应用程序/语言里，正则表达式的语法和功能往往会有明显（有时也不那么明显）的差异</li>
-</ul>
-<p>文章 <a href="/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/" title="常见应用软件和编程语言中的正则表达式">常见应用软件和编程语言中的正则表达式</a> 对支持正则表达式的许多应用程序和语言在这方面的细节进行了汇总。在继续下面的学习之前，你应该先熟悉一下，看看你们正在使用的应用程序或语言在正则表达式方面有哪些与众不同之处。</p>
-<p>在继续学习之前，你还用该了解以下几个事实：</p>
-<ul>
-<li>在使用正则表达式的时候，你将发现几乎所有的问题都有不止一种解决方案。它们有的比较简单，有的比较快速，有的兼容性好，有的功能更全。这么说吧，在编写正则表达式的时候，只有对、错两种选择的情况是很少见的——同一个问题往往会有多种解决方案。</li>
-<li>正如前面讲的那样，正则表达式的不同实现往往会有所差异。在后面的内容中，已经尽了最大的努力来保证实例能适用于尽可能多的实现；但有些差异和不兼容是无法回避的，针对这种情况，文中都尽可能地进行了注明。</li>
-<li>与其他编程语言一样，学习正则表达式的关键是实践，实践，再实践，强烈建议在学习后面的内容时能够亲自实践每一个示例。</li>
-</ul>
-<h1 id="匹配单个字符"><a href="#匹配单个字符" class="headerlink" title="匹配单个字符"></a>匹配单个字符</h1><h2 id="匹配纯文本"><a href="#匹配纯文本" class="headerlink" title="匹配纯文本"></a>匹配纯文本</h2><p><code>Ben</code> 是一个正则表达式。因为本身是纯文本（甚至可以只包含纯文本）。当然，像这样使用正则表达式是一种浪费，但它作为我们学习正则表达式的起点还是很不错的。一个例子：</p>
-<p>文本：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">Hello, my name is Ben. This is my article.</span><br></pre></td></tr></table></figure>
-
-<p>正则表达式：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my</span><br></pre></td></tr></table></figure>
-
-<p>结果：</p>
-<blockquote>
-<p>Hello, <span class="label primary">my</span> name is Ben. This is <span class="label primary">my</span> article.</p>
-</blockquote>
-<p>分析：</p>
-<p>这里使用的正则表达式是纯文本，它将匹配原始文本里的 my，它在原始文本里找到了两个结果。</p>
-<ul>
-<li>注意，绝大多数正则表达式引擎的默认行为是只返回第一个匹配结果。具体到上面那个例子，它只会返回原始文本里的第一个 <code>my</code>。</li>
-<li>那么怎样才能把两个或更多个匹配结果都找出来呢？绝大多数的正则表达式的实现都提供了一种能够把所有的匹配结果全部找出来的机制。比如说，在 JavaScript 里，可选的 g（意思是 global，全局）标志将返回一个包含着所有匹配的结果数组。使用不同语言或工具请查阅文章 <a href="/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/" title="常见应用软件和编程语言中的正则表达式">常见应用软件和编程语言中的正则表达式</a>。</li>
-<li>正则表达式是区分大小写字母的，所以 my 不能匹配 My。绝大多数的正则表达式的实现也支持不区分大小写的匹配操作。比如，JavaScript 用户可以用 i 标志来强制执行一次不区分字母大小写的搜索。使用不同语言或工具请查阅文章 <a href="/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/" title="常见应用软件和编程语言中的正则表达式">常见应用软件和编程语言中的正则表达式</a>。</li>
-</ul>
-<h2 id="匹配任意字符"><a href="#匹配任意字符" class="headerlink" title="匹配任意字符"></a>匹配任意字符</h2><p>在正则表达式里，特殊字符（或字符集合）用来给出要搜索的东西。<code>.</code> 字符（英文句号）可以匹配任何一个单个的字符。</p>
-<blockquote>
-<p>注：正则表达式里的 <code>.</code> 字符相当于 DOS 的 <code>?</code> 字符，也相当于 SQL 里的 <code>_</code> （下划线）字符。</p>
-</blockquote>
-<p>于是，用正则表达式 <code>c.t</code> 进行搜索将匹配到 <code>cat</code> 和 <code>cot</code> （还能匹配到一些毫无意义的单词）</p>
-<h3 id="例一"><a href="#例一" class="headerlink" title="例一"></a>例一</h3><p>文本：</p>
-<blockquote>
-<p>sales.xls<br>sales1.xls<br>orders3.xls<br>sales2.xls<br>sales3.xls<br>apac1.xls<br>europe2.xls<br>na1.xls<br>na2.xls<br>sa1.xls</p>
-</blockquote>
-<p>正则表达式：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sales.</span><br></pre></td></tr></table></figure>
-
-<p>结果：</p>
-<blockquote>
-<span class="label primary">sales.</span>xls<br/><span class="label primary">sales1</span>.xls<br/>orders3.xls<br/><span class="label primary">sales2</span>.xls<br/><span class="label primary">sales3</span>.xls
-<p>apac1.xls<br>europe2.xls<br>na1.xls<br>na2.xls<br>sa1.xls</p>
-</blockquote>
-<p>分析：</p>
-<p>正则表达式 <code>sales.</code> 将把由字符串 sales 和另外一个字符构成的文件名查找出来。9个文件里有四个与这个模式（pattern）相匹配。</p>
-<ul>
-<li>人们常用“模式”表示实际的正则表达式</li>
-<li>正则表达式可以用来匹配包含着字符串内容的模式。匹配的并不总是整个字符串，而是与某个模式相匹配的字符，即使他们只是整个字符串的一部分。在上面的例子里，我们使用的正则表达式并不能匹配整个文件名</li>
-<li><code>.</code> 能够匹配任何一个单个的字符，也包括<code>.</code> 本身，故这个模式也与 <code>sales.</code> 相匹配</li>
-</ul>
-<h3 id="例二"><a href="#例二" class="headerlink" title="例二"></a>例二</h3><p>文本：</p>
-<blockquote>
-<p>sales.xls<br>sales1.xls<br>orders3.xls<br>sales2.xls<br>sales3.xls<br>apac1.xls<br>europe2.xls<br>na1.xls<br>na2.xls<br>sa1.xls</p>
-</blockquote>
-<p>正则表达式：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.a.</span><br></pre></td></tr></table></figure>
-
-<p>结果：</p>
-<blockquote>
-<span class="label primary">sal</span>.es.xls<br/><span class="label primary">sal</span>.es1.xls<br/>orders3.xls<br/><span class="label primary">sal</span>es2xls<br/><span class="label primary">sal</span>es3.xls<br/>a<span class="label primary">pac</span>1.xls<br/>europe2.xls<br/><span class="label primary">na1</span>.xls<br/><span class="label primary">na2</span>.xls<br/><span class="label primary">sa1</span>.xls
-</blockquote>
-<p>分析：</p>
-<p>该模式将与第二个字符是 <code>a</code> 的任意三个字符匹配</p>
-<h2 id="匹配特殊字符"><a href="#匹配特殊字符" class="headerlink" title="匹配特殊字符"></a>匹配特殊字符</h2><p>思考一个问题：既然 <code>.</code> 是一个能够与任何一个单字符相匹配的特殊字符，那么怎样才能搜索 <code>.</code> 本身呢？这时候就要想办法来告诉正则表达式你需要的是 <code>.</code> 字符本身而不是它在正则表达式中的特殊含义。</p>
-<p>为此，你必须在 <code>.</code> 的前面加上一个 <code>\</code> （反斜杠）字符来对它进行转义。 <code>\</code> 是一个元字符（metacharacter，表示“这个字符有特殊含义”，而不是字符本身含义）</p>
-<blockquote>
-<p>当然，如果要搜索 <code>\</code> 本身，我们仍然可以用 <code>\</code> 进行转义，相应的正则表达式是两个连续的反斜杠字符 <code>\\</code></p>
-</blockquote>
-<p>再一次验证刚才的例子：</p>
-<p>文本：</p>
-<blockquote>
-<p>sales.xls<br>sales1.xls<br>orders3.xls<br>sales2.xls<br>sales3.xls<br>apac1.xls<br>europe2.xls<br>na1.xls<br>na2.xls<br>sa1.xls</p>
-</blockquote>
-<p>正则表达式：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.a.\.xls</span><br></pre></td></tr></table></figure>
-
-<p>结果：</p>
-<blockquote>
-<p>sales.xls<br>sales1.xls<br>orders3.xls<br>sales2.xls<br>sales3.xls<br>apac1.xls<br>europe2.xls<br/><span class="label primary">na1</span>.xls<br/><span class="label primary">na2</span>.xls<br/><span class="label primary">sa1</span>.xls</p>
-</blockquote>
-<p>分析：</p>
-<p>这个例子是把以 <code>na</code>（表示北美）或 <code>sa</code>（表示南美）开头的文件（不管它们后面跟着一个什么数字）找出来。</p>
-<p>第一个 <code>.</code> 匹配 <code>n</code>（在前两个匹配结果里）或 <code>s</code>（在第三个匹配结果里），第二个 <code>.</code> 匹配 <code>1</code> 或 <code>2</code> 。接下来，<code>\.</code> 匹配文件名与扩展名之间的分隔符 <code>.</code> 本身，最后的 <code>xls</code> 匹配它本身。</p>
-<ul>
-<li>我们刚才讲过，<code>.</code> 可以匹配任意一个字符，这一说法并非绝对准确。在绝大多数的正则表达式实现里，<code>.</code> 只能匹配除换行符以外的任何单个字符。</li>
-</ul>
-<h1 id="参考书目"><a href="#参考书目" class="headerlink" title="参考书目"></a>参考书目</h1><p>（美国）Ben Forta. 正则表达式必知必会. 北京：人民邮电出版社, 2015.1.</p>
-]]></content>
-      <categories>
-        <category>正则表达式</category>
-      </categories>
-      <tags>
-        <tag>正则表达式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>常见应用软件和编程语言中的正则表达式</title>
-    <url>/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>正则表达式总结（二）</title>
@@ -2046,6 +1898,149 @@
       </tags>
   </entry>
   <entry>
+    <title>电路基础02</title>
+    <url>/posts/dian-lu-ji-chu-02/</url>
+    <content><![CDATA[<h2 id="等效变换的概念"><a href="#等效变换的概念" class="headerlink" title="等效变换的概念"></a>等效变换的概念</h2><p>如果有两个电路N1、N2，其内部结构不同，但从端口看，它们的电压、电流关系相同（方向、大小均相同），则称它们是相互等效的电路，即N1与N2对外电路的影响是相同的。</p>
+<h2 id="电阻的串联、并联和混联"><a href="#电阻的串联、并联和混联" class="headerlink" title="电阻的串联、并联和混联"></a>电阻的串联、并联和混联</h2><ul>
+<li>分压公式：</li>
+</ul>
+<p>$$<br>u_k=\cfrac{R_k}{\sum{R_k}}u<br>$$</p>
+<ul>
+<li>分流公式：</li>
+</ul>
+<p>$$<br>i_k=\cfrac{G_k}{\sum{G_k}}i<br>$$</p>
+<ul>
+<li><p>混联</p>
+<ol>
+<li><p>电路在几何对称的情况下，应首先找出相应的等电位点，然后再进行化简</p>
+</li>
+<li><p>电桥：</p>
+</li>
+</ol>
+<p><img data-src="01.png" alt="电桥"></p>
+<p>平衡条件（平衡时中间桥臂电流电压均为零）：<br>$$<br>\frac{R_1}{R3}=\frac{R_2}{R_4}<br>$$</p>
+</li>
+</ul>
+<p>  一些翻转和变形：</p>
+<p>  <img data-src="02.png" alt="翻转和变形"></p>
+<ul>
+<li><p>分析法：</p>
+<blockquote>
+<p>先判断电桥是否平衡。</p>
+<p>平衡时中间桥臂电压为零可以将其短路（虚短）；平衡时中间桥臂电流为零可以将其断路（虚断）</p>
+<p>而最后的计算结果相同</p>
+<p>如果电桥不平衡，可采用 $Y-\triangle$ 变换的方法分析</p>
+</blockquote>
+</li>
+<li><p>注：平衡电桥只对无源支路成立</p>
+</li>
+</ul>
+<h2 id="电阻的-Y-triangle-（星形-三角形）变换"><a href="#电阻的-Y-triangle-（星形-三角形）变换" class="headerlink" title="电阻的 $Y-\triangle$ （星形-三角形）变换"></a>电阻的 $Y-\triangle$ （星形-三角形）变换</h2><h3 id="三端网络的等效概念"><a href="#三端网络的等效概念" class="headerlink" title="三端网络的等效概念"></a>三端网络的等效概念</h3><p>若两个三端网络与同一个外部电路相接时，电压 $$u_{12}, u_{23}$$ 与电流 $${i_1, i_2}$$ 之间的关系完全相同，则称这两个三端网络对外互为等效</p>
+<p><img data-src="03.png" alt="三端网络"></p>
+<ul>
+<li><p>对 $Y$ 电路<br>$$<br>\left{<br>\begin{aligned}<br>i_1=\frac{R_3}{R_1R_2+R_2R_3+R_3R_1}u_{12}-\frac{R_2}{R_1R_2+R_2R_3+R_3R_1}u_{31} \<br>i_2=\frac{R_1}{R_1R_2+R_2R_3+R_3R_1}u_{23}-\frac{R_3}{R_1R_2+R_2R_3+R_3R_1}u_{12} \<br>i_3=\frac{R_2}{R_1R_2+R_2R_3+R_3R_1}u_{31}-\frac{R_1}{R_1R_2+R_2R_3+R_3R_1}u_{23} \<br>\end{aligned}<br>\right.<br>$$</p>
+</li>
+<li><p>对 $\triangle$ 电路<br>$$<br>\left{<br>\begin{aligned}<br>i^{‘}<em>1=i</em>{12}-i_{31}=\frac1{R_{12}}u_{12}-\frac1{R_{31}}u_{31} \<br>i^{‘}<em>2=i</em>{23}-i_{12}=\frac1{R_{23}}u_{23}-\frac1{R_{12}}u_{12} \<br>i^{‘}<em>3=i</em>{31}-i_{23}=\frac1{R_{31}}u_{31}-\frac1{R_{23}}u_{23} \<br>\end{aligned}<br>\right.<br>$$</p>
+</li>
+</ul>
+<h3 id="等效变换公式：-triangle-rightarrow-Y"><a href="#等效变换公式：-triangle-rightarrow-Y" class="headerlink" title="等效变换公式：$\triangle \rightarrow Y$"></a>等效变换公式：$\triangle \rightarrow Y$</h3><p><img data-src="04.png" alt="三角形-星形"><br>$$<br>\left{<br>\begin{aligned}<br>R_1=\frac{R_{12}R_{31}}{\sum R_{ij}} \<br>R_2=\frac{R_{12}R_{23}}{\sum R_{ij}} \<br>R_3=\frac{R_{23}R_{31}}{\sum R_{ij}} \<br>\end{aligned}<br>\right.<br>$$</p>
+<p>若 $$R_{12}=R_{23}=R_{31}=R$$，则 $$R_1=R_2=R_3=\cfrac R 3$$</p>
+<blockquote>
+<p>分母为 $\triangle$ 形中三个电阻之和</p>
+<p>分子为 $\triangle$ 形中与之对应节点相连的电阻之积</p>
+</blockquote>
+<h3 id="等效变换公式：-Y-rightarrow-triangle"><a href="#等效变换公式：-Y-rightarrow-triangle" class="headerlink" title="等效变换公式：$Y \rightarrow \triangle$"></a>等效变换公式：$Y \rightarrow \triangle$</h3><p><img data-src="05.png" alt="星形-三角形"><br>$$<br>\left{<br>\begin{aligned}<br>R_{12}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{3}} \<br>R_{23}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{1}} \<br>R_{31}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{2}} \<br>\end{aligned}<br>\right.<br>$$</p>
+<p>若 $$R_1=R_2=R_3=R$$，则 $$R_{12}=R_{23}=R_{31}=3R$$</p>
+<blockquote>
+<p>分子为 $Y$ 形中三个电阻两两乘积之和</p>
+<p>分母为 $Y$ 形中与之对应两节点的无关电阻</p>
+</blockquote>
+<h3 id="建议画出该图"><a href="#建议画出该图" class="headerlink" title="建议画出该图"></a>建议画出该图</h3><p><img data-src="06.png" alt="全图"></p>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>求 $R_{ab}$ :</p>
+<p>首先选择比较容易变换的电阻进行变换：（$Y \rightarrow \triangle $）</p>
+<p><img data-src="07.png" alt="例题"><br>$$<br>R_{ab}=\cfrac{1}{\cfrac19+\cfrac13+\cfrac14}\Omega=\cfrac{36}{25}\Omega<br>$$</p>
+<h2 id="理想电压源的串联和并联"><a href="#理想电压源的串联和并联" class="headerlink" title="理想电压源的串联和并联"></a>理想电压源的串联和并联</h2><ul>
+<li><p>理想电压源的<strong>并联</strong>必须是同极性、同数值</p>
+</li>
+<li><p>对外电路进行讨论时，与理想电压源<strong>并联</strong>的元件（支路）对外电路不起作用，对外电路讨论时可<strong>断开</strong></p>
+</li>
+<li><p>计算流过理想电压源支路的电流时，并联支路的作用必须予以保留</p>
+</li>
+</ul>
+<h2 id="理想电流源的串联和并联"><a href="#理想电流源的串联和并联" class="headerlink" title="理想电流源的串联和并联"></a>理想电流源的串联和并联</h2><ul>
+<li>理想电流源的<strong>并联</strong>，同方向（同向上或同向下）相加</li>
+<li>理想电流源的<strong>串联</strong>必须是同方向、同数值</li>
+<li>与理想电流源<strong>串联</strong>的元件（支路）对外电路不起作用，对外电路讨论时可短接</li>
+<li>若求理想电流源的端电压时，串联支路的作用必须予以保留</li>
+</ul>
+<h2 id="实际电源的等效变换"><a href="#实际电源的等效变换" class="headerlink" title="实际电源的等效变换"></a>实际电源的等效变换</h2><p><img data-src="08.png" alt="等效变换"></p>
+<p>等效互换条件：<br>$$<br>\begin{aligned}<br>R_{su}=R_{si}&amp;\overset{\triangle}{=}R_{}s \<br>u_s&amp;=R_si_s \<br>(i_s&amp;=\frac{u_s}{R_s})<br>\end{aligned}<br>$$<br>注意：</p>
+<ul>
+<li>两个条件必须同时满足</li>
+<li>等效变换前后要保持电源方向的一致，即电流源的方向由电压源方向的 $“-“$ 指向 $“+”$</li>
+<li>等效是对外部而言，对内不等效</li>
+</ul>
+<h3 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h3><p>运用电源等效变换方法求 $u$</p>
+<p><img data-src="09.png" alt="例题"></p>
+<p>解：</p>
+<p><img data-src="10.png" alt="例题"></p>
+<p>理想电流源的并联可以等效为一个理想电流源（两个理想电流源的数值和）</p>
+<p><img data-src="11.png" alt="例题"></p>
+<p>再转化为电压源与 $6V$ 的电压源组合：</p>
+<p><img data-src="12.png" alt="例题"></p>
+<p>最终等效电路图：</p>
+<p><img data-src="13.png" alt="例题"><br>$$<br>u=4\times\cfrac{\cfrac{5}{4}+2}{2}=6.5V<br>$$</p>
+<h3 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h3><p>已知：$$U_{s1}=12V,U_{s2}=24V,R_1=R_2=20\Omega,R_3=50\Omega$$</p>
+<p><img data-src="14.png" alt="例题"></p>
+<p><img data-src="15.png" alt="例题"></p>
+<p><img data-src="16.png" alt="例题"></p>
+<h2 id="含受控源电路等效电阻的求取"><a href="#含受控源电路等效电阻的求取" class="headerlink" title="含受控源电路等效电阻的求取"></a>含受控源电路等效电阻的求取</h2><p>名词解释：</p>
+<ul>
+<li><p>输入电阻</p>
+<blockquote>
+<p>一个二端无源网络$N_0$，其端口处的电压与电流之比称之为该无源网络的输入电阻，即：</p>
+<p>$$R_{in}=\dfrac{u}{i}$$</p>
+</blockquote>
+</li>
+</ul>
+<p>一个含受控源的简单二端网络，可以通过与独立源相似的等效变换来化简电路。</p>
+<p><img data-src="17.png" alt="例题"></p>
+<p>注意：</p>
+<p><strong>在化简过程中，必须保留受控源的控制变量支路</strong></p>
+<h3 id="例："><a href="#例：" class="headerlink" title="例："></a>例：</h3><p>求电路的输入电阻：</p>
+<p><img data-src="18.png" alt="例题"></p>
+<p><img data-src="20.png" alt="例题"></p>
+<ul>
+<li>可见：含受控源电路的输入电阻为 “+” 为 “-” 均属正常，一定要注意物理量的方向</li>
+</ul>
+<h2 id="运用等效变换分析含受控源的电阻电路"><a href="#运用等效变换分析含受控源的电阻电路" class="headerlink" title="运用等效变换分析含受控源的电阻电路"></a>运用等效变换分析含受控源的电阻电路</h2><blockquote>
+<p>注意：</p>
+<p>等效变换中控制支路不参与等效变换，予以保留</p>
+</blockquote>
+<h3 id="例1-1"><a href="#例1-1" class="headerlink" title="例1"></a>例1</h3><p><img data-src="21.png" alt="例题"></p>
+<blockquote>
+<p>分析：</p>
+<ul>
+<li>控制支路 $3\Omega$ 不参与等效变换</li>
+<li>其余支路：$6A$ 和 $4A$ 可以等效变换，$9\Omega$ 和右侧的混联电阻可以做等效变换</li>
+</ul>
+</blockquote>
+<p>可得到：</p>
+<p><img data-src="22.png" alt="例题"></p>
+<h3 id="例2-1"><a href="#例2-1" class="headerlink" title="例2"></a>例2</h3><p><img data-src="23.png" alt="例题"></p>
+<h2 id="另外一些例题"><a href="#另外一些例题" class="headerlink" title="另外一些例题"></a>另外一些例题</h2><p><img data-src="24.png" alt="例题"></p>
+<p><img data-src="25.png" alt="例题"></p>
+<p><img data-src="26.png" alt="例题"></p>
+<p><img data-src="27.png" alt="例题"></p>
+]]></content>
+      <categories>
+        <category>电路</category>
+      </categories>
+      <tags>
+        <tag>电路</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>电路基础03</title>
     <url>/posts/dian-lu-ji-chu-03/</url>
     <content><![CDATA[<h2 id="一般电路的网孔电流法"><a href="#一般电路的网孔电流法" class="headerlink" title="一般电路的网孔电流法"></a>一般电路的网孔电流法</h2><h3 id="支路电流法"><a href="#支路电流法" class="headerlink" title="支路电流法"></a>支路电流法</h3><p><strong>以支路电流为未知量</strong>，根据 KCL、KVL 列关于支路电流的方程，进行求解的过程</p>
@@ -2221,149 +2216,6 @@
 </ol>
 <h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><p><img data-src="05.png" alt="例题"></p>
 <p><img data-src="06.png" alt="例题"></p>
-]]></content>
-      <categories>
-        <category>电路</category>
-      </categories>
-      <tags>
-        <tag>电路</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>电路基础02</title>
-    <url>/posts/dian-lu-ji-chu-02/</url>
-    <content><![CDATA[<h2 id="等效变换的概念"><a href="#等效变换的概念" class="headerlink" title="等效变换的概念"></a>等效变换的概念</h2><p>如果有两个电路N1、N2，其内部结构不同，但从端口看，它们的电压、电流关系相同（方向、大小均相同），则称它们是相互等效的电路，即N1与N2对外电路的影响是相同的。</p>
-<h2 id="电阻的串联、并联和混联"><a href="#电阻的串联、并联和混联" class="headerlink" title="电阻的串联、并联和混联"></a>电阻的串联、并联和混联</h2><ul>
-<li>分压公式：</li>
-</ul>
-<p>$$<br>u_k=\cfrac{R_k}{\sum{R_k}}u<br>$$</p>
-<ul>
-<li>分流公式：</li>
-</ul>
-<p>$$<br>i_k=\cfrac{G_k}{\sum{G_k}}i<br>$$</p>
-<ul>
-<li><p>混联</p>
-<ol>
-<li><p>电路在几何对称的情况下，应首先找出相应的等电位点，然后再进行化简</p>
-</li>
-<li><p>电桥：</p>
-</li>
-</ol>
-<p><img data-src="01.png" alt="电桥"></p>
-<p>平衡条件（平衡时中间桥臂电流电压均为零）：<br>$$<br>\frac{R_1}{R3}=\frac{R_2}{R_4}<br>$$</p>
-</li>
-</ul>
-<p>  一些翻转和变形：</p>
-<p>  <img data-src="02.png" alt="翻转和变形"></p>
-<ul>
-<li><p>分析法：</p>
-<blockquote>
-<p>先判断电桥是否平衡。</p>
-<p>平衡时中间桥臂电压为零可以将其短路（虚短）；平衡时中间桥臂电流为零可以将其断路（虚断）</p>
-<p>而最后的计算结果相同</p>
-<p>如果电桥不平衡，可采用 $Y-\triangle$ 变换的方法分析</p>
-</blockquote>
-</li>
-<li><p>注：平衡电桥只对无源支路成立</p>
-</li>
-</ul>
-<h2 id="电阻的-Y-triangle-（星形-三角形）变换"><a href="#电阻的-Y-triangle-（星形-三角形）变换" class="headerlink" title="电阻的 $Y-\triangle$ （星形-三角形）变换"></a>电阻的 $Y-\triangle$ （星形-三角形）变换</h2><h3 id="三端网络的等效概念"><a href="#三端网络的等效概念" class="headerlink" title="三端网络的等效概念"></a>三端网络的等效概念</h3><p>若两个三端网络与同一个外部电路相接时，电压 $$u_{12}, u_{23}$$ 与电流 $${i_1, i_2}$$ 之间的关系完全相同，则称这两个三端网络对外互为等效</p>
-<p><img data-src="03.png" alt="三端网络"></p>
-<ul>
-<li><p>对 $Y$ 电路<br>$$<br>\left{<br>\begin{aligned}<br>i_1=\frac{R_3}{R_1R_2+R_2R_3+R_3R_1}u_{12}-\frac{R_2}{R_1R_2+R_2R_3+R_3R_1}u_{31} \<br>i_2=\frac{R_1}{R_1R_2+R_2R_3+R_3R_1}u_{23}-\frac{R_3}{R_1R_2+R_2R_3+R_3R_1}u_{12} \<br>i_3=\frac{R_2}{R_1R_2+R_2R_3+R_3R_1}u_{31}-\frac{R_1}{R_1R_2+R_2R_3+R_3R_1}u_{23} \<br>\end{aligned}<br>\right.<br>$$</p>
-</li>
-<li><p>对 $\triangle$ 电路<br>$$<br>\left{<br>\begin{aligned}<br>i^{‘}<em>1=i</em>{12}-i_{31}=\frac1{R_{12}}u_{12}-\frac1{R_{31}}u_{31} \<br>i^{‘}<em>2=i</em>{23}-i_{12}=\frac1{R_{23}}u_{23}-\frac1{R_{12}}u_{12} \<br>i^{‘}<em>3=i</em>{31}-i_{23}=\frac1{R_{31}}u_{31}-\frac1{R_{23}}u_{23} \<br>\end{aligned}<br>\right.<br>$$</p>
-</li>
-</ul>
-<h3 id="等效变换公式：-triangle-rightarrow-Y"><a href="#等效变换公式：-triangle-rightarrow-Y" class="headerlink" title="等效变换公式：$\triangle \rightarrow Y$"></a>等效变换公式：$\triangle \rightarrow Y$</h3><p><img data-src="04.png" alt="三角形-星形"><br>$$<br>\left{<br>\begin{aligned}<br>R_1=\frac{R_{12}R_{31}}{\sum R_{ij}} \<br>R_2=\frac{R_{12}R_{23}}{\sum R_{ij}} \<br>R_3=\frac{R_{23}R_{31}}{\sum R_{ij}} \<br>\end{aligned}<br>\right.<br>$$</p>
-<p>若 $$R_{12}=R_{23}=R_{31}=R$$，则 $$R_1=R_2=R_3=\cfrac R 3$$</p>
-<blockquote>
-<p>分母为 $\triangle$ 形中三个电阻之和</p>
-<p>分子为 $\triangle$ 形中与之对应节点相连的电阻之积</p>
-</blockquote>
-<h3 id="等效变换公式：-Y-rightarrow-triangle"><a href="#等效变换公式：-Y-rightarrow-triangle" class="headerlink" title="等效变换公式：$Y \rightarrow \triangle$"></a>等效变换公式：$Y \rightarrow \triangle$</h3><p><img data-src="05.png" alt="星形-三角形"><br>$$<br>\left{<br>\begin{aligned}<br>R_{12}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{3}} \<br>R_{23}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{1}} \<br>R_{31}=\frac{R_1R_2+R_2R_3+R_3R_1}{R_{2}} \<br>\end{aligned}<br>\right.<br>$$</p>
-<p>若 $$R_1=R_2=R_3=R$$，则 $$R_{12}=R_{23}=R_{31}=3R$$</p>
-<blockquote>
-<p>分子为 $Y$ 形中三个电阻两两乘积之和</p>
-<p>分母为 $Y$ 形中与之对应两节点的无关电阻</p>
-</blockquote>
-<h3 id="建议画出该图"><a href="#建议画出该图" class="headerlink" title="建议画出该图"></a>建议画出该图</h3><p><img data-src="06.png" alt="全图"></p>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>求 $R_{ab}$ :</p>
-<p>首先选择比较容易变换的电阻进行变换：（$Y \rightarrow \triangle $）</p>
-<p><img data-src="07.png" alt="例题"><br>$$<br>R_{ab}=\cfrac{1}{\cfrac19+\cfrac13+\cfrac14}\Omega=\cfrac{36}{25}\Omega<br>$$</p>
-<h2 id="理想电压源的串联和并联"><a href="#理想电压源的串联和并联" class="headerlink" title="理想电压源的串联和并联"></a>理想电压源的串联和并联</h2><ul>
-<li><p>理想电压源的<strong>并联</strong>必须是同极性、同数值</p>
-</li>
-<li><p>对外电路进行讨论时，与理想电压源<strong>并联</strong>的元件（支路）对外电路不起作用，对外电路讨论时可<strong>断开</strong></p>
-</li>
-<li><p>计算流过理想电压源支路的电流时，并联支路的作用必须予以保留</p>
-</li>
-</ul>
-<h2 id="理想电流源的串联和并联"><a href="#理想电流源的串联和并联" class="headerlink" title="理想电流源的串联和并联"></a>理想电流源的串联和并联</h2><ul>
-<li>理想电流源的<strong>并联</strong>，同方向（同向上或同向下）相加</li>
-<li>理想电流源的<strong>串联</strong>必须是同方向、同数值</li>
-<li>与理想电流源<strong>串联</strong>的元件（支路）对外电路不起作用，对外电路讨论时可短接</li>
-<li>若求理想电流源的端电压时，串联支路的作用必须予以保留</li>
-</ul>
-<h2 id="实际电源的等效变换"><a href="#实际电源的等效变换" class="headerlink" title="实际电源的等效变换"></a>实际电源的等效变换</h2><p><img data-src="08.png" alt="等效变换"></p>
-<p>等效互换条件：<br>$$<br>\begin{aligned}<br>R_{su}=R_{si}&amp;\overset{\triangle}{=}R_{}s \<br>u_s&amp;=R_si_s \<br>(i_s&amp;=\frac{u_s}{R_s})<br>\end{aligned}<br>$$<br>注意：</p>
-<ul>
-<li>两个条件必须同时满足</li>
-<li>等效变换前后要保持电源方向的一致，即电流源的方向由电压源方向的 $“-“$ 指向 $“+”$</li>
-<li>等效是对外部而言，对内不等效</li>
-</ul>
-<h3 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h3><p>运用电源等效变换方法求 $u$</p>
-<p><img data-src="09.png" alt="例题"></p>
-<p>解：</p>
-<p><img data-src="10.png" alt="例题"></p>
-<p>理想电流源的并联可以等效为一个理想电流源（两个理想电流源的数值和）</p>
-<p><img data-src="11.png" alt="例题"></p>
-<p>再转化为电压源与 $6V$ 的电压源组合：</p>
-<p><img data-src="12.png" alt="例题"></p>
-<p>最终等效电路图：</p>
-<p><img data-src="13.png" alt="例题"><br>$$<br>u=4\times\cfrac{\cfrac{5}{4}+2}{2}=6.5V<br>$$</p>
-<h3 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h3><p>已知：$$U_{s1}=12V,U_{s2}=24V,R_1=R_2=20\Omega,R_3=50\Omega$$</p>
-<p><img data-src="14.png" alt="例题"></p>
-<p><img data-src="15.png" alt="例题"></p>
-<p><img data-src="16.png" alt="例题"></p>
-<h2 id="含受控源电路等效电阻的求取"><a href="#含受控源电路等效电阻的求取" class="headerlink" title="含受控源电路等效电阻的求取"></a>含受控源电路等效电阻的求取</h2><p>名词解释：</p>
-<ul>
-<li><p>输入电阻</p>
-<blockquote>
-<p>一个二端无源网络$N_0$，其端口处的电压与电流之比称之为该无源网络的输入电阻，即：</p>
-<p>$$R_{in}=\dfrac{u}{i}$$</p>
-</blockquote>
-</li>
-</ul>
-<p>一个含受控源的简单二端网络，可以通过与独立源相似的等效变换来化简电路。</p>
-<p><img data-src="17.png" alt="例题"></p>
-<p>注意：</p>
-<p><strong>在化简过程中，必须保留受控源的控制变量支路</strong></p>
-<h3 id="例："><a href="#例：" class="headerlink" title="例："></a>例：</h3><p>求电路的输入电阻：</p>
-<p><img data-src="18.png" alt="例题"></p>
-<p><img data-src="20.png" alt="例题"></p>
-<ul>
-<li>可见：含受控源电路的输入电阻为 “+” 为 “-” 均属正常，一定要注意物理量的方向</li>
-</ul>
-<h2 id="运用等效变换分析含受控源的电阻电路"><a href="#运用等效变换分析含受控源的电阻电路" class="headerlink" title="运用等效变换分析含受控源的电阻电路"></a>运用等效变换分析含受控源的电阻电路</h2><blockquote>
-<p>注意：</p>
-<p>等效变换中控制支路不参与等效变换，予以保留</p>
-</blockquote>
-<h3 id="例1-1"><a href="#例1-1" class="headerlink" title="例1"></a>例1</h3><p><img data-src="21.png" alt="例题"></p>
-<blockquote>
-<p>分析：</p>
-<ul>
-<li>控制支路 $3\Omega$ 不参与等效变换</li>
-<li>其余支路：$6A$ 和 $4A$ 可以等效变换，$9\Omega$ 和右侧的混联电阻可以做等效变换</li>
-</ul>
-</blockquote>
-<p>可得到：</p>
-<p><img data-src="22.png" alt="例题"></p>
-<h3 id="例2-1"><a href="#例2-1" class="headerlink" title="例2"></a>例2</h3><p><img data-src="23.png" alt="例题"></p>
-<h2 id="另外一些例题"><a href="#另外一些例题" class="headerlink" title="另外一些例题"></a>另外一些例题</h2><p><img data-src="24.png" alt="例题"></p>
-<p><img data-src="25.png" alt="例题"></p>
-<p><img data-src="26.png" alt="例题"></p>
-<p><img data-src="27.png" alt="例题"></p>
 ]]></content>
       <categories>
         <category>电路</category>
@@ -2584,7 +2436,7 @@
 <p><img data-src="image-20210211151810530.png" alt="image-20210211151810530"></p>
 <h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><p>我使用的是Anaconda用来管理Python，下载页面是<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">清华大学开源镜像站</a>，速度会快一些。由于它也是编程环境，所以我将其安装在<code>D:\CodeEnv\Anaconda3</code>目录下。</p>
 <p>安装完成后按照<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">镜像使用帮助</a>的步骤更改<code>.condarc</code>文件进行换源，换成国内源将会大大提高下载Python包的速度。</p>
-<p>然后同样将<code>D:\CodeEnv\Anaconda3</code>添加进 环境变量–&gt;系统变量–&gt;Path 目录下，可使用 <code>python --version</code> 进行验证：</p>
+<p>然后同样将<code>D:\CodeEnv\Anaconda3</code>以及 <code>D:\CodeEnv\Anaconda3\Scripts</code> 两个路径添加进 环境变量–&gt;系统变量–&gt;Path 目录下，可使用 <code>python --version</code> 进行验证：</p>
 <p><img data-src="image-20210211152831704.png" alt="image-20210211152831704"></p>
 <p>下面列出一些常见命令，启动 Anaconda Prompt：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda update conda  	<span class="comment">#升级conda(升级Anaconda前需要先升级conda)：</span></span><br><span class="line">conda update anaconda  	<span class="comment">#升级anaconda</span></span><br><span class="line">conda update --all  	<span class="comment">#更新所有包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># conda 和 pip 常用命令对比，一般 pip 版本更新速度比 conda 版本更快，更推荐用 pip 来安装包</span></span><br><span class="line">conda install [package-name]        <span class="comment"># 安装名为[package-name]的包</span></span><br><span class="line">conda install [package-name]=X.X    <span class="comment"># 安装名为[package-name]的包并指定版本X.X</span></span><br><span class="line">conda update [package-name]         <span class="comment"># 更新名为[package-name]的包</span></span><br><span class="line">conda remove [package-name]         <span class="comment"># 删除名为[package-name]的包</span></span><br><span class="line">conda list                          <span class="comment"># 列出当前环境下已安装的所有包</span></span><br><span class="line">conda search [package-name]         <span class="comment"># 列出名为[package-name]的包在conda源中的所有可用版本</span></span><br><span class="line"></span><br><span class="line">pip install [package-name]              <span class="comment"># 安装名为[package-name]的包</span></span><br><span class="line">pip install [package-name]==X.X         <span class="comment"># 安装名为[package-name]的包并指定版本X.X</span></span><br><span class="line">pip install [package-name] --proxy=代理服务器IP:端口号         <span class="comment"># 使用代理服务器安装</span></span><br><span class="line">pip install [package-name] --upgrade    <span class="comment"># 更新名为[package-name]的包</span></span><br><span class="line">pip uninstall [package-name]            <span class="comment"># 删除名为[package-name]的包</span></span><br><span class="line">pip list                                <span class="comment"># 列出当前环境下已安装的所有包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 环境相关</span></span><br><span class="line">conda create --name [env-name]      <span class="comment"># 建立名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda activate [env-name]           <span class="comment"># 进入名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda deactivate                    <span class="comment"># 退出当前的Conda虚拟环境</span></span><br><span class="line">conda env remove --name [env-name]  <span class="comment"># 删除名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda env list                      <span class="comment"># 列出所有Conda虚拟环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># conda 中配置代理：在用户目录下的 .condarc 文件中添加以下内容：</span></span><br><span class="line">proxy_servers:</span><br><span class="line">    http: http://代理服务器IP:端口号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询某个 conda 指令使用-h后缀，如：</span></span><br><span class="line">conda update -h</span><br></pre></td></tr></table></figure>
@@ -2662,8 +2514,156 @@
 <h2 id="关于重置电脑"><a href="#关于重置电脑" class="headerlink" title="关于重置电脑"></a>关于重置电脑</h2><p>有些人认为重置电脑就意味着所有文件都删除，这是不对的。Win10可以仅仅删除C盘（安装了Windows的驱动器盘）的内容，这就意味着虽然所有的软件都被删除了，但是软件的数据（包括浏览器等的下载数据和聊天数据）只要不在C盘，就可以被保留下来。</p>
 <p><img data-src="image-20210211182154052.png" alt="image-20210211182154052"></p>
 <p><img data-src="image-20210211182210574.png" alt="image-20210211182210574"></p>
-<p>所以微信和QQ的重要聊天数据请不要放在C盘，这样即使重置系统，所有的聊天记录也不会消失。</p>
+<p>所以微信和QQ的重要聊天数据请不要放在C盘，这样即使重置系统，所有的聊天记录也不会消失。在重新安装微信和QQ后，聊天记录的存储位置选择你原来数据的所在位置，软件就会提示你“有旧的数据，是否使用”，选择使用即可。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>2020年度总结</title>
+    <url>/posts/2020-nian-du-zong-jie/</url>
+    <content><![CDATA[<hr>
+<p>还没写完TAT，写完再放出</p>
+<hr>
+]]></content>
+      <categories>
+        <category>年度总结</category>
+      </categories>
+      <tags>
+        <tag>2020</tag>
+        <tag>年度总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>正则表达式总结（一）</title>
+    <url>/posts/zheng-ze-biao-da-shi-zong-jie-yi/</url>
+    <content><![CDATA[<h1 id="正则表达式入门"><a href="#正则表达式入门" class="headerlink" title="正则表达式入门"></a>正则表达式入门</h1><h2 id="如何使用正则表达式"><a href="#如何使用正则表达式" class="headerlink" title="如何使用正则表达式"></a>如何使用正则表达式</h2><p>搜索和替换是正则表达式的两种基本用途，下面是两个例子：</p>
+<ul>
+<li>搜索</li>
+</ul>
+<blockquote>
+<p>假设一个需求是要把 <code>car</code>、<code>CAR</code>、<code>Car</code> 或 <code>CaR</code> 都找出来，同时要确保 <code>scar</code>、<code>carry</code> 和 <code>incarcerate</code> 之类的单词不会被匹配到。</p>
+</blockquote>
+<p>那么对应的语句为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">\b[Cc][Aa][Rr]\b</span><br></pre></td></tr></table></figure>
+
+<p>当然，一些高级的编辑器提供了不区分大小写以及 <code>Match Only Whole World</code> （仅匹配整个单词）的选项，但还有许多编辑器不具备这一功能，而你往往无法正在你编辑的文档里做出这种调整。使用正则表达式而不是纯文本 <code>car</code> 就可以解决这个问题。</p>
+<ul>
+<li>替换</li>
+</ul>
+<blockquote>
+<p>把 URL 地址字符串替换为真正可点击的 URL。<br>例如：原始的 URL 为：<code>https://convivae.top/</code><br>替换后的结果为</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">https://convivae.top</span>&gt;</span>https://convivae.top/<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>这需要先把相关文本里的 URL 地址字符串找出来（比如说搜索以 <code>http://</code> 或 <code>https://</code> 开头、以句号、逗号、空白字符结尾的字符串），再把找到的 URL 地址字符串替换为 html 语言的 <code>&lt;A HREF=...&gt;...&lt;/A&gt;</code> 元素。</p>
+<h2 id="什么是正则表达式"><a href="#什么是正则表达式" class="headerlink" title="什么是正则表达式"></a>什么是正则表达式</h2><p>定义：简单地说，正则表达式是用来匹配和处理文本的字符串。</p>
+<p>正则表达式并不是一种完备的程序设计语言，甚至都算不上是一种直接安装并运行的程序。更准确地说，正则表达式语言是内置于其它语言或软件产品里的“迷你”语言。现在几乎所有的语言或工具都支持正则表达式，但是正则表达式与你正在使用的语言或工具可以说毫无相似之处。正则表达式虽然也被称为一种语言，但它与人们对语言的印象相去甚远。</p>
+<p>说完这些掌故，我们再来看一些例子，它们都是合法的正则表达式：</p>
+<ul>
+<li><code>Ben</code></li>
+<li><code>.</code></li>
+<li><code>www\.convivae\.com</code></li>
+<li><code>[a-zA-Z0-9_.]*</code></li>
+<li><code>&lt;[Hh]1&gt;.*&lt;/[Hh]1&gt;</code></li>
+<li><code>\r\n\r\n</code></li>
+<li><code>\d&#123;3,3&#125;-\d&#123;3,3&#125;-\d&#123;4,4&#125;</code></li>
+</ul>
+<p>请注意，语法是正则表达式最容易掌握的部分，真正的挑战是学会如何运用那些语法把实际问题分解为一系列正则表达式并最终解决。与学习其他程序设计语言一样，只靠读书是学不会如何灵活运用语法正则的，你必须通过亲身实践才能真正掌握它们。</p>
+<h2 id="使用正则表达式"><a href="#使用正则表达式" class="headerlink" title="使用正则表达式"></a>使用正则表达式</h2><ul>
+<li>正则表达式的使用方法和具体功能，在不同的应用程序/语言中各有不同。</li>
+<li>并非所有的正则表达式实现都是一样的。在不同的应用程序/语言里，正则表达式的语法和功能往往会有明显（有时也不那么明显）的差异</li>
+</ul>
+<p>文章 <a href="/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/" title="常见应用软件和编程语言中的正则表达式">常见应用软件和编程语言中的正则表达式</a> 对支持正则表达式的许多应用程序和语言在这方面的细节进行了汇总。在继续下面的学习之前，你应该先熟悉一下，看看你们正在使用的应用程序或语言在正则表达式方面有哪些与众不同之处。</p>
+<p>在继续学习之前，你还用该了解以下几个事实：</p>
+<ul>
+<li>在使用正则表达式的时候，你将发现几乎所有的问题都有不止一种解决方案。它们有的比较简单，有的比较快速，有的兼容性好，有的功能更全。这么说吧，在编写正则表达式的时候，只有对、错两种选择的情况是很少见的——同一个问题往往会有多种解决方案。</li>
+<li>正如前面讲的那样，正则表达式的不同实现往往会有所差异。在后面的内容中，已经尽了最大的努力来保证实例能适用于尽可能多的实现；但有些差异和不兼容是无法回避的，针对这种情况，文中都尽可能地进行了注明。</li>
+<li>与其他编程语言一样，学习正则表达式的关键是实践，实践，再实践，强烈建议在学习后面的内容时能够亲自实践每一个示例。</li>
+</ul>
+<h1 id="匹配单个字符"><a href="#匹配单个字符" class="headerlink" title="匹配单个字符"></a>匹配单个字符</h1><h2 id="匹配纯文本"><a href="#匹配纯文本" class="headerlink" title="匹配纯文本"></a>匹配纯文本</h2><p><code>Ben</code> 是一个正则表达式。因为本身是纯文本（甚至可以只包含纯文本）。当然，像这样使用正则表达式是一种浪费，但它作为我们学习正则表达式的起点还是很不错的。一个例子：</p>
+<p>文本：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">Hello, my name is Ben. This is my article.</span><br></pre></td></tr></table></figure>
+
+<p>正则表达式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">my</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<blockquote>
+<p>Hello, <span class="label primary">my</span> name is Ben. This is <span class="label primary">my</span> article.</p>
+</blockquote>
+<p>分析：</p>
+<p>这里使用的正则表达式是纯文本，它将匹配原始文本里的 my，它在原始文本里找到了两个结果。</p>
+<ul>
+<li>注意，绝大多数正则表达式引擎的默认行为是只返回第一个匹配结果。具体到上面那个例子，它只会返回原始文本里的第一个 <code>my</code>。</li>
+<li>那么怎样才能把两个或更多个匹配结果都找出来呢？绝大多数的正则表达式的实现都提供了一种能够把所有的匹配结果全部找出来的机制。比如说，在 JavaScript 里，可选的 g（意思是 global，全局）标志将返回一个包含着所有匹配的结果数组。使用不同语言或工具请查阅文章 <a href="/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/" title="常见应用软件和编程语言中的正则表达式">常见应用软件和编程语言中的正则表达式</a>。</li>
+<li>正则表达式是区分大小写字母的，所以 my 不能匹配 My。绝大多数的正则表达式的实现也支持不区分大小写的匹配操作。比如，JavaScript 用户可以用 i 标志来强制执行一次不区分字母大小写的搜索。使用不同语言或工具请查阅文章 <a href="/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/" title="常见应用软件和编程语言中的正则表达式">常见应用软件和编程语言中的正则表达式</a>。</li>
+</ul>
+<h2 id="匹配任意字符"><a href="#匹配任意字符" class="headerlink" title="匹配任意字符"></a>匹配任意字符</h2><p>在正则表达式里，特殊字符（或字符集合）用来给出要搜索的东西。<code>.</code> 字符（英文句号）可以匹配任何一个单个的字符。</p>
+<blockquote>
+<p>注：正则表达式里的 <code>.</code> 字符相当于 DOS 的 <code>?</code> 字符，也相当于 SQL 里的 <code>_</code> （下划线）字符。</p>
+</blockquote>
+<p>于是，用正则表达式 <code>c.t</code> 进行搜索将匹配到 <code>cat</code> 和 <code>cot</code> （还能匹配到一些毫无意义的单词）</p>
+<h3 id="例一"><a href="#例一" class="headerlink" title="例一"></a>例一</h3><p>文本：</p>
+<blockquote>
+<p>sales.xls<br>sales1.xls<br>orders3.xls<br>sales2.xls<br>sales3.xls<br>apac1.xls<br>europe2.xls<br>na1.xls<br>na2.xls<br>sa1.xls</p>
+</blockquote>
+<p>正则表达式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sales.</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<blockquote>
+<span class="label primary">sales.</span>xls<br/><span class="label primary">sales1</span>.xls<br/>orders3.xls<br/><span class="label primary">sales2</span>.xls<br/><span class="label primary">sales3</span>.xls
+<p>apac1.xls<br>europe2.xls<br>na1.xls<br>na2.xls<br>sa1.xls</p>
+</blockquote>
+<p>分析：</p>
+<p>正则表达式 <code>sales.</code> 将把由字符串 sales 和另外一个字符构成的文件名查找出来。9个文件里有四个与这个模式（pattern）相匹配。</p>
+<ul>
+<li>人们常用“模式”表示实际的正则表达式</li>
+<li>正则表达式可以用来匹配包含着字符串内容的模式。匹配的并不总是整个字符串，而是与某个模式相匹配的字符，即使他们只是整个字符串的一部分。在上面的例子里，我们使用的正则表达式并不能匹配整个文件名</li>
+<li><code>.</code> 能够匹配任何一个单个的字符，也包括<code>.</code> 本身，故这个模式也与 <code>sales.</code> 相匹配</li>
+</ul>
+<h3 id="例二"><a href="#例二" class="headerlink" title="例二"></a>例二</h3><p>文本：</p>
+<blockquote>
+<p>sales.xls<br>sales1.xls<br>orders3.xls<br>sales2.xls<br>sales3.xls<br>apac1.xls<br>europe2.xls<br>na1.xls<br>na2.xls<br>sa1.xls</p>
+</blockquote>
+<p>正则表达式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.a.</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<blockquote>
+<span class="label primary">sal</span>.es.xls<br/><span class="label primary">sal</span>.es1.xls<br/>orders3.xls<br/><span class="label primary">sal</span>es2xls<br/><span class="label primary">sal</span>es3.xls<br/>a<span class="label primary">pac</span>1.xls<br/>europe2.xls<br/><span class="label primary">na1</span>.xls<br/><span class="label primary">na2</span>.xls<br/><span class="label primary">sa1</span>.xls
+</blockquote>
+<p>分析：</p>
+<p>该模式将与第二个字符是 <code>a</code> 的任意三个字符匹配</p>
+<h2 id="匹配特殊字符"><a href="#匹配特殊字符" class="headerlink" title="匹配特殊字符"></a>匹配特殊字符</h2><p>思考一个问题：既然 <code>.</code> 是一个能够与任何一个单字符相匹配的特殊字符，那么怎样才能搜索 <code>.</code> 本身呢？这时候就要想办法来告诉正则表达式你需要的是 <code>.</code> 字符本身而不是它在正则表达式中的特殊含义。</p>
+<p>为此，你必须在 <code>.</code> 的前面加上一个 <code>\</code> （反斜杠）字符来对它进行转义。 <code>\</code> 是一个元字符（metacharacter，表示“这个字符有特殊含义”，而不是字符本身含义）</p>
+<blockquote>
+<p>当然，如果要搜索 <code>\</code> 本身，我们仍然可以用 <code>\</code> 进行转义，相应的正则表达式是两个连续的反斜杠字符 <code>\\</code></p>
+</blockquote>
+<p>再一次验证刚才的例子：</p>
+<p>文本：</p>
+<blockquote>
+<p>sales.xls<br>sales1.xls<br>orders3.xls<br>sales2.xls<br>sales3.xls<br>apac1.xls<br>europe2.xls<br>na1.xls<br>na2.xls<br>sa1.xls</p>
+</blockquote>
+<p>正则表达式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.a.\.xls</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<blockquote>
+<p>sales.xls<br>sales1.xls<br>orders3.xls<br>sales2.xls<br>sales3.xls<br>apac1.xls<br>europe2.xls<br/><span class="label primary">na1</span>.xls<br/><span class="label primary">na2</span>.xls<br/><span class="label primary">sa1</span>.xls</p>
+</blockquote>
+<p>分析：</p>
+<p>这个例子是把以 <code>na</code>（表示北美）或 <code>sa</code>（表示南美）开头的文件（不管它们后面跟着一个什么数字）找出来。</p>
+<p>第一个 <code>.</code> 匹配 <code>n</code>（在前两个匹配结果里）或 <code>s</code>（在第三个匹配结果里），第二个 <code>.</code> 匹配 <code>1</code> 或 <code>2</code> 。接下来，<code>\.</code> 匹配文件名与扩展名之间的分隔符 <code>.</code> 本身，最后的 <code>xls</code> 匹配它本身。</p>
+<ul>
+<li>我们刚才讲过，<code>.</code> 可以匹配任意一个字符，这一说法并非绝对准确。在绝大多数的正则表达式实现里，<code>.</code> 只能匹配除换行符以外的任何单个字符。</li>
+</ul>
+<h1 id="参考书目"><a href="#参考书目" class="headerlink" title="参考书目"></a>参考书目</h1><p>（美国）Ben Forta. 正则表达式必知必会. 北京：人民邮电出版社, 2015.1.</p>
+]]></content>
+      <categories>
+        <category>正则表达式</category>
+      </categories>
+      <tags>
+        <tag>正则表达式</tag>
+      </tags>
   </entry>
   <entry>
     <title>Hexo 博客踩坑</title>

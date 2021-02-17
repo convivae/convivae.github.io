@@ -53,7 +53,7 @@
 <meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211182154052.png">
 <meta property="og:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211182210574.png">
 <meta property="article:published_time" content="2021-02-11T05:46:19.000Z">
-<meta property="article:modified_time" content="2021-02-13T09:29:59.743Z">
+<meta property="article:modified_time" content="2021-02-17T10:51:09.549Z">
 <meta property="article:author" content="Convivae">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://convivae.top/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/image-20210211144741685.png">
@@ -270,7 +270,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-13 17:29:59" itemprop="dateModified" datetime="2021-02-13T17:29:59+08:00">2021-02-13</time>
+                <time title="修改时间：2021-02-17 18:51:09" itemprop="dateModified" datetime="2021-02-17T18:51:09+08:00">2021-02-17</time>
               </span>
 
           
@@ -321,7 +321,7 @@
 <p><img data-src="image-20210211151810530.png" alt="image-20210211151810530"></p>
 <h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><p>我使用的是Anaconda用来管理Python，下载页面是<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">清华大学开源镜像站</a>，速度会快一些。由于它也是编程环境，所以我将其安装在<code>D:\CodeEnv\Anaconda3</code>目录下。</p>
 <p>安装完成后按照<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">镜像使用帮助</a>的步骤更改<code>.condarc</code>文件进行换源，换成国内源将会大大提高下载Python包的速度。</p>
-<p>然后同样将<code>D:\CodeEnv\Anaconda3</code>添加进 环境变量–&gt;系统变量–&gt;Path 目录下，可使用 <code>python --version</code> 进行验证：</p>
+<p>然后同样将<code>D:\CodeEnv\Anaconda3</code>以及 <code>D:\CodeEnv\Anaconda3\Scripts</code> 两个路径添加进 环境变量–&gt;系统变量–&gt;Path 目录下，可使用 <code>python --version</code> 进行验证：</p>
 <p><img data-src="image-20210211152831704.png" alt="image-20210211152831704"></p>
 <p>下面列出一些常见命令，启动 Anaconda Prompt：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">conda update conda  	<span class="comment">#升级conda(升级Anaconda前需要先升级conda)：</span></span><br><span class="line">conda update anaconda  	<span class="comment">#升级anaconda</span></span><br><span class="line">conda update --all  	<span class="comment">#更新所有包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># conda 和 pip 常用命令对比，一般 pip 版本更新速度比 conda 版本更快，更推荐用 pip 来安装包</span></span><br><span class="line">conda install [package-name]        <span class="comment"># 安装名为[package-name]的包</span></span><br><span class="line">conda install [package-name]=X.X    <span class="comment"># 安装名为[package-name]的包并指定版本X.X</span></span><br><span class="line">conda update [package-name]         <span class="comment"># 更新名为[package-name]的包</span></span><br><span class="line">conda remove [package-name]         <span class="comment"># 删除名为[package-name]的包</span></span><br><span class="line">conda list                          <span class="comment"># 列出当前环境下已安装的所有包</span></span><br><span class="line">conda search [package-name]         <span class="comment"># 列出名为[package-name]的包在conda源中的所有可用版本</span></span><br><span class="line"></span><br><span class="line">pip install [package-name]              <span class="comment"># 安装名为[package-name]的包</span></span><br><span class="line">pip install [package-name]==X.X         <span class="comment"># 安装名为[package-name]的包并指定版本X.X</span></span><br><span class="line">pip install [package-name] --proxy=代理服务器IP:端口号         <span class="comment"># 使用代理服务器安装</span></span><br><span class="line">pip install [package-name] --upgrade    <span class="comment"># 更新名为[package-name]的包</span></span><br><span class="line">pip uninstall [package-name]            <span class="comment"># 删除名为[package-name]的包</span></span><br><span class="line">pip list                                <span class="comment"># 列出当前环境下已安装的所有包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 环境相关</span></span><br><span class="line">conda create --name [env-name]      <span class="comment"># 建立名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda activate [env-name]           <span class="comment"># 进入名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda deactivate                    <span class="comment"># 退出当前的Conda虚拟环境</span></span><br><span class="line">conda env remove --name [env-name]  <span class="comment"># 删除名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda env list                      <span class="comment"># 列出所有Conda虚拟环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># conda 中配置代理：在用户目录下的 .condarc 文件中添加以下内容：</span></span><br><span class="line">proxy_servers:</span><br><span class="line">    http: http://代理服务器IP:端口号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询某个 conda 指令使用-h后缀，如：</span></span><br><span class="line">conda update -h</span><br></pre></td></tr></table></figure>
@@ -399,7 +399,7 @@
 <h2 id="关于重置电脑"><a href="#关于重置电脑" class="headerlink" title="关于重置电脑"></a>关于重置电脑</h2><p>有些人认为重置电脑就意味着所有文件都删除，这是不对的。Win10可以仅仅删除C盘（安装了Windows的驱动器盘）的内容，这就意味着虽然所有的软件都被删除了，但是软件的数据（包括浏览器等的下载数据和聊天数据）只要不在C盘，就可以被保留下来。</p>
 <p><img data-src="image-20210211182154052.png" alt="image-20210211182154052"></p>
 <p><img data-src="image-20210211182210574.png" alt="image-20210211182210574"></p>
-<p>所以微信和QQ的重要聊天数据请不要放在C盘，这样即使重置系统，所有的聊天记录也不会消失。</p>
+<p>所以微信和QQ的重要聊天数据请不要放在C盘，这样即使重置系统，所有的聊天记录也不会消失。在重新安装微信和QQ后，聊天记录的存储位置选择你原来数据的所在位置，软件就会提示你“有旧的数据，是否使用”，选择使用即可。</p>
 
     </div>
 
