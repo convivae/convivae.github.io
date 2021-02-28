@@ -6,7 +6,7 @@
   <link href="https://convivae.top/atom.xml" rel="self"/>
   
   <link href="https://convivae.top/"/>
-  <updated>2021-02-17T12:18:32.451Z</updated>
+  <updated>2021-02-28T11:32:29.944Z</updated>
   <id>https://convivae.top/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>翻转链表</title>
+    <link href="https://convivae.top/posts/fan-zhuan-lian-biao/"/>
+    <id>https://convivae.top/posts/fan-zhuan-lian-biao/</id>
+    <published>2021-02-28T11:29:24.000Z</published>
+    <updated>2021-02-28T11:32:29.944Z</updated>
+    
+    
+    <summary type="html">翻转链表</summary>
+    
+    
+    
+    <category term="算法" scheme="https://convivae.top/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="Java" scheme="https://convivae.top/tags/Java/"/>
+    
+    <category term="算法" scheme="https://convivae.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java 基础查漏补缺</title>
+    <link href="https://convivae.top/posts/java-ji-chu-cha-lou-bu-que/"/>
+    <id>https://convivae.top/posts/java-ji-chu-cha-lou-bu-que/</id>
+    <published>2021-02-28T02:28:36.000Z</published>
+    <updated>2021-02-28T11:50:12.814Z</updated>
+    
+    
+    <summary type="html">一些 Java 的基础知识，待完善</summary>
+    
+    
+    
+    <category term="基础" scheme="https://convivae.top/categories/%E5%9F%BA%E7%A1%80/"/>
+    
+    
+    <category term="Java" scheme="https://convivae.top/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>关于炒股这件小事</title>
@@ -53,7 +93,7 @@
     <link href="https://convivae.top/posts/2020-nian-du-zong-jie/"/>
     <id>https://convivae.top/posts/2020-nian-du-zong-jie/</id>
     <published>2020-12-31T05:41:46.000Z</published>
-    <updated>2021-02-11T10:52:09.136Z</updated>
+    <updated>2021-02-28T02:30:03.716Z</updated>
     
     
     <summary type="html">2020年，好像经历了很多，也好像什么也没经历。做个总结，为新的一年立几个 flag 吧。还未写完</summary>
@@ -342,48 +382,6 @@
     
     
     <summary type="html">mybatis中的连接池及事务控制，基于XML配置的动态SQL语句使用，多表操作</summary>
-    
-    
-    
-    <category term="Mybatis" scheme="https://convivae.top/categories/Mybatis/"/>
-    
-    
-    <category term="Mybatis" scheme="https://convivae.top/tags/Mybatis/"/>
-    
-    <category term="JDBC" scheme="https://convivae.top/tags/JDBC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mybatis学习笔记02</title>
-    <link href="https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/"/>
-    <id>https://convivae.top/posts/mybatis-xue-xi-bi-ji-02/</id>
-    <published>2020-02-05T10:53:01.000Z</published>
-    <updated>2020-03-04T16:38:25.159Z</updated>
-    
-    
-    <summary type="html">Mybatis 的 CRUD 以及配置参数的讲解</summary>
-    
-    
-    
-    <category term="Mybatis" scheme="https://convivae.top/categories/Mybatis/"/>
-    
-    
-    <category term="Mybatis" scheme="https://convivae.top/tags/Mybatis/"/>
-    
-    <category term="JDBC" scheme="https://convivae.top/tags/JDBC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mybatis学习笔记01</title>
-    <link href="https://convivae.top/posts/mybatis-xue-xi-bi-ji-01/"/>
-    <id>https://convivae.top/posts/mybatis-xue-xi-bi-ji-01/</id>
-    <published>2020-02-05T02:38:59.000Z</published>
-    <updated>2020-03-04T16:39:39.524Z</updated>
-    
-    
-    <summary type="html">Mybatis概述</summary>
     
     
     
