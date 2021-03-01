@@ -30,8 +30,9 @@
 <meta property="og:description" content="一些 Java 的基础知识，待完善">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://convivae.top/posts/java-ji-chu-cha-lou-bu-que/4552908_1476435955845_3AA2482F152044FA3EC4640FD49DAE02">
+<meta property="og:image" content="https://convivae.top/posts/java-ji-chu-cha-lou-bu-que/837161_1488616442711_250E74268F38A4202D8C30E4329DEBCC">
 <meta property="article:published_time" content="2021-02-28T02:28:36.000Z">
-<meta property="article:modified_time" content="2021-02-28T11:50:12.814Z">
+<meta property="article:modified_time" content="2021-03-01T13:34:57.887Z">
 <meta property="article:author" content="Convivae">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -241,10 +242,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-02-28 10:28:36 / 修改时间：19:50:12" itemprop="dateCreated datePublished" datetime="2021-02-28T10:28:36+08:00">2021-02-28</time>
+              <time title="创建时间：2021-02-28 10:28:36" itemprop="dateCreated datePublished" datetime="2021-02-28T10:28:36+08:00">2021-02-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-01 21:34:57" itemprop="dateModified" datetime="2021-03-01T21:34:57+08:00">2021-03-01</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -274,7 +281,49 @@
 </blockquote>
 <h2 id="基本的数据结构"><a href="#基本的数据结构" class="headerlink" title="基本的数据结构"></a>基本的数据结构</h2><p><img data-src="4552908_1476435955845_3AA2482F152044FA3EC4640FD49DAE02" alt="img"></p>
 <p>   从框架图中了解继承关系以及重要的数据结构（包括其继承情况、底层原理等）</p>
-<h3 id="String、StringBuilder、StringBuffer"><a href="#String、StringBuilder、StringBuffer" class="headerlink" title="String、StringBuilder、StringBuffer"></a>String、StringBuilder、StringBuffer</h3><h3 id="hashMap、linkedHashMap、hashTable"><a href="#hashMap、linkedHashMap、hashTable" class="headerlink" title="hashMap、linkedHashMap、hashTable"></a>hashMap、linkedHashMap、hashTable</h3><h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><h2 id="二进制相关"><a href="#二进制相关" class="headerlink" title="二进制相关"></a>二进制相关</h2><h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p>一旦在finally块中使用了return或throw语句，将会导致try块，catch块中的return，throw语句失效</p>
+<p>集合常考点：</p>
+<p><img data-src="837161_1488616442711_250E74268F38A4202D8C30E4329DEBCC" alt="img"></p>
+<p>Collection中存放的是一组各自独立的对象，Map中存放的是“键-值”对象。</p>
+<p>List和Set都是Collection的子接口，List是一个有序可重复列表，Set是一个无序重复集。</p>
+<p>而Array是数组，并不继承Collection接口。</p>
+<h3 id="String、StringBuilder、StringBuffer"><a href="#String、StringBuilder、StringBuffer" class="headerlink" title="String、StringBuilder、StringBuffer"></a>String、StringBuilder、StringBuffer</h3><table>
+<thead>
+<tr>
+<th>String</th>
+<th>StringBuffer</th>
+<th>StringBuilder</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>String的值是不可变的，这就导致每次对String的操作都会生成新的String对象，不仅效率低下，而且浪费大量优先的内存空间</td>
+<td>StringBuffer是可变类，和线程安全的字符串操作类，任何对它指向的字符串的操作都不会产生新的对象。每个StringBuffer对象都有一定的缓冲区容量，当字符串大小没有超过容量时，不会分配新的容量，当字符串大小超过容量时，会自动增加容量</td>
+<td>可变类，速度更快</td>
+</tr>
+<tr>
+<td>不可变</td>
+<td>可变</td>
+<td>可变</td>
+</tr>
+<tr>
+<td></td>
+<td>线程安全</td>
+<td>线程不安全</td>
+</tr>
+<tr>
+<td></td>
+<td>多线程操作字符串</td>
+<td>单线程操作字符串</td>
+</tr>
+</tbody></table>
+<p><strong>对String对象的任何改变都不影响到原对象，相关的任何change操作都会生成新的对象</strong></p>
+<p>和 String 类不同的是，StringBuffer 和 StringBuilder 类的对象能够被多次的修改，并且<strong>不产生新的未使用对象</strong>。</p>
+<p>由于 StringBuilder 相较于 StringBuffer 有速度优势，<strong>所以多数情况下建议使用 StringBuilder 类</strong>。然而在应用程序要求线程安全的情况下，则必须使用 StringBuffer 类。</p>
+<p><strong>小结:</strong></p>
+<p>（1）如果要操作少量的数据用 String；</p>
+<p>（2）多线程操作字符串缓冲区下操作大量数据 StringBuffer；</p>
+<p>（3）单线程操作字符串缓冲区下操作大量数据 StringBuilder。</p>
+<h3 id="hashMap、linkedHashMap、hashTable"><a href="#hashMap、linkedHashMap、hashTable" class="headerlink" title="hashMap、linkedHashMap、hashTable"></a>hashMap、linkedHashMap、hashTable</h3><p>Hashmap中的value可以之null，get(key)==null有两种情况，一是key不存在，二是该key中存的是null，所以应该使用map.containskey(key)返回的true/false来判断是否存在这个key。</p>
+<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><h2 id="二进制相关"><a href="#二进制相关" class="headerlink" title="二进制相关"></a>二进制相关</h2><h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p>一旦在finally块中使用了return或throw语句，将会导致try块，catch块中的return，throw语句失效</p>
    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">returnTest</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception e)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">finally</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>   返回 false</p>
@@ -303,7 +352,8 @@
 </li>
 </ol>
 <h3 id="static-相关"><a href="#static-相关" class="headerlink" title="static 相关"></a>static 相关</h3><p>声明位置 初始值 生命周期 修饰的内容</p>
-<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><h2 id="父类、子类、继承、super"><a href="#父类、子类、继承、super" class="headerlink" title="父类、子类、继承、super"></a>父类、子类、继承、super</h2><ol>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>abstract修饰的类是抽象类，是可以继承的，而final修饰的类表示不能再被继承，故两者不能共同使用</p>
+<h2 id="父类、子类、继承、super"><a href="#父类、子类、继承、super" class="headerlink" title="父类、子类、继承、super"></a>父类、子类、继承、super</h2><ol>
 <li><p>子类构造函数调用父类构造函数用super，且super语句必须是子类构造方法的第一句</p>
 </li>
 <li><p>子类重写父类方法后，若想调用父类中被重写的方法，用super。未被重写的方法可以直接调用。</p>
@@ -322,7 +372,11 @@
 </ol>
 <h2 id="文件处理"><a href="#文件处理" class="headerlink" title="文件处理"></a>文件处理</h2><p>文件操作的类及其用法：文本文件 二进制文件</p>
 <h2 id="内存使用问题"><a href="#内存使用问题" class="headerlink" title="内存使用问题"></a>内存使用问题</h2><p>各个变量的存储位置，JVM的内存模型等</p>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2>
+<h2 id="多线程、同步等问题"><a href="#多线程、同步等问题" class="headerlink" title="多线程、同步等问题"></a>多线程、同步等问题</h2><p>volatile关键字是一种轻量级的同步机制，只保证数据的可见性，而不保证数据的原子性。</p>
+<p>volatile关键字有两个作用：</p>
+<p>1.并发环境可见性：volatile修饰后的变量能够保证该变量在线程间的可见性，线程进行数据的读写操作时将绕开工作内存（CPU缓存）而直接跟主内存进行数据交互，即线程进行读操作时直接从主内存中读取，写操作时直接将修改后端变量刷新到主内存中，这样就能保证其他线程访问到的数据是最新数据</p>
+<p>2.并发环境有序性：通过对volatile变量采取内存屏障（Memory barrier）的方式来防止编译重排序和CPU指令重排序，具体方式是通过在操作volatile变量的指令前后加入内存屏障，来实现happens-before关系，保证在多线程环境下的数据交互不会出现紊乱。</p>
+
     </div>
 
     
@@ -451,7 +505,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.</span> <span class="nav-text">优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">基本的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String%E3%80%81StringBuilder%E3%80%81StringBuffer"><span class="nav-number">2.1.</span> <span class="nav-text">String、StringBuilder、StringBuffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hashMap%E3%80%81linkedHashMap%E3%80%81hashTable"><span class="nav-number">2.2.</span> <span class="nav-text">hashMap、linkedHashMap、hashTable</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text">关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceof"><span class="nav-number">3.1.</span> <span class="nav-text">instanceof</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9B%B8%E5%85%B3"><span class="nav-number">4.</span> <span class="nav-text">二进制相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E3%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E3%80%81static%E3%80%81%E5%88%9D%E5%A7%8B%E5%80%BC%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">局部变量、成员变量、static、初始值：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#static-%E7%9B%B8%E5%85%B3"><span class="nav-number">6.1.</span> <span class="nav-text">static 相关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">7.</span> <span class="nav-text">抽象类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%88%B6%E7%B1%BB%E3%80%81%E5%AD%90%E7%B1%BB%E3%80%81%E7%BB%A7%E6%89%BF%E3%80%81super"><span class="nav-number">8.</span> <span class="nav-text">父类、子类、继承、super</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-%E4%B8%89%E5%A4%A7%E6%B3%A8%E8%A7%A3"><span class="nav-number">9.</span> <span class="nav-text">Java 三大注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">10.</span> <span class="nav-text">文件处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">内存使用问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">12.</span> <span class="nav-text">多线程</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.</span> <span class="nav-text">优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">基本的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String%E3%80%81StringBuilder%E3%80%81StringBuffer"><span class="nav-number">2.1.</span> <span class="nav-text">String、StringBuilder、StringBuffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hashMap%E3%80%81linkedHashMap%E3%80%81hashTable"><span class="nav-number">2.2.</span> <span class="nav-text">hashMap、linkedHashMap、hashTable</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text">关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceof"><span class="nav-number">3.1.</span> <span class="nav-text">instanceof</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9B%B8%E5%85%B3"><span class="nav-number">4.</span> <span class="nav-text">二进制相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E3%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E3%80%81static%E3%80%81%E5%88%9D%E5%A7%8B%E5%80%BC%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">局部变量、成员变量、static、初始值：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#static-%E7%9B%B8%E5%85%B3"><span class="nav-number">6.1.</span> <span class="nav-text">static 相关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">7.</span> <span class="nav-text">抽象类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%88%B6%E7%B1%BB%E3%80%81%E5%AD%90%E7%B1%BB%E3%80%81%E7%BB%A7%E6%89%BF%E3%80%81super"><span class="nav-number">8.</span> <span class="nav-text">父类、子类、继承、super</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-%E4%B8%89%E5%A4%A7%E6%B3%A8%E8%A7%A3"><span class="nav-number">9.</span> <span class="nav-text">Java 三大注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">10.</span> <span class="nav-text">文件处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">内存使用问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E3%80%81%E5%90%8C%E6%AD%A5%E7%AD%89%E9%97%AE%E9%A2%98"><span class="nav-number">12.</span> <span class="nav-text">多线程、同步等问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

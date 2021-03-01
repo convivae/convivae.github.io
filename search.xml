@@ -374,6 +374,415 @@
       </tags>
   </entry>
   <entry>
+    <title>Java 基础查漏补缺</title>
+    <url>/posts/java-ji-chu-cha-lou-bu-que/</url>
+    <content><![CDATA[<h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><blockquote>
+<p><code>++</code> 作为后缀时的优先级比 <code>*</code> 高，因此 <code>*p++</code> 是先 p++, 而后<code>*(p++)</code> 的。</p>
+<p><code>++</code> 作为后缀时优先级和 <code>()</code> 一样高，结合律从左到右。因此<code>(*p)++</code> 是先取值，然后 <code>++</code>。</p>
+<p><code>++</code> 作为前缀时的优先级和 <code>*</code> 一样高， 结合律从右到左， 所以 <code>++*p == ++(*p)</code> 的。</p>
+</blockquote>
+<h2 id="基本的数据结构"><a href="#基本的数据结构" class="headerlink" title="基本的数据结构"></a>基本的数据结构</h2><p><img data-src="4552908_1476435955845_3AA2482F152044FA3EC4640FD49DAE02" alt="img"></p>
+<p>   从框架图中了解继承关系以及重要的数据结构（包括其继承情况、底层原理等）</p>
+<p>集合常考点：</p>
+<p><img data-src="837161_1488616442711_250E74268F38A4202D8C30E4329DEBCC" alt="img"></p>
+<p>Collection中存放的是一组各自独立的对象，Map中存放的是“键-值”对象。</p>
+<p>List和Set都是Collection的子接口，List是一个有序可重复列表，Set是一个无序重复集。</p>
+<p>而Array是数组，并不继承Collection接口。</p>
+<h3 id="String、StringBuilder、StringBuffer"><a href="#String、StringBuilder、StringBuffer" class="headerlink" title="String、StringBuilder、StringBuffer"></a>String、StringBuilder、StringBuffer</h3><table>
+<thead>
+<tr>
+<th>String</th>
+<th>StringBuffer</th>
+<th>StringBuilder</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>String的值是不可变的，这就导致每次对String的操作都会生成新的String对象，不仅效率低下，而且浪费大量优先的内存空间</td>
+<td>StringBuffer是可变类，和线程安全的字符串操作类，任何对它指向的字符串的操作都不会产生新的对象。每个StringBuffer对象都有一定的缓冲区容量，当字符串大小没有超过容量时，不会分配新的容量，当字符串大小超过容量时，会自动增加容量</td>
+<td>可变类，速度更快</td>
+</tr>
+<tr>
+<td>不可变</td>
+<td>可变</td>
+<td>可变</td>
+</tr>
+<tr>
+<td></td>
+<td>线程安全</td>
+<td>线程不安全</td>
+</tr>
+<tr>
+<td></td>
+<td>多线程操作字符串</td>
+<td>单线程操作字符串</td>
+</tr>
+</tbody></table>
+<p><strong>对String对象的任何改变都不影响到原对象，相关的任何change操作都会生成新的对象</strong></p>
+<p>和 String 类不同的是，StringBuffer 和 StringBuilder 类的对象能够被多次的修改，并且<strong>不产生新的未使用对象</strong>。</p>
+<p>由于 StringBuilder 相较于 StringBuffer 有速度优势，<strong>所以多数情况下建议使用 StringBuilder 类</strong>。然而在应用程序要求线程安全的情况下，则必须使用 StringBuffer 类。</p>
+<p><strong>小结:</strong></p>
+<p>（1）如果要操作少量的数据用 String；</p>
+<p>（2）多线程操作字符串缓冲区下操作大量数据 StringBuffer；</p>
+<p>（3）单线程操作字符串缓冲区下操作大量数据 StringBuilder。</p>
+<h3 id="hashMap、linkedHashMap、hashTable"><a href="#hashMap、linkedHashMap、hashTable" class="headerlink" title="hashMap、linkedHashMap、hashTable"></a>hashMap、linkedHashMap、hashTable</h3><p>Hashmap中的value可以之null，get(key)==null有两种情况，一是key不存在，二是该key中存的是null，所以应该使用map.containskey(key)返回的true/false来判断是否存在这个key。</p>
+<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><h2 id="二进制相关"><a href="#二进制相关" class="headerlink" title="二进制相关"></a>二进制相关</h2><h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p>一旦在finally块中使用了return或throw语句，将会导致try块，catch块中的return，throw语句失效</p>
+   <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">returnTest</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception e)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">finally</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>   返回 false</p>
+<p>   根据官方的JVM规范：<br>   <strong>如果try语句里有return，返回的是try语句块中变量值。</strong><br>   详细执行过程如下：</p>
+<ol>
+<li>如果有返回值，就把返回值保存到局部变量中；</li>
+<li>执行jsr指令跳到finally语句里执行；</li>
+<li>执行完finally语句后，返回之前保存在局部变量表里的值。</li>
+</ol>
+<p>   <strong>如果try，finally语句里均有return，忽略try的return，而使用finally的return.</strong></p>
+<h2 id="局部变量、成员变量、static、初始值："><a href="#局部变量、成员变量、static、初始值：" class="headerlink" title="局部变量、成员变量、static、初始值："></a>局部变量、成员变量、static、初始值：</h2><ol>
+<li>成员变量是独立于方法外的变量，局部变量是类的方法中的变量<ol>
+<li>成员变量：包括实例变量和类变量，用 static 修饰的是类变量，不用 static 修饰的是实例变量，所有类的成员变量可以通过 this 来引用。</li>
+<li>局部变量：包括形参，方法局部变量，代码块局部变量，存在于方法的参数列表和方法定义中以及代码块中。</li>
+</ol>
+</li>
+<li>成员变量可以被public，protect，private，static等修饰符修饰，而局部变量不能被控制修饰符及 static修饰；两者都可以定义成final型。</li>
+<li>成员变量存储在堆，局部变量存储在栈。局部变量的作用域仅限于定义它的方法，在该方法的外部无法访问它。成员变量的作用域在整个类内部都是可见的，所有成员方法都可以使用它。如果访问权限允许，还可以在类的外部使用成员变量。</li>
+<li>局部变量的生存周期与方法的执行期相同。当方法执行到定义局部变量的语句时，局部变量被创建；执行到它所在的作用域的最后一条语句时，局部变量被销毁。类的成员变量，如果是实例成员变量，它和对象的生存期相同。而静态成员变量的生存期是整个程序运行期。</li>
+<li>成员变量在类加载或实例被创建时，系统自动分配内存空间，并在分配空间后自动为成员变量指定初始化值，初始化值为默认值，基本类型的默认值为0，复合类型的默认值为null。（被final修饰且没有static的必须显式赋值），局部变量在定义后必须经过显式初始化后才能使用，系统不会为局部变量执行初始化。</li>
+<li>局部变量可以和成员变量 同名，且在使用时，局部变量具有更高的优先级，直接使用同名访问，访问的是局部变量，如需要访问成员变量可以用this.变量名访问<ol start="7">
+<li>成员变量赋值的规律：接班数据类型byte、short、char、int、long默认赋值0，float、double默认赋值0.0，String等引用数据类型默认赋值null</li>
+<li>类变量在不设置初始值时，会进行默认值赋值，而局部方法中声明的变量则必须进行初始化，他不会进行默认值赋值。</li>
+<li>静态变量会默认赋初值，局部变量和final声明的变量必须手动赋初值</li>
+</ol>
+</li>
+</ol>
+<h3 id="static-相关"><a href="#static-相关" class="headerlink" title="static 相关"></a>static 相关</h3><p>声明位置 初始值 生命周期 修饰的内容</p>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>abstract修饰的类是抽象类，是可以继承的，而final修饰的类表示不能再被继承，故两者不能共同使用</p>
+<h2 id="父类、子类、继承、super"><a href="#父类、子类、继承、super" class="headerlink" title="父类、子类、继承、super"></a>父类、子类、继承、super</h2><ol>
+<li><p>子类构造函数调用父类构造函数用super，且super语句必须是子类构造方法的第一句</p>
+</li>
+<li><p>子类重写父类方法后，若想调用父类中被重写的方法，用super。未被重写的方法可以直接调用。</p>
+</li>
+<li><p>关于文件</p>
+<ol>
+<li>File类是对文件整体或者文件属性操作的类，例如创建文件、删除文件、查看文件是否存在等功能，不能操作文件内容；文件内容是用IO流操作的。</li>
+</ol>
+</li>
+</ol>
+<h2 id="Java-三大注解"><a href="#Java-三大注解" class="headerlink" title="Java 三大注解"></a>Java 三大注解</h2><ol>
+<li>Java三大注解分别是@Override @Deprecated @Suppresswarnings</li>
+<li>@Override 注解表名子类中覆盖了超类中的某个方法，如果写错了覆盖形式，编译器会报错</li>
+<li>@Deprecated 表明不希望别人在以后使用这个类，方法，变量等等</li>
+<li>@Suppresswarnings 达到抑制编译器产生警告的目的，但是不建议使用，因为后期编码人员看不懂编译器提示的警告，不能更好的选择更好的类去完成任务</li>
+</ol>
+<h2 id="文件处理"><a href="#文件处理" class="headerlink" title="文件处理"></a>文件处理</h2><p>文件操作的类及其用法：文本文件 二进制文件</p>
+<h2 id="内存使用问题"><a href="#内存使用问题" class="headerlink" title="内存使用问题"></a>内存使用问题</h2><p>各个变量的存储位置，JVM的内存模型等</p>
+<h2 id="多线程、同步等问题"><a href="#多线程、同步等问题" class="headerlink" title="多线程、同步等问题"></a>多线程、同步等问题</h2><p>volatile关键字是一种轻量级的同步机制，只保证数据的可见性，而不保证数据的原子性。</p>
+<p>volatile关键字有两个作用：</p>
+<p>1.并发环境可见性：volatile修饰后的变量能够保证该变量在线程间的可见性，线程进行数据的读写操作时将绕开工作内存（CPU缓存）而直接跟主内存进行数据交互，即线程进行读操作时直接从主内存中读取，写操作时直接将修改后端变量刷新到主内存中，这样就能保证其他线程访问到的数据是最新数据</p>
+<p>2.并发环境有序性：通过对volatile变量采取内存屏障（Memory barrier）的方式来防止编译重排序和CPU指令重排序，具体方式是通过在操作volatile变量的指令前后加入内存屏障，来实现happens-before关系，保证在多线程环境下的数据交互不会出现紊乱。</p>
+]]></content>
+      <categories>
+        <category>基础</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二叉树中的最大路径和</title>
+    <url>/posts/er-cha-shu-zhong-de-zui-da-lu-jing-he/</url>
+    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/">leetcode 124</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>路径 被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。同一个节点在一条路径序列中 至多出现一次 。该路径 至少包含一个 节点，且不一定经过根节点。</p>
+<p>路径和 是路径中各节点值的总和。</p>
+<p>给你一个二叉树的根节点 root ，返回其 最大路径和 。</p>
+</blockquote>
+<p>示例1：</p>
+<p><img data-src="exx1.jpg" alt="img"></p>
+<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">输入：root = [1,2,3]</span><br><span class="line">输出：6</span><br><span class="line">解释：最优路径是<span class="number"> 2 </span>-&gt;<span class="number"> 1 </span>-&gt;<span class="number"> 3 </span>，路径和为<span class="number"> 2 </span>+<span class="number"> 1 </span>+<span class="number"> 3 </span>= 6</span><br></pre></td></tr></table></figure>
+
+<p>示例2：</p>
+<p><img data-src="exx2.jpg" alt="img"></p>
+<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">输入：root = [-10,9,20,null,null,15,7]</span><br><span class="line">输出：42</span><br><span class="line">解释：最优路径是<span class="number"> 15 </span>-&gt;<span class="number"> 20 </span>-&gt;<span class="number"> 7 </span>，路径和为<span class="number"> 15 </span>+<span class="number"> 20 </span>+<span class="number"> 7 </span>= 42</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>树中节点数目范围是 [1, 3 * $10^4$]</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val, TreeNode left, TreeNode right) &#123;</span></span><br><span class="line"><span class="comment"> *         this.val = val;</span></span><br><span class="line"><span class="comment"> *         this.left = left;</span></span><br><span class="line"><span class="comment"> *         this.right = right;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ans = Integer.MIN_VALUE;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">oneSideMax</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left = Math.max(<span class="number">0</span>, oneSideMax(root.left));</span><br><span class="line">        <span class="keyword">int</span> right = Math.max(<span class="number">0</span>, oneSideMax(root.right));</span><br><span class="line">        ans = Math.max(ans, left + right + root.val);</span><br><span class="line">        <span class="keyword">return</span> Math.max(left, right) + root.val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        oneSideMax(root);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>子函数 <code>oneSideMax(node)</code> 采用了递归的思想，该函数用来计算二叉树中的一个节点的最大贡献值，具体而言，就是在以该节点为根节点的子树中寻找以该节点为起点的一条路径，使得该路径上的节点值之和最大。</p>
+<p>具体的计算如下（对比代码来看，先忽略 <code>ans = ...</code> 的这一行）：</p>
+<ul>
+<li>空节点的最大贡献值等于 0</li>
+<li>非空节点的最大贡献值等于节点值与其子节点中的最大贡献值之和（对于叶节点而言，最大贡献值等于节点值）（考虑到节点的最大贡献值可能为负值，因此当子路径有负值时该子路径将被舍弃，记为0）</li>
+</ul>
+<p>例如，考虑示例2的二叉树：</p>
+<figure class="highlight livescript"><table><tr><td class="code"><pre><span class="line"> -<span class="number">10</span></span><br><span class="line"> / <span class="string">\</span></span><br><span class="line"><span class="number">9</span>  <span class="number">20</span></span><br><span class="line">  /  <span class="string">\</span></span><br><span class="line"> <span class="number">15</span>   <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<p>叶节点 9、15、7 的最大贡献值分别为 9、15、7。</p>
+<p>非叶节点 20 的最大贡献值等于 $20+\max(15,7)=35$，节点 −10 的最大贡献值等于 $-10+\max(9,35)=25$。</p>
+<p>上述计算过程是递归的过程，因此，对根节点调用函数 <code>oneSideMax</code>，即可得到每个节点的最大贡献值。</p>
+<p>根据函数 <code>oneSideMax</code>得到每个节点的最大贡献值之后，如何得到二叉树的最大路径和？</p>
+<p>对于二叉树中的一个节点，该节点的最大路径和取决于该节点的值与该节点的左右子节点的最大贡献值，如果子节点的最大贡献值为正，则计入该节点的最大路径和，否则不计入该节点的最大路径和。维护一个全局变量 ans 存储最大路径和，在递归过程中更新 ans 的值，最后得到的 ans 的值即为二叉树中的最大路径和。</p>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度：$O(N)$，其中 N 是二叉树中的节点个数。对每个节点访问不超过 2 次。</p>
+<p>空间复杂度：$O(N)$，其中 N 是二叉树中的节点个数。空间复杂度主要取决于递归调用层数，最大层数等于二叉树的高度，最坏情况下，二叉树的高度等于二叉树中的节点个数。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/solution/er-cha-shu-zhong-de-zui-da-lu-jing-he-by-leetcode-/">https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/solution/er-cha-shu-zhong-de-zui-da-lu-jing-he-by-leetcode-/</a><br>来源：力扣（LeetCode）</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>二叉树</tag>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于炒股这件小事</title>
+    <url>/posts/guan-yu-chao-gu-zhe-jian-xiao-shi/</url>
+    <content><![CDATA[<p>从长期来看，股票的价格无论怎么波动，最终都会回归到它的内在价值。</p>
+<h1 id="关于短视"><a href="#关于短视" class="headerlink" title="关于短视"></a>关于短视</h1><p>短视其实是一种习惯，而这种习惯往往也会投射到生活当中。</p>
+<p>在股市里的短视不过是会让你亏掉一些钱，而在生活中的短视，可能亏掉的就是一个属于你的更好的人生。</p>
+<p>比如说我们生活中一些沉迷赌博的人，他们往往沉迷于短期赢钱所带来的快感，当这种快感大于输钱恐惧的时候，这个人就会一直赌下去。所以一般好赌的人都不太愿意踏踏实实的去赚钱，因为他们觉得这样来钱太慢了。</p>
+<p>但是他们意识不到的是，虽然赌博有的时候可以赢一些钱，但是哪怕一两次赢得再多，当下赢的这笔钱对于自己的人生来讲，其实根本起不到什么大的作用。反而长期来看只要继续赌钱，这些钱早晚还是会输回去。</p>
+<p>这是一个很简单的概率问题，尤其是一些沉迷网赌的人，这种最后输赢的概率甚至根本就是被人为控制好的。</p>
+<p>但是很多人就是看不明白这一点，所以沉迷赌博的人，本质上最大的问题是一个认知上的问题。稍微聪明一点，有一点长期思维的人，其实都是不会去碰这些的。</p>
+<h2 id="工作方面的短视"><a href="#工作方面的短视" class="headerlink" title="工作方面的短视"></a>工作方面的短视</h2><p>除了这个，还有我们平时在生活中遇到各种事物问题，需要抉择的时候，我们大多数人也都会下意识地去看重短期利益做判断。</p>
+<p>比如找工作的时候，很多人只喜欢选当下工资高的，但是却忽略了这个岗位未来的发展前景和个人能力的提升与积累。</p>
+<p>这种类型的工作其实有很多，我们可以举个例子，比如说，外卖员这个职业，外卖员的工作会比较辛苦，但是如果勤快一点工资也还算不错。但是这个职业对于个人来讲并没有任何的成长性，不能为你积累任何的资源，经验，以及职业能力。</p>
+<p>就算你工作十年，有一天你不送外卖了，你会发现你依然什么都不会，因为这十年你整个人的成长都是停滞的状态。</p>
+<h2 id="生活方面的短视"><a href="#生活方面的短视" class="headerlink" title="生活方面的短视"></a>生活方面的短视</h2><p>这是工作方面，那我们的生活方面呢？</p>
+<p>比如有人会沉迷打游戏，有人喜欢追剧，并且为此花费大量的精力。当我们在做这些的时候，当下可以给我们带来短暂的快感，但是长期来看，如果大量的时间都花在了这些方面，那我们的个人成长也会是处于停滞的状态。</p>
+<h1 id="关于眼前利益和长远利益"><a href="#关于眼前利益和长远利益" class="headerlink" title="关于眼前利益和长远利益"></a>关于眼前利益和长远利益</h1><p>其实无论是工作，还是生活，大多数人在面临选择的时候，都会更偏向于看重眼前的利益去做决定，但是却忽略了这样做我们可能会失去的东西。</p>
+<p>其实这很正常，因为这是刻在我们骨子里的东西，当下就可以得到的东西往往可以给我们带来满足感。比如一场输赢立断的赌局，一份下个月就可以拿到的工资。。。</p>
+<p>而当我们把眼光往长期去看的时候，如果我们开始把收获的时间定在未来，很多时候则代表我们需要放弃一些当下就能够得到的东西，这会让人非常的没有安全感。</p>
+<p>这本身就是违背我们天性的，但是当我们想要成长，想要变得更加优秀的时候，我们就必须学会克服这些天性，这是必须要做的。</p>
+<p>投资是如此，人生，更是如此。</p>
+<h1 id="人生就是一场投资"><a href="#人生就是一场投资" class="headerlink" title="人生就是一场投资"></a>人生就是一场投资</h1><p>其实从某种角度来看，人生其实本就是一场投资，这不过我们大多数人没有意识到而已。</p>
+<p>就像股票的价格无论怎么波动，最终都会回归它的内在价值，而我们的人生其实也是一样，真正决定你能够爬的多高，走得多远的是你的内在价值。比如说你的能力，你的认知，你的阅历，这一切都是你的内在价值。</p>
+<p>包括投资这件事本身，它也是一种能力，它也是你内在价值的一部分，而我们的时间和精力就是我们可以不断去投入的。</p>
+<p>你可以选择把你的时间和精力都投资于那些仅仅能给你带来短期利益的事物。但是你的内在价值会很难增长，甚至停滞，那么你的人生大概率只会原地踏步，甚至退步。</p>
+<p>你也可以选择把你的时间和精力不断投资于你的学习和成长，不断提升你的个人能力。虽然这些投资在当下不会让你看到什么立竿见影的回报，但是在这个过程中你的内在价值会不断地提升，积累，而在未来，价格最终会回归价值。</p>
+<p>也许在这期间你会遇到低谷、挫折，但是你要相信，当你真的在不断成长，能力不断提升，价值变得越来越高的时候，你真的会收获到，与你价值相匹配的回报。</p>
+<p>这不是鸡汤，是我们应该相信的东西</p>
+<p>所以，其实这个世界上最值得我们投资的资产是什么呢？</p>
+<p>是股票？房子？基金？</p>
+<p>都不是</p>
+<p>是你自己</p>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>零钱兑换</title>
+    <url>/posts/ling-qian-dui-huan/</url>
+    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/coin-change/">leetcode 322</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。</p>
+<p>你可以认为每种硬币的数量是无限的。</p>
+</blockquote>
+<p>示例1：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>], <span class="attr">amount</span> = <span class="number">11</span></span><br><span class="line">输出：<span class="number">3</span> </span><br><span class="line">解释：<span class="number">11</span> = <span class="number">5</span> + <span class="number">5</span> + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>示例2：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">2</span>], <span class="attr">amount</span> = <span class="number">3</span></span><br><span class="line">输出：-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>示例3：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">0</span></span><br><span class="line">输出：<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>示例4：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">1</span></span><br><span class="line">输出：<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>示例5：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">2</span></span><br><span class="line">输出：<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= coins.length &lt;= 12</code></li>
+<li><code>1 &lt;= coins[i] &lt;= 2^31 - 1</code></li>
+<li><code>0 &lt;= amount &lt;= 10^4</code></li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="暴力递归"><a href="#暴力递归" class="headerlink" title="暴力递归"></a>暴力递归</h3><p>首先，这个问题是动态规划问题，因为它具有「最优子结构」的。<strong>要符合「最优子结构」，子问题间必须互相独立</strong>。</p>
+<p>为什么说它符合最优子结构呢？比如你想求 <code>amount = 11</code> 时的最少硬币数（原问题），如果你知道凑出 <code>amount = 10</code> 的最少硬币数（子问题），你只需要把子问题的答案加一（再选一枚面值为 1 的硬币）就是原问题的答案。因为硬币的数量是没有限制的，所以子问题之间没有相互制约，是互相独立的。</p>
+<p>那么，既然知道了这是个动态规划问题，就要思考<strong>如何列出正确的状态转移方程</strong>？</p>
+<p>1、<strong>确定 base case</strong>，这个很简单，显然目标金额 <code>amount</code> 为 0 时算法返回 0，因为不需要任何硬币就已经凑出目标金额了。</p>
+<p>2、<strong>确定「状态」，也就是原问题和子问题中会变化的变量</strong>。由于硬币数量无限，硬币的面额也是题目给定的，只有目标金额会不断地向 base case 靠近，所以唯一的「状态」就是目标金额 <code>amount</code>。</p>
+<p>3、<strong>确定「选择」，也就是导致「状态」产生变化的行为</strong>。目标金额为什么变化呢，因为你在选择硬币，你每选择一枚硬币，就相当于减少了目标金额。所以说所有硬币的面值，就是你的「选择」。</p>
+<p>4、<strong>明确 <code>dp</code> 函数/数组的定义</strong>。我们这里讲的是自顶向下的解法，所以会有一个递归的 <code>dp</code> 函数，一般来说函数的参数就是状态转移中会变化的量，也就是上面说到的「状态」；函数的返回值就是题目要求我们计算的量。就本题来说，状态只有一个，即「目标金额」，题目要求我们计算凑出目标金额所需的最少硬币数量。所以我们可以这样定义 <code>dp</code> 函数：</p>
+<p><code>dp(n)</code> 的定义：输入一个目标金额 <code>n</code>，返回凑出目标金额 <code>n</code> 的最少硬币数量。</p>
+<p>java代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// base case</span></span><br><span class="line">    <span class="keyword">if</span> (amount == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (amount &lt; <span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 求最小值，所以初始化为正无穷</span></span><br><span class="line">    <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> p : coins) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = coinChange(coins, amount - p);</span><br><span class="line">        <span class="comment">//子问题无解，跳过</span></span><br><span class="line">        <span class="keyword">if</span>(tmp == -<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res = Math.min(res, <span class="number">1</span> + tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 问题无解时返回 -1</span></span><br><span class="line">    <span class="keyword">return</span> res == Integer.MAX_VALUE ? -<span class="number">1</span> : res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此，这个问题其实就解决了，只不过需要消除一下重叠子问题，因为画出递归树就会发现好多问题是被重复计算了的。</p>
+<p>当然，该程序直接交上去会超时。</p>
+<p><strong>递归算法的时间复杂度分析：子问题总数 x 每个子问题的时间</strong>。</p>
+<p>子问题总数为递归树节点个数，这个比较难看出来，是 O(n^k)，总之是指数级别的。每个子问题中含有一个 for 循环，复杂度为 O(k)。所以总时间复杂度为 O(k * n^k)，指数级别。</p>
+<h3 id="带备忘录的递归"><a href="#带备忘录的递归" class="headerlink" title="带备忘录的递归"></a>带备忘录的递归</h3><p>只需要稍加修改，就可以通过备忘录消除子问题：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HashMap&lt;Integer, Integer&gt; memo = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (amount == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (amount &lt; <span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 查找备忘录,避免重复计算</span></span><br><span class="line">    <span class="keyword">if</span>(memo.containsKey(amount))&#123;</span><br><span class="line">        <span class="keyword">return</span> memo.get(amount);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> p : coins) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = coinChange(coins, amount - p);</span><br><span class="line">        <span class="comment">//子问题无解，跳过</span></span><br><span class="line">        <span class="keyword">if</span>(tmp == -<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res = Math.min(res, <span class="number">1</span> + tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(res == Integer.MAX_VALUE)</span><br><span class="line">        res = -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 记入备忘录</span></span><br><span class="line">    memo.put(amount,res);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显然「备忘录」大大减小了子问题数目，完全消除了子问题的冗余，所以子问题总数不会超过金额数 <code>n</code>，即子问题数目为 O(n)。处理一个子问题的时间不变，仍是 O(k)，所以总的时间复杂度是 O(kn)。</p>
+<p>这个代码交上去是OK的</p>
+<h3 id="dp-数组的迭代解法"><a href="#dp-数组的迭代解法" class="headerlink" title="dp 数组的迭代解法"></a>dp 数组的迭代解法</h3><p>当然，我们也可以自底向上使用 dp table 来消除重叠子问题，关于「状态」「选择」和 base case 与之前没有区别，<code>dp</code> 数组的定义和刚才 <code>dp</code> 函数类似，也是把「状态」，也就是目标金额作为变量。不过 <code>dp</code> 函数体现在函数参数，而 <code>dp</code> 数组体现在数组索引：</p>
+<p><strong><code>dp</code> 数组的定义：当目标金额为 <code>i</code> 时，至少需要 <code>dp[i]</code> 枚硬币凑出</strong>。</p>
+<p>根据我们文章开头给出的动态规划代码框架可以写出如下解法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 数组的大小为 amount + 1，初始值也为 amount + 1</span></span><br><span class="line">    <span class="comment">// 因为凑成 amount 金额的硬币数最多只有 amount 个，所以可以初始化为 amount+1</span></span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[amount + <span class="number">1</span>];</span><br><span class="line">    Arrays.fill(dp, amount + <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// base case</span></span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//外层循环在遍历所有状态的取值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; amount + <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">//内层循环在求所有选择的最小值</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> coin : coins) &#123;</span><br><span class="line">            <span class="comment">// 子问题无解，跳过</span></span><br><span class="line">            <span class="keyword">if</span> (i - coin &lt; <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            dp[i] = Math.min(dp[i], <span class="number">1</span> + dp[i - coin]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (dp[amount] == amount + <span class="number">1</span>) ? -<span class="number">1</span> : dp[amount];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文展示了如何流程化确定「状态转移方程」，只要通过状态转移方程写出暴力递归解，剩下的也就是优化递归树，消除重叠子问题而已。</p>
+<p><strong>计算机解决问题其实没有任何奇技淫巧，它唯一的解决办法就是穷举</strong>，穷举所有可能性。算法设计无非就是先思考“如何穷举”，然后再追求“如何聪明地穷举”。</p>
+<p>列出动态转移方程，就是在解决“如何穷举”的问题。之所以说它难，一是因为很多穷举需要递归实现，二是因为有的问题本身的解空间复杂，不那么容易穷举完整。</p>
+<p>备忘录、DP table 就是在追求“如何聪明地穷举”。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://github.com/labuladong/fucking-algorithm/blob/master/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.md">动态规划详解</a></p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>leetcode</tag>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>翻转链表</title>
+    <url>/posts/fan-zhuan-lian-biao/</url>
+    <content><![CDATA[<p>链表的结构：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    ListNode next;</span><br><span class="line"></span><br><span class="line">    ListNode() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    ListNode(<span class="keyword">int</span> val) &#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ListNode(<span class="keyword">int</span> val, ListNode next) &#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>翻转链表的算法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseNode</span><span class="params">(ListNode l)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l == <span class="keyword">null</span> || l.next == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> l;</span><br><span class="line">    ListNode p = l, pre = <span class="keyword">null</span>, next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span> (p.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">        next = p.next;</span><br><span class="line">        p.next = pre;</span><br><span class="line">        pre = p;</span><br><span class="line">        p = next;</span><br><span class="line">    &#125;</span><br><span class="line">    p.next = pre;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重装系统后一些软件的安装与环境配置</title>
+    <url>/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/</url>
+    <content><![CDATA[<h1 id="基本配置情况"><a href="#基本配置情况" class="headerlink" title="基本配置情况"></a>基本配置情况</h1><p>首先码一下我的机器配置：</p>
+<p>系统：Windows 10</p>
+<p>CPU：i5-9300H</p>
+<p>内存：32GB</p>
+<p>GPU：RTX 2060</p>
+<p>磁盘：一块 512GB 的三星 PM981A 固态（C盘分128GB，剩余容量为D盘） + 一块 1TB 西数机械硬盘（E盘）</p>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><p>首先是磁盘的分配：</p>
+<ul>
+<li>C盘不用去管它，尽量不把数据存进去</li>
+<li>D盘用来安装软件。由于D盘是固态，可以用来安装软件或者游戏，不会损失性能。安装软件时选择自定义安装，手动指定安装位置。这很简单，只需要把安装位置中的<code>C:</code>改为<code>d:</code>即可，不用做其他操作。另外，编程环境也适合放在这里。</li>
+<li>E盘用来存放软件产生的数据，比如微信和QQ的聊天数据以及各种下载的数据（包括浏览器，迅雷，百度网盘等下载的数据）</li>
+</ul>
+<p>然后是根据磁盘的分配得到的文件目录（目录名特别是编程相关的尽量别出现汉字）：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">D:/</span><br><span class="line">├── CodeEnv  <span class="regexp">//</span>存放基本的编程环境</span><br><span class="line">│   ├── Anaconda3  <span class="regexp">//</span>Python环境</span><br><span class="line">│   ├── mingw64  <span class="regexp">//</span>C和C++环境</span><br><span class="line">│   ├── jdk-<span class="number">11.0</span>.<span class="number">10</span>  <span class="regexp">//</span>Java环境</span><br><span class="line">│   ├── apache-maven-<span class="number">3.6</span>.<span class="number">3</span>  <span class="regexp">//m</span>aven</span><br><span class="line">│   ├── mysql-<span class="number">8.0</span>.<span class="number">23</span>-winx64  <span class="regexp">//my</span>sql</span><br><span class="line">│   ├── MongoDB  <span class="regexp">//</span>MongoDB</span><br><span class="line">│   ├── Redis-x64-<span class="number">5.0</span>.<span class="number">10</span>  <span class="regexp">//</span>Redis</span><br><span class="line">│   ├── etc...</span><br><span class="line">├── Program Files  <span class="regexp">//</span><span class="number">64</span>位软件安装位置</span><br><span class="line">├── Program Files (x86)  <span class="regexp">//</span><span class="number">32</span>位软件安装位置</span><br><span class="line"></span><br><span class="line">E:/</span><br><span class="line">├── MySpace  <span class="regexp">//</span>存放各类项目文件</span><br><span class="line">│   ├── AndroidStudio  <span class="regexp">//</span>Android Studio的项目文件</span><br><span class="line">│   ├── Clion</span><br><span class="line">│   ├── IntelliJ IDEA</span><br><span class="line">│   ├── Pycharm</span><br><span class="line">│   ├── VS</span><br><span class="line">│   ├── WebStorm</span><br><span class="line">│   ├── etc...</span><br><span class="line">├── TencentFiles  <span class="regexp">//</span>存放QQ和微信的聊天文件</span><br><span class="line">│   ├── QQ</span><br><span class="line">│   ├── WeChat</span><br><span class="line">├── Browser  <span class="regexp">//</span>存放各个浏览器的下载文件</span><br><span class="line">├── ThunderFiles  <span class="regexp">//</span>迅雷下载文件</span><br><span class="line">├── BaiduNetdiskDownload  <span class="regexp">//</span>百度网盘下载文件</span><br><span class="line">├── VirtualMachine  <span class="regexp">//</span>虚拟机文件</span><br><span class="line">├── etc...</span><br></pre></td></tr></table></figure>
+
+<p>另外，我们平时习惯在桌面上存放各种资料，而桌面一般都位于C盘，为了减少C盘的使用，下面我们将桌面移动到D盘：</p>
+<p>首先打开此电脑（Win+E键快捷打开）：</p>
+<ul>
+<li>在 查看–&gt;选项–&gt;打开文件资源管理器时打开选择：此电脑（这一步非必须，个人习惯）</li>
+</ul>
+<p><img data-src="image-20210211144741685.png" alt="image-20210211144741685"></p>
+<p><img data-src="image-20210211144909446.png" alt="image-20210211144909446"></p>
+<ul>
+<li><p>打开此电脑（Win+E键快捷打开），右键“桌面”–&gt;属性–&gt;位置–&gt;<code>C</code>改为<code>D</code>–&gt;敲三下回车键</p>
+<p><img data-src="image-20210211145430566.png" alt="image-20210211145430566"></p>
+</li>
+<li><p>其他的文件夹同理也可以移动到D盘</p>
+</li>
+</ul>
+<h1 id="编程环境"><a href="#编程环境" class="headerlink" title="编程环境"></a>编程环境</h1><h2 id="C-C"><a href="#C-C" class="headerlink" title="C/C++"></a>C/C++</h2><p>我使用的编译器是Mingw-64自带的gcc，但是其<a target="_blank" rel="noopener" href="http://www.mingw-w64.org/">官网</a>以及<a target="_blank" rel="noopener" href="http://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/">SourceForge</a>更新较慢，因此我采用的是<a target="_blank" rel="noopener" href="http://winlibs.com/">WinLibs</a>，其<a target="_blank" rel="noopener" href="http://winlibs.com/#download-release">download 页面</a>提供 GCC + MinGW-w64 以及 GCC + LLVM/Clang/LLD/LLDB + MinGW-w64 的下载，版本较新，可以自取所需。</p>
+<p>下载后解压至 <code>D:\CodeEnv</code>目录下，并将<code>D:\CodeEnv\mingw64\bin</code>添加进 环境变量–&gt;系统变量–&gt;Path目录下即可。可使用 <code>gcc --version</code> 和 <code>g++ --version</code> 进行验证：</p>
+<p><img data-src="image-20210211150937665.png" alt="image-20210211150937665"></p>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><p>下载页面：<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-downloads.html">JDK下载</a>，我一般选择的是 <a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html">JDK11</a>，选择后缀名为<code>*_windows-x64_bin.zip</code>进行下载，然后同样解压至<code>D:\CodeEnv</code>目录下，将<code>D:\CodeEnv\jdk-11.0.10\bin</code>添加进 环境变量–&gt;系统变量–&gt;Path目录下，将 <code>D:\CodeEnv\jdk-11.0.10</code> 设置为新的系统变量 <code>JAVA_HOME</code>即可。可使用 <code>java --version</code> 进行验证：</p>
+<p><img data-src="image-20210211151810530.png" alt="image-20210211151810530"></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><p>我使用的是Anaconda用来管理Python，下载页面是<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">清华大学开源镜像站</a>，速度会快一些。由于它也是编程环境，所以我将其安装在<code>D:\CodeEnv\Anaconda3</code>目录下。</p>
+<p>安装完成后按照<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">镜像使用帮助</a>的步骤更改<code>.condarc</code>文件进行换源，换成国内源将会大大提高下载Python包的速度。</p>
+<p>然后同样将<code>D:\CodeEnv\Anaconda3</code>以及 <code>D:\CodeEnv\Anaconda3\Scripts</code> 两个路径添加进 环境变量–&gt;系统变量–&gt;Path 目录下，可使用 <code>python --version</code> 进行验证：</p>
+<p><img data-src="image-20210211152831704.png" alt="image-20210211152831704"></p>
+<p>下面列出一些常见命令，启动 Anaconda Prompt：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda update conda  	<span class="comment">#升级conda(升级Anaconda前需要先升级conda)：</span></span><br><span class="line">conda update anaconda  	<span class="comment">#升级anaconda</span></span><br><span class="line">conda update --all  	<span class="comment">#更新所有包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># conda 和 pip 常用命令对比，一般 pip 版本更新速度比 conda 版本更快，更推荐用 pip 来安装包</span></span><br><span class="line">conda install [package-name]        <span class="comment"># 安装名为[package-name]的包</span></span><br><span class="line">conda install [package-name]=X.X    <span class="comment"># 安装名为[package-name]的包并指定版本X.X</span></span><br><span class="line">conda update [package-name]         <span class="comment"># 更新名为[package-name]的包</span></span><br><span class="line">conda remove [package-name]         <span class="comment"># 删除名为[package-name]的包</span></span><br><span class="line">conda list                          <span class="comment"># 列出当前环境下已安装的所有包</span></span><br><span class="line">conda search [package-name]         <span class="comment"># 列出名为[package-name]的包在conda源中的所有可用版本</span></span><br><span class="line"></span><br><span class="line">pip install [package-name]              <span class="comment"># 安装名为[package-name]的包</span></span><br><span class="line">pip install [package-name]==X.X         <span class="comment"># 安装名为[package-name]的包并指定版本X.X</span></span><br><span class="line">pip install [package-name] --proxy=代理服务器IP:端口号         <span class="comment"># 使用代理服务器安装</span></span><br><span class="line">pip install [package-name] --upgrade    <span class="comment"># 更新名为[package-name]的包</span></span><br><span class="line">pip uninstall [package-name]            <span class="comment"># 删除名为[package-name]的包</span></span><br><span class="line">pip list                                <span class="comment"># 列出当前环境下已安装的所有包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 环境相关</span></span><br><span class="line">conda create --name [env-name]      <span class="comment"># 建立名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda activate [env-name]           <span class="comment"># 进入名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda deactivate                    <span class="comment"># 退出当前的Conda虚拟环境</span></span><br><span class="line">conda env remove --name [env-name]  <span class="comment"># 删除名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda env list                      <span class="comment"># 列出所有Conda虚拟环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># conda 中配置代理：在用户目录下的 .condarc 文件中添加以下内容：</span></span><br><span class="line">proxy_servers:</span><br><span class="line">    http: http://代理服务器IP:端口号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询某个 conda 指令使用-h后缀，如：</span></span><br><span class="line">conda update -h</span><br></pre></td></tr></table></figure>
+
+<p>例如，若想创建 TensorFlow2.0 并安装 CUDA 和 cuDNN 的环境：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda create --name tf2 python=3.8      <span class="comment"># “tf2”是你建立的conda虚拟环境的名字</span></span><br><span class="line">conda activate tf2                      <span class="comment"># 进入名为“tf2”的conda虚拟环境</span></span><br><span class="line">pip install tensorflow					<span class="comment"># 使用 Python 包管理器 pip 安装 TensorFlow。</span></span><br><span class="line"></span><br><span class="line">conda search cudatoolkit				<span class="comment">#安装前可先搜索一下版本号</span></span><br><span class="line">conda search cudnn</span><br><span class="line"></span><br><span class="line">conda install cudatoolkit=X.X			<span class="comment">#不加版本号默认安装最新的</span></span><br><span class="line">conda install cudnn=X.X.X</span><br></pre></td></tr></table></figure>
+
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://git-scm.com/">Git</a>，按照提示安装即可。下面列一下 SSH key 的生成以及 Github 的连接：</p>
+<p>首先配置用户名和邮箱，用户名和邮箱与你 Github 账号的一致，下面的 <code>[your-name]</code> 和 <code>[your-email-address]</code> 替换为你自己的用户名和邮箱。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;[your-name]&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;[your-email-address]&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后生成 SSH key：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;[your-email-address]&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这行命令执行后会问你若干问题，不用管它，一律回车就行。然后在你的用户目录（Windows是 <code>C:\Users\[your-name]</code>）下就会生成一个 <code>.ssh</code> 的文件夹，打开后有两个文件：<code>id_rsa</code> 和 <code>id_rsa.pub</code>，分别是私钥和公钥。</p>
+<p><img data-src="image-20210213172115832.png" alt="image-20210213172115832"></p>
+<p>我们右键用记事本（或其他的编辑软件）打开公钥文件 <code>id_rsa.pub</code> ，并复制里面的全部内容。</p>
+<p>打开 Github，找到 Settings –&gt; SSH and GPG keys –&gt; New SSH key–&gt;在 Title 文本框中随便输入一个标题，并把刚才复制的内容复制到 <code>Key</code>的文本框中–&gt; Add SSH key即可。</p>
+<p><img data-src="image-20210213172828648.png" alt="image-20210213172828648"></p>
+<h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">Mysql 下载</a></p>
+<p><img data-src="image-20210211162119313.png" alt="image-20210211162119313"></p>
+<p>选择第一个，然后不用登录，点击 <code>No thanks, just start my download.</code></p>
+<p><img data-src="image-20210211162236180.png" alt="image-20210211162236180"></p>
+<p>同样解压至 <code>D:\CodeEnv</code>。</p>
+<p>使用管理员打开命令行（右键开始菜单，选择Windows PowerShell（管理员））</p>
+<p><img data-src="image-20210211162627719.png" alt="image-20210211162627719"></p>
+<p>依次执行下面的命令（<code>mysql-8.0.23-winx64</code>这个文件夹根据你自己的版本来改动）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> d:</span><br><span class="line"><span class="built_in">cd</span> D:\CodeEnv\mysql-8.0.23-winx64\bin	<span class="comment">#根据自己的文件夹进行调整</span></span><br><span class="line">.\mysqld --initialize --console  <span class="comment">#执行后最后一行有一个密码，一定要记住这个密码</span></span><br><span class="line">.\mysqld install  <span class="comment">#安装 mysql</span></span><br><span class="line">net start mysql  <span class="comment">#启动 mysql</span></span><br><span class="line">.\mysql -u root -p  <span class="comment">#进入 mysql 数据库，这里输入上面记住的密码（建议复制粘贴）</span></span><br><span class="line">ALTER USER root@localhost IDENTIFIED  BY <span class="string">&#x27;1234&#x27;</span>;  <span class="comment">#修改密码为 1234</span></span><br><span class="line"><span class="built_in">exit</span>  <span class="comment">#或 quit</span></span><br></pre></td></tr></table></figure>
+
+<p>如图：</p>
+<p><img data-src="console.png" alt="console"></p>
+<p>此时 mysql 就已经安装好了，并且登录密码也改为了 <code>1234</code>.</p>
+<p>接下来设置一下环境变量，将 <code>D:\CodeEnv\mysql-8.0.23-winx64\bin</code> 添加进 环境变量–&gt;系统变量–&gt;Path目录下，这样随意打开一个命令行窗口都可以通过 <code>mysql -u root -p</code>来登录 mysql 数据库了。</p>
+<p><img data-src="image-20210211163623992.png" alt="image-20210211163623992"></p>
+<p>最后一步，关闭 mysql 的开机自启动。安装 mysql 服务之后，默认服务启动方式是自动启动，每次开机时，mysql 服务会自动启动，这样会消耗电脑内存，导致电脑运行缓慢。而我们并不是每次开机都需要使用 mysql 的。</p>
+<p>首先打开服务列表：快捷键 Win+R 输入 <code>services.msc</code>（或者 右击我的电脑-&gt;管理-&gt;点击左侧服务和应用程序-&gt;服务），在服务列表里找到 Mysql，右键–&gt;属性，将启动类型改为手动。</p>
+<p><img data-src="image-20210211170130539.png" alt="image-20210211170130539"></p>
+<p>此时 mysql 就不会随着开机自启动，若想启动 mysql，只需使用管理员打开命令行窗口，输入<code>net start mysql</code>即可，关闭 mysql 服务可使用命令 <code>net stop mysql</code>。</p>
+<h2 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://www.mongodb.com/try/download/community">MongoDB Community Server</a>，选择 zip 包进行下载：</p>
+<p><img data-src="image-20210211173258946.png" alt="image-20210211173258946"></p>
+<p>同样，将其解压至 <code>D:\CodeEnv</code>，并将 <code>D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3\bin</code>添加进 环境变量–&gt;系统变量–&gt;Path 目录下。</p>
+<p>在<code>D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3</code>目录下新建两个文件夹<code>db</code> 和 <code>log</code>，创建数据库和日志文件的目录。然后在该目录下创建一个配置文件 <code>mongod.cfg</code>，其中指定 <code>systemLog.path</code> 和 <code>storage.dbPath</code>。具体配置内容如下：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">systemLog</span>:</span><br><span class="line">    <span class="attribute">destination</span>: file</span><br><span class="line">    <span class="attribute">path</span>: D:\CodeEnv\mongodb-win<span class="number">32</span>-x<span class="number">86</span>_<span class="number">64</span>-windows-<span class="number">4</span>.<span class="number">4</span>.<span class="number">3</span>\log\mongod.log</span><br><span class="line"><span class="attribute">storage</span>:</span><br><span class="line">    <span class="attribute">dbPath</span>: D:\CodeEnv\mongodb-win<span class="number">32</span>-x<span class="number">86</span>_<span class="number">64</span>-windows-<span class="number">4</span>.<span class="number">4</span>.<span class="number">3</span>\db</span><br></pre></td></tr></table></figure>
+
+<p>注意这些路径都是绝对路径，使用相对路径会报错。</p>
+<p>接下来安装 MongoDB 服务，使用管理员打开命令行窗口（右键开始菜单，选择Windows PowerShell（管理员）），通过执行mongod.exe，使用–install选项来安装服务，使用–config选项来指定之前创建的配置文件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> d:</span><br><span class="line"><span class="built_in">cd</span> D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3\bin</span><br><span class="line">.\mongod --config <span class="string">&quot;D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3\mongod.cfg&quot;</span> --install</span><br></pre></td></tr></table></figure>
+
+<p>启动 MongoDB 服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">net start mongodb</span><br></pre></td></tr></table></figure>
+
+<p>和 Mysql 一样，MongoDB 服务也是默认自启动的，也可以通过服务列表（快捷键 Win+R 输入 <code>services.msc</code>）来关闭它的自启动。之后通过管理员命令窗口输入 <code>net start mongodb</code> 和 <code>net stop mongodb</code> 来控制 MongoDB 服务的开启和关闭。</p>
+<p>可以输入 <code>mongo</code> 来进入数据库的Shell界面：</p>
+<p><img data-src="image-20210211180129178.png" alt="image-20210211180129178"></p>
+<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">maven 下载</a> </p>
+<p><img data-src="image-20210211170815254.png" alt="image-20210211170815254"></p>
+<p>选择最后一项，同样解压至 <code>D:\CodeEnv</code>，将 <code>D:\CodeEnv\apache-maven-3.6.3</code> 设置为新的系统变量 <code>MAVEN_HOME</code>。</p>
+<p>然后对 maven 进行一些设置，打开<code>D:\CodeEnv\apache-maven-3.6.3\conf\settings.xml</code>，找到被注释掉的 <code>localRepository</code>，在下面加一行</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>D:\CodeEnv\MavenRepository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>表示设置本地仓库位置为 <code>D:\CodeEnv\MavenRepository</code>，之后下载的 jar 包会保存在这里。</p>
+<p><img data-src="image-20210211171245855.png" alt="image-20210211171245855"></p>
+<p>然后找到 <code>&lt;mirrors&gt;</code> 标签，在标签内加入：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>aliyunmaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>阿里云公共仓库<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://maven.aliyun.com/repository/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="image-20210211171450158.png" alt="image-20210211171450158"></p>
+<p>换成国内<a target="_blank" rel="noopener" href="https://maven.aliyun.com/mvn/guide">阿里</a>的源，下载速度会有所提升。</p>
+<p>另，maven 的 jar 包可在 <a target="_blank" rel="noopener" href="https://mvnrepository.com/">Maven Repository</a> 中找到</p>
+<h1 id="软件的配置"><a href="#软件的配置" class="headerlink" title="软件的配置"></a>软件的配置</h1><h2 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h2><p>设置中把文件的存储位置改到E盘自己设置的目录下：</p>
+<p><img data-src="image-20210211181035633.png" alt="image-20210211181035633"></p>
+<p>这样，微信的所有聊天文件都在E盘了，要找一些文件的时候可以直接去这个路径下面去找。</p>
+<h2 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h2><p>安装时自定义保存目录即可。</p>
+<p><img data-src="Snipaste_2021-02-11_18-15-57.png" alt="Snipaste_2021-02-11_18-15-57"></p>
+<p>该目录也可以在进入软件后自行设置。</p>
+<h2 id="关于重置电脑"><a href="#关于重置电脑" class="headerlink" title="关于重置电脑"></a>关于重置电脑</h2><p>有些人认为重置电脑就意味着所有文件都删除，这是不对的。Win10可以仅仅删除C盘（安装了Windows的驱动器盘）的内容，这就意味着虽然所有的软件都被删除了，但是软件的数据（包括浏览器等的下载数据和聊天数据）只要不在C盘，就可以被保留下来。</p>
+<p><img data-src="image-20210211182154052.png" alt="image-20210211182154052"></p>
+<p><img data-src="image-20210211182210574.png" alt="image-20210211182210574"></p>
+<p>所以微信和QQ的重要聊天数据请不要放在C盘，这样即使重置系统，所有的聊天记录也不会消失。在重新安装微信和QQ后，聊天记录的存储位置选择你原来数据的所在位置，软件就会提示你“有旧的数据，是否使用”，选择使用即可。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>2020年度总结</title>
     <url>/posts/2020-nian-du-zong-jie/</url>
     <content><![CDATA[<hr>
@@ -732,6 +1141,60 @@
       </tags>
   </entry>
   <entry>
+    <title>BUAA-北航-自动评教代码</title>
+    <url>/posts/buaa-bei-hang-zi-dong-ping-jiao-dai-ma/</url>
+    <content><![CDATA[<ul>
+<li><p>修复了<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IBSLGi9LfI75wQ3O7vHI4w">参考代码</a>中卡在<code>是否推荐</code>这一步无法继续运行的 Bug</p>
+</li>
+<li><p>适用于北航教务系统，校内网和VPN均可使用</p>
+</li>
+<li><p>截止本文发出前该代码仍可正常使用</p>
+</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">javascript: <span class="function"><span class="keyword">function</span> <span class="title">judge</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    doc = <span class="built_in">window</span>.top.document.getElementById(<span class="string">&quot;iframename&quot;</span>).contentWindow;</span><br><span class="line">    doc.alert = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    doc.confirm = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> arr = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span> (arr[<span class="number">0</span>] === arr[<span class="number">1</span>] &amp;&amp; arr[<span class="number">2</span>] === arr[<span class="number">3</span>] &amp;&amp; arr[<span class="number">4</span>] === arr[<span class="number">5</span>] &amp;&amp; arr[<span class="number">1</span>] === arr[<span class="number">2</span>]) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">            arr[i] = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    a = doc.$(<span class="string">&quot;input[name^=tabmapzb]&quot;</span>);</span><br><span class="line">    b = doc.$(<span class="string">&quot;span.yellow&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (a.length !== <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">            a[arr[i] + i * <span class="number">5</span>].click();</span><br><span class="line">        &#125;</span><br><span class="line">        doc.$(<span class="string">&quot;#sftj&quot;</span>).get(<span class="number">0</span>).selectedIndex = <span class="number">1</span>;</span><br><span class="line">        doc.tj();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        b[<span class="number">1</span>].firstElementChild.click();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">doc = <span class="built_in">window</span>.top.document.getElementById(<span class="string">&quot;iframename&quot;</span>).contentWindow;</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="string">&quot;doc.$.onload = judge()&quot;</span>, <span class="number">1400</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ol>
+<li><p>使用 <strong>Chrome</strong> 浏览器打开评教页面</p>
+<blockquote>
+<p>打开教务管理系统 –&gt; 教学评价 –&gt; 学生评教 –&gt; 开始评教</p>
+</blockquote>
+</li>
+<li><p>将此时浏览器地址栏的内容清空，并将上述代码复制到地址栏，并在代码的最开始加上</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">javascript:</span><br></pre></td></tr></table></figure>
+
+<p>回车即可。</p>
+<p>注意：代码最开始虽然有<code>javascript:</code>，但是复制过去后就没了，所以需要我们手动加上</p>
+</li>
+</ol>
+<h2 id="代码说明与自定义"><a href="#代码说明与自定义" class="headerlink" title="代码说明与自定义"></a>代码说明与自定义</h2><ol>
+<li><p>评教的效果是从前三项 <code>优秀</code>、<code>良好</code>、<code>中等</code>三者中随机生成的，而且保证不会出现全选一个等级的情况（全选一个等级是提交不上的）</p>
+<p>如果需要修改，可把代码第12行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">arr[i] = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>中的<code>3</code> 改成 <code>n(1 &lt; n &lt;= 5)</code>，意思是从前 <code>n</code>项中随机生成</p>
+</li>
+<li><p>是否推荐选的是 <code>是</code></p>
+<p>需要修改的话在第21行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">doc.$(<span class="string">&quot;#sftj&quot;</span>).get(<span class="number">0</span>).selectedIndex = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>0</code> 改为 <code>1</code> 表示选择不推荐</p>
+</li>
+<li><p>用完记得关闭评教页面</p>
+</li>
+<li><p>别的浏览器大概支持吧（选的课太少了，没机会试了_(:з)∠)_）</p>
+</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IBSLGi9LfI75wQ3O7vHI4w">分享一份自动评教代码</a></p>
+]]></content>
+      <categories>
+        <category>评教</category>
+      </categories>
+      <tags>
+        <tag>评教</tag>
+        <tag>BUAA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Mybatis学习笔记01</title>
     <url>/posts/mybatis-xue-xi-bi-ji-01/</url>
     <content><![CDATA[<h2 id="三层架构"><a href="#三层架构" class="headerlink" title="三层架构"></a>三层架构</h2><ul>
@@ -895,60 +1358,6 @@
       </tags>
   </entry>
   <entry>
-    <title>BUAA-北航-自动评教代码</title>
-    <url>/posts/buaa-bei-hang-zi-dong-ping-jiao-dai-ma/</url>
-    <content><![CDATA[<ul>
-<li><p>修复了<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IBSLGi9LfI75wQ3O7vHI4w">参考代码</a>中卡在<code>是否推荐</code>这一步无法继续运行的 Bug</p>
-</li>
-<li><p>适用于北航教务系统，校内网和VPN均可使用</p>
-</li>
-<li><p>截止本文发出前该代码仍可正常使用</p>
-</li>
-</ul>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">javascript: <span class="function"><span class="keyword">function</span> <span class="title">judge</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    doc = <span class="built_in">window</span>.top.document.getElementById(<span class="string">&quot;iframename&quot;</span>).contentWindow;</span><br><span class="line">    doc.alert = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    doc.confirm = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> arr = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span> (arr[<span class="number">0</span>] === arr[<span class="number">1</span>] &amp;&amp; arr[<span class="number">2</span>] === arr[<span class="number">3</span>] &amp;&amp; arr[<span class="number">4</span>] === arr[<span class="number">5</span>] &amp;&amp; arr[<span class="number">1</span>] === arr[<span class="number">2</span>]) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">            arr[i] = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    a = doc.$(<span class="string">&quot;input[name^=tabmapzb]&quot;</span>);</span><br><span class="line">    b = doc.$(<span class="string">&quot;span.yellow&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (a.length !== <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++) &#123;</span><br><span class="line">            a[arr[i] + i * <span class="number">5</span>].click();</span><br><span class="line">        &#125;</span><br><span class="line">        doc.$(<span class="string">&quot;#sftj&quot;</span>).get(<span class="number">0</span>).selectedIndex = <span class="number">1</span>;</span><br><span class="line">        doc.tj();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        b[<span class="number">1</span>].firstElementChild.click();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">doc = <span class="built_in">window</span>.top.document.getElementById(<span class="string">&quot;iframename&quot;</span>).contentWindow;</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="string">&quot;doc.$.onload = judge()&quot;</span>, <span class="number">1400</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ol>
-<li><p>使用 <strong>Chrome</strong> 浏览器打开评教页面</p>
-<blockquote>
-<p>打开教务管理系统 –&gt; 教学评价 –&gt; 学生评教 –&gt; 开始评教</p>
-</blockquote>
-</li>
-<li><p>将此时浏览器地址栏的内容清空，并将上述代码复制到地址栏，并在代码的最开始加上</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">javascript:</span><br></pre></td></tr></table></figure>
-
-<p>回车即可。</p>
-<p>注意：代码最开始虽然有<code>javascript:</code>，但是复制过去后就没了，所以需要我们手动加上</p>
-</li>
-</ol>
-<h2 id="代码说明与自定义"><a href="#代码说明与自定义" class="headerlink" title="代码说明与自定义"></a>代码说明与自定义</h2><ol>
-<li><p>评教的效果是从前三项 <code>优秀</code>、<code>良好</code>、<code>中等</code>三者中随机生成的，而且保证不会出现全选一个等级的情况（全选一个等级是提交不上的）</p>
-<p>如果需要修改，可把代码第12行</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">arr[i] = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-
-<p>中的<code>3</code> 改成 <code>n(1 &lt; n &lt;= 5)</code>，意思是从前 <code>n</code>项中随机生成</p>
-</li>
-<li><p>是否推荐选的是 <code>是</code></p>
-<p>需要修改的话在第21行</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">doc.$(<span class="string">&quot;#sftj&quot;</span>).get(<span class="number">0</span>).selectedIndex = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-
-<p><code>0</code> 改为 <code>1</code> 表示选择不推荐</p>
-</li>
-<li><p>用完记得关闭评教页面</p>
-</li>
-<li><p>别的浏览器大概支持吧（选的课太少了，没机会试了_(:з)∠)_）</p>
-</li>
-</ol>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/IBSLGi9LfI75wQ3O7vHI4w">分享一份自动评教代码</a></p>
-]]></content>
-      <categories>
-        <category>评教</category>
-      </categories>
-      <tags>
-        <tag>评教</tag>
-        <tag>BUAA</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring学习笔记02</title>
     <url>/posts/spring-xue-xi-bi-ji-02/</url>
     <content><![CDATA[<h2 id="Spring-中-IOC-的常用注解"><a href="#Spring-中-IOC-的常用注解" class="headerlink" title="Spring 中 IOC 的常用注解"></a>Spring 中 IOC 的常用注解</h2><p>上一节介绍的 xml 配置：</p>
@@ -1058,11 +1467,6 @@
       </tags>
   </entry>
   <entry>
-    <title>常见应用软件和编程语言中的正则表达式</title>
-    <url>/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>Ubuntu命令行安装zsh、oh-my-zsh、插件以及相关配置</title>
     <url>/posts/ubuntu-ming-ling-xing-an-zhuang-zsh-oh-my-zsh-cha-jian-yi-ji-xiang-guan-pei-zhi/</url>
     <content><![CDATA[<p>鉴于网上的教程参差不齐，方法也都不太一样，我每次都需要找半天才能找到一个相对来说满意的教程。</p>
@@ -1165,6 +1569,11 @@
 </li>
 </ol>
 ]]></content>
+  </entry>
+  <entry>
+    <title>常见应用软件和编程语言中的正则表达式</title>
+    <url>/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>jdbc学习笔记01</title>
@@ -2374,123 +2783,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java 基础查漏补缺</title>
-    <url>/posts/java-ji-chu-cha-lou-bu-que/</url>
-    <content><![CDATA[<h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><blockquote>
-<p><code>++</code> 作为后缀时的优先级比 <code>*</code> 高，因此 <code>*p++</code> 是先 p++, 而后<code>*(p++)</code> 的。</p>
-<p><code>++</code> 作为后缀时优先级和 <code>()</code> 一样高，结合律从左到右。因此<code>(*p)++</code> 是先取值，然后 <code>++</code>。</p>
-<p><code>++</code> 作为前缀时的优先级和 <code>*</code> 一样高， 结合律从右到左， 所以 <code>++*p == ++(*p)</code> 的。</p>
-</blockquote>
-<h2 id="基本的数据结构"><a href="#基本的数据结构" class="headerlink" title="基本的数据结构"></a>基本的数据结构</h2><p><img data-src="4552908_1476435955845_3AA2482F152044FA3EC4640FD49DAE02" alt="img"></p>
-<p>   从框架图中了解继承关系以及重要的数据结构（包括其继承情况、底层原理等）</p>
-<h3 id="String、StringBuilder、StringBuffer"><a href="#String、StringBuilder、StringBuffer" class="headerlink" title="String、StringBuilder、StringBuffer"></a>String、StringBuilder、StringBuffer</h3><h3 id="hashMap、linkedHashMap、hashTable"><a href="#hashMap、linkedHashMap、hashTable" class="headerlink" title="hashMap、linkedHashMap、hashTable"></a>hashMap、linkedHashMap、hashTable</h3><h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><h2 id="二进制相关"><a href="#二进制相关" class="headerlink" title="二进制相关"></a>二进制相关</h2><h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p>一旦在finally块中使用了return或throw语句，将会导致try块，catch块中的return，throw语句失效</p>
-   <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">returnTest</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception e)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">finally</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>   返回 false</p>
-<p>   根据官方的JVM规范：<br>   <strong>如果try语句里有return，返回的是try语句块中变量值。</strong><br>   详细执行过程如下：</p>
-<ol>
-<li>如果有返回值，就把返回值保存到局部变量中；</li>
-<li>执行jsr指令跳到finally语句里执行；</li>
-<li>执行完finally语句后，返回之前保存在局部变量表里的值。</li>
-</ol>
-<p>   <strong>如果try，finally语句里均有return，忽略try的return，而使用finally的return.</strong></p>
-<h2 id="局部变量、成员变量、static、初始值："><a href="#局部变量、成员变量、static、初始值：" class="headerlink" title="局部变量、成员变量、static、初始值："></a>局部变量、成员变量、static、初始值：</h2><ol>
-<li>成员变量是独立于方法外的变量，局部变量是类的方法中的变量<ol>
-<li>成员变量：包括实例变量和类变量，用 static 修饰的是类变量，不用 static 修饰的是实例变量，所有类的成员变量可以通过 this 来引用。</li>
-<li>局部变量：包括形参，方法局部变量，代码块局部变量，存在于方法的参数列表和方法定义中以及代码块中。</li>
-</ol>
-</li>
-<li>成员变量可以被public，protect，private，static等修饰符修饰，而局部变量不能被控制修饰符及 static修饰；两者都可以定义成final型。</li>
-<li>成员变量存储在堆，局部变量存储在栈。局部变量的作用域仅限于定义它的方法，在该方法的外部无法访问它。成员变量的作用域在整个类内部都是可见的，所有成员方法都可以使用它。如果访问权限允许，还可以在类的外部使用成员变量。</li>
-<li>局部变量的生存周期与方法的执行期相同。当方法执行到定义局部变量的语句时，局部变量被创建；执行到它所在的作用域的最后一条语句时，局部变量被销毁。类的成员变量，如果是实例成员变量，它和对象的生存期相同。而静态成员变量的生存期是整个程序运行期。</li>
-<li>成员变量在类加载或实例被创建时，系统自动分配内存空间，并在分配空间后自动为成员变量指定初始化值，初始化值为默认值，基本类型的默认值为0，复合类型的默认值为null。（被final修饰且没有static的必须显式赋值），局部变量在定义后必须经过显式初始化后才能使用，系统不会为局部变量执行初始化。</li>
-<li>局部变量可以和成员变量 同名，且在使用时，局部变量具有更高的优先级，直接使用同名访问，访问的是局部变量，如需要访问成员变量可以用this.变量名访问<ol start="7">
-<li>成员变量赋值的规律：接班数据类型byte、short、char、int、long默认赋值0，float、double默认赋值0.0，String等引用数据类型默认赋值null</li>
-<li>类变量在不设置初始值时，会进行默认值赋值，而局部方法中声明的变量则必须进行初始化，他不会进行默认值赋值。</li>
-<li>静态变量会默认赋初值，局部变量和final声明的变量必须手动赋初值</li>
-</ol>
-</li>
-</ol>
-<h3 id="static-相关"><a href="#static-相关" class="headerlink" title="static 相关"></a>static 相关</h3><p>声明位置 初始值 生命周期 修饰的内容</p>
-<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><h2 id="父类、子类、继承、super"><a href="#父类、子类、继承、super" class="headerlink" title="父类、子类、继承、super"></a>父类、子类、继承、super</h2><ol>
-<li><p>子类构造函数调用父类构造函数用super，且super语句必须是子类构造方法的第一句</p>
-</li>
-<li><p>子类重写父类方法后，若想调用父类中被重写的方法，用super。未被重写的方法可以直接调用。</p>
-</li>
-<li><p>关于文件</p>
-<ol>
-<li>File类是对文件整体或者文件属性操作的类，例如创建文件、删除文件、查看文件是否存在等功能，不能操作文件内容；文件内容是用IO流操作的。</li>
-</ol>
-</li>
-</ol>
-<h2 id="Java-三大注解"><a href="#Java-三大注解" class="headerlink" title="Java 三大注解"></a>Java 三大注解</h2><ol>
-<li>Java三大注解分别是@Override @Deprecated @Suppresswarnings</li>
-<li>@Override 注解表名子类中覆盖了超类中的某个方法，如果写错了覆盖形式，编译器会报错</li>
-<li>@Deprecated 表明不希望别人在以后使用这个类，方法，变量等等</li>
-<li>@Suppresswarnings 达到抑制编译器产生警告的目的，但是不建议使用，因为后期编码人员看不懂编译器提示的警告，不能更好的选择更好的类去完成任务</li>
-</ol>
-<h2 id="文件处理"><a href="#文件处理" class="headerlink" title="文件处理"></a>文件处理</h2><p>文件操作的类及其用法：文本文件 二进制文件</p>
-<h2 id="内存使用问题"><a href="#内存使用问题" class="headerlink" title="内存使用问题"></a>内存使用问题</h2><p>各个变量的存储位置，JVM的内存模型等</p>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2>]]></content>
-      <categories>
-        <category>基础</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>二叉树中的最大路径和</title>
-    <url>/posts/er-cha-shu-zhong-de-zui-da-lu-jing-he/</url>
-    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/">leetcode 124</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
-<p>路径 被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。同一个节点在一条路径序列中 至多出现一次 。该路径 至少包含一个 节点，且不一定经过根节点。</p>
-<p>路径和 是路径中各节点值的总和。</p>
-<p>给你一个二叉树的根节点 root ，返回其 最大路径和 。</p>
-</blockquote>
-<p>示例1：</p>
-<p><img data-src="exx1.jpg" alt="img"></p>
-<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">输入：root = [1,2,3]</span><br><span class="line">输出：6</span><br><span class="line">解释：最优路径是<span class="number"> 2 </span>-&gt;<span class="number"> 1 </span>-&gt;<span class="number"> 3 </span>，路径和为<span class="number"> 2 </span>+<span class="number"> 1 </span>+<span class="number"> 3 </span>= 6</span><br></pre></td></tr></table></figure>
-
-<p>示例2：</p>
-<p><img data-src="exx2.jpg" alt="img"></p>
-<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">输入：root = [-10,9,20,null,null,15,7]</span><br><span class="line">输出：42</span><br><span class="line">解释：最优路径是<span class="number"> 15 </span>-&gt;<span class="number"> 20 </span>-&gt;<span class="number"> 7 </span>，路径和为<span class="number"> 15 </span>+<span class="number"> 20 </span>+<span class="number"> 7 </span>= 42</span><br></pre></td></tr></table></figure>
-
-<p><strong>提示：</strong></p>
-<ul>
-<li>树中节点数目范围是 [1, 3 * $10^4$]</li>
-<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
-</ul>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val, TreeNode left, TreeNode right) &#123;</span></span><br><span class="line"><span class="comment"> *         this.val = val;</span></span><br><span class="line"><span class="comment"> *         this.left = left;</span></span><br><span class="line"><span class="comment"> *         this.right = right;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ans = Integer.MIN_VALUE;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">oneSideMax</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left = Math.max(<span class="number">0</span>, oneSideMax(root.left));</span><br><span class="line">        <span class="keyword">int</span> right = Math.max(<span class="number">0</span>, oneSideMax(root.right));</span><br><span class="line">        ans = Math.max(ans, left + right + root.val);</span><br><span class="line">        <span class="keyword">return</span> Math.max(left, right) + root.val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        oneSideMax(root);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>子函数 <code>oneSideMax(node)</code> 采用了递归的思想，该函数用来计算二叉树中的一个节点的最大贡献值，具体而言，就是在以该节点为根节点的子树中寻找以该节点为起点的一条路径，使得该路径上的节点值之和最大。</p>
-<p>具体的计算如下（对比代码来看，先忽略 <code>ans = ...</code> 的这一行）：</p>
-<ul>
-<li>空节点的最大贡献值等于 0</li>
-<li>非空节点的最大贡献值等于节点值与其子节点中的最大贡献值之和（对于叶节点而言，最大贡献值等于节点值）（考虑到节点的最大贡献值可能为负值，因此当子路径有负值时该子路径将被舍弃，记为0）</li>
-</ul>
-<p>例如，考虑示例2的二叉树：</p>
-<figure class="highlight livescript"><table><tr><td class="code"><pre><span class="line"> -<span class="number">10</span></span><br><span class="line"> / <span class="string">\</span></span><br><span class="line"><span class="number">9</span>  <span class="number">20</span></span><br><span class="line">  /  <span class="string">\</span></span><br><span class="line"> <span class="number">15</span>   <span class="number">7</span></span><br></pre></td></tr></table></figure>
-
-<p>叶节点 9、15、7 的最大贡献值分别为 9、15、7。</p>
-<p>非叶节点 20 的最大贡献值等于 $20+\max(15,7)=35$，节点 −10 的最大贡献值等于 $-10+\max(9,35)=25$。</p>
-<p>上述计算过程是递归的过程，因此，对根节点调用函数 <code>oneSideMax</code>，即可得到每个节点的最大贡献值。</p>
-<p>根据函数 <code>oneSideMax</code>得到每个节点的最大贡献值之后，如何得到二叉树的最大路径和？</p>
-<p>对于二叉树中的一个节点，该节点的最大路径和取决于该节点的值与该节点的左右子节点的最大贡献值，如果子节点的最大贡献值为正，则计入该节点的最大路径和，否则不计入该节点的最大路径和。维护一个全局变量 ans 存储最大路径和，在递归过程中更新 ans 的值，最后得到的 ans 的值即为二叉树中的最大路径和。</p>
-<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度：$O(N)$，其中 N 是二叉树中的节点个数。对每个节点访问不超过 2 次。</p>
-<p>空间复杂度：$O(N)$，其中 N 是二叉树中的节点个数。空间复杂度主要取决于递归调用层数，最大层数等于二叉树的高度，最坏情况下，二叉树的高度等于二叉树中的节点个数。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/solution/er-cha-shu-zhong-de-zui-da-lu-jing-he-by-leetcode-/">https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/solution/er-cha-shu-zhong-de-zui-da-lu-jing-he-by-leetcode-/</a><br>来源：力扣（LeetCode）</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>二叉树</tag>
-        <tag>leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>电路基础04</title>
     <url>/posts/dian-lu-ji-chu-04/</url>
     <content><![CDATA[<h2 id="叠加定理"><a href="#叠加定理" class="headerlink" title="叠加定理"></a>叠加定理</h2><ul>
@@ -2661,251 +2953,6 @@
       </categories>
       <tags>
         <tag>电路</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于炒股这件小事</title>
-    <url>/posts/guan-yu-chao-gu-zhe-jian-xiao-shi/</url>
-    <content><![CDATA[<p>从长期来看，股票的价格无论怎么波动，最终都会回归到它的内在价值。</p>
-<h1 id="关于短视"><a href="#关于短视" class="headerlink" title="关于短视"></a>关于短视</h1><p>短视其实是一种习惯，而这种习惯往往也会投射到生活当中。</p>
-<p>在股市里的短视不过是会让你亏掉一些钱，而在生活中的短视，可能亏掉的就是一个属于你的更好的人生。</p>
-<p>比如说我们生活中一些沉迷赌博的人，他们往往沉迷于短期赢钱所带来的快感，当这种快感大于输钱恐惧的时候，这个人就会一直赌下去。所以一般好赌的人都不太愿意踏踏实实的去赚钱，因为他们觉得这样来钱太慢了。</p>
-<p>但是他们意识不到的是，虽然赌博有的时候可以赢一些钱，但是哪怕一两次赢得再多，当下赢的这笔钱对于自己的人生来讲，其实根本起不到什么大的作用。反而长期来看只要继续赌钱，这些钱早晚还是会输回去。</p>
-<p>这是一个很简单的概率问题，尤其是一些沉迷网赌的人，这种最后输赢的概率甚至根本就是被人为控制好的。</p>
-<p>但是很多人就是看不明白这一点，所以沉迷赌博的人，本质上最大的问题是一个认知上的问题。稍微聪明一点，有一点长期思维的人，其实都是不会去碰这些的。</p>
-<h2 id="工作方面的短视"><a href="#工作方面的短视" class="headerlink" title="工作方面的短视"></a>工作方面的短视</h2><p>除了这个，还有我们平时在生活中遇到各种事物问题，需要抉择的时候，我们大多数人也都会下意识地去看重短期利益做判断。</p>
-<p>比如找工作的时候，很多人只喜欢选当下工资高的，但是却忽略了这个岗位未来的发展前景和个人能力的提升与积累。</p>
-<p>这种类型的工作其实有很多，我们可以举个例子，比如说，外卖员这个职业，外卖员的工作会比较辛苦，但是如果勤快一点工资也还算不错。但是这个职业对于个人来讲并没有任何的成长性，不能为你积累任何的资源，经验，以及职业能力。</p>
-<p>就算你工作十年，有一天你不送外卖了，你会发现你依然什么都不会，因为这十年你整个人的成长都是停滞的状态。</p>
-<h2 id="生活方面的短视"><a href="#生活方面的短视" class="headerlink" title="生活方面的短视"></a>生活方面的短视</h2><p>这是工作方面，那我们的生活方面呢？</p>
-<p>比如有人会沉迷打游戏，有人喜欢追剧，并且为此花费大量的精力。当我们在做这些的时候，当下可以给我们带来短暂的快感，但是长期来看，如果大量的时间都花在了这些方面，那我们的个人成长也会是处于停滞的状态。</p>
-<h1 id="关于眼前利益和长远利益"><a href="#关于眼前利益和长远利益" class="headerlink" title="关于眼前利益和长远利益"></a>关于眼前利益和长远利益</h1><p>其实无论是工作，还是生活，大多数人在面临选择的时候，都会更偏向于看重眼前的利益去做决定，但是却忽略了这样做我们可能会失去的东西。</p>
-<p>其实这很正常，因为这是刻在我们骨子里的东西，当下就可以得到的东西往往可以给我们带来满足感。比如一场输赢立断的赌局，一份下个月就可以拿到的工资。。。</p>
-<p>而当我们把眼光往长期去看的时候，如果我们开始把收获的时间定在未来，很多时候则代表我们需要放弃一些当下就能够得到的东西，这会让人非常的没有安全感。</p>
-<p>这本身就是违背我们天性的，但是当我们想要成长，想要变得更加优秀的时候，我们就必须学会克服这些天性，这是必须要做的。</p>
-<p>投资是如此，人生，更是如此。</p>
-<h1 id="人生就是一场投资"><a href="#人生就是一场投资" class="headerlink" title="人生就是一场投资"></a>人生就是一场投资</h1><p>其实从某种角度来看，人生其实本就是一场投资，这不过我们大多数人没有意识到而已。</p>
-<p>就像股票的价格无论怎么波动，最终都会回归它的内在价值，而我们的人生其实也是一样，真正决定你能够爬的多高，走得多远的是你的内在价值。比如说你的能力，你的认知，你的阅历，这一切都是你的内在价值。</p>
-<p>包括投资这件事本身，它也是一种能力，它也是你内在价值的一部分，而我们的时间和精力就是我们可以不断去投入的。</p>
-<p>你可以选择把你的时间和精力都投资于那些仅仅能给你带来短期利益的事物。但是你的内在价值会很难增长，甚至停滞，那么你的人生大概率只会原地踏步，甚至退步。</p>
-<p>你也可以选择把你的时间和精力不断投资于你的学习和成长，不断提升你的个人能力。虽然这些投资在当下不会让你看到什么立竿见影的回报，但是在这个过程中你的内在价值会不断地提升，积累，而在未来，价格最终会回归价值。</p>
-<p>也许在这期间你会遇到低谷、挫折，但是你要相信，当你真的在不断成长，能力不断提升，价值变得越来越高的时候，你真的会收获到，与你价值相匹配的回报。</p>
-<p>这不是鸡汤，是我们应该相信的东西</p>
-<p>所以，其实这个世界上最值得我们投资的资产是什么呢？</p>
-<p>是股票？房子？基金？</p>
-<p>都不是</p>
-<p>是你自己</p>
-]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>重装系统后一些软件的安装与环境配置</title>
-    <url>/posts/chong-zhuang-xi-tong-hou-yi-xie-ruan-jian-de-an-zhuang-yu-huan-jing-pei-zhi/</url>
-    <content><![CDATA[<h1 id="基本配置情况"><a href="#基本配置情况" class="headerlink" title="基本配置情况"></a>基本配置情况</h1><p>首先码一下我的机器配置：</p>
-<p>系统：Windows 10</p>
-<p>CPU：i5-9300H</p>
-<p>内存：32GB</p>
-<p>GPU：RTX 2060</p>
-<p>磁盘：一块 512GB 的三星 PM981A 固态（C盘分128GB，剩余容量为D盘） + 一块 1TB 西数机械硬盘（E盘）</p>
-<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><p>首先是磁盘的分配：</p>
-<ul>
-<li>C盘不用去管它，尽量不把数据存进去</li>
-<li>D盘用来安装软件。由于D盘是固态，可以用来安装软件或者游戏，不会损失性能。安装软件时选择自定义安装，手动指定安装位置。这很简单，只需要把安装位置中的<code>C:</code>改为<code>d:</code>即可，不用做其他操作。另外，编程环境也适合放在这里。</li>
-<li>E盘用来存放软件产生的数据，比如微信和QQ的聊天数据以及各种下载的数据（包括浏览器，迅雷，百度网盘等下载的数据）</li>
-</ul>
-<p>然后是根据磁盘的分配得到的文件目录（目录名特别是编程相关的尽量别出现汉字）：</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">D:/</span><br><span class="line">├── CodeEnv  <span class="regexp">//</span>存放基本的编程环境</span><br><span class="line">│   ├── Anaconda3  <span class="regexp">//</span>Python环境</span><br><span class="line">│   ├── mingw64  <span class="regexp">//</span>C和C++环境</span><br><span class="line">│   ├── jdk-<span class="number">11.0</span>.<span class="number">10</span>  <span class="regexp">//</span>Java环境</span><br><span class="line">│   ├── apache-maven-<span class="number">3.6</span>.<span class="number">3</span>  <span class="regexp">//m</span>aven</span><br><span class="line">│   ├── mysql-<span class="number">8.0</span>.<span class="number">23</span>-winx64  <span class="regexp">//my</span>sql</span><br><span class="line">│   ├── MongoDB  <span class="regexp">//</span>MongoDB</span><br><span class="line">│   ├── Redis-x64-<span class="number">5.0</span>.<span class="number">10</span>  <span class="regexp">//</span>Redis</span><br><span class="line">│   ├── etc...</span><br><span class="line">├── Program Files  <span class="regexp">//</span><span class="number">64</span>位软件安装位置</span><br><span class="line">├── Program Files (x86)  <span class="regexp">//</span><span class="number">32</span>位软件安装位置</span><br><span class="line"></span><br><span class="line">E:/</span><br><span class="line">├── MySpace  <span class="regexp">//</span>存放各类项目文件</span><br><span class="line">│   ├── AndroidStudio  <span class="regexp">//</span>Android Studio的项目文件</span><br><span class="line">│   ├── Clion</span><br><span class="line">│   ├── IntelliJ IDEA</span><br><span class="line">│   ├── Pycharm</span><br><span class="line">│   ├── VS</span><br><span class="line">│   ├── WebStorm</span><br><span class="line">│   ├── etc...</span><br><span class="line">├── TencentFiles  <span class="regexp">//</span>存放QQ和微信的聊天文件</span><br><span class="line">│   ├── QQ</span><br><span class="line">│   ├── WeChat</span><br><span class="line">├── Browser  <span class="regexp">//</span>存放各个浏览器的下载文件</span><br><span class="line">├── ThunderFiles  <span class="regexp">//</span>迅雷下载文件</span><br><span class="line">├── BaiduNetdiskDownload  <span class="regexp">//</span>百度网盘下载文件</span><br><span class="line">├── VirtualMachine  <span class="regexp">//</span>虚拟机文件</span><br><span class="line">├── etc...</span><br></pre></td></tr></table></figure>
-
-<p>另外，我们平时习惯在桌面上存放各种资料，而桌面一般都位于C盘，为了减少C盘的使用，下面我们将桌面移动到D盘：</p>
-<p>首先打开此电脑（Win+E键快捷打开）：</p>
-<ul>
-<li>在 查看–&gt;选项–&gt;打开文件资源管理器时打开选择：此电脑（这一步非必须，个人习惯）</li>
-</ul>
-<p><img data-src="image-20210211144741685.png" alt="image-20210211144741685"></p>
-<p><img data-src="image-20210211144909446.png" alt="image-20210211144909446"></p>
-<ul>
-<li><p>打开此电脑（Win+E键快捷打开），右键“桌面”–&gt;属性–&gt;位置–&gt;<code>C</code>改为<code>D</code>–&gt;敲三下回车键</p>
-<p><img data-src="image-20210211145430566.png" alt="image-20210211145430566"></p>
-</li>
-<li><p>其他的文件夹同理也可以移动到D盘</p>
-</li>
-</ul>
-<h1 id="编程环境"><a href="#编程环境" class="headerlink" title="编程环境"></a>编程环境</h1><h2 id="C-C"><a href="#C-C" class="headerlink" title="C/C++"></a>C/C++</h2><p>我使用的编译器是Mingw-64自带的gcc，但是其<a target="_blank" rel="noopener" href="http://www.mingw-w64.org/">官网</a>以及<a target="_blank" rel="noopener" href="http://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/">SourceForge</a>更新较慢，因此我采用的是<a target="_blank" rel="noopener" href="http://winlibs.com/">WinLibs</a>，其<a target="_blank" rel="noopener" href="http://winlibs.com/#download-release">download 页面</a>提供 GCC + MinGW-w64 以及 GCC + LLVM/Clang/LLD/LLDB + MinGW-w64 的下载，版本较新，可以自取所需。</p>
-<p>下载后解压至 <code>D:\CodeEnv</code>目录下，并将<code>D:\CodeEnv\mingw64\bin</code>添加进 环境变量–&gt;系统变量–&gt;Path目录下即可。可使用 <code>gcc --version</code> 和 <code>g++ --version</code> 进行验证：</p>
-<p><img data-src="image-20210211150937665.png" alt="image-20210211150937665"></p>
-<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><p>下载页面：<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-downloads.html">JDK下载</a>，我一般选择的是 <a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-jdk11-downloads.html">JDK11</a>，选择后缀名为<code>*_windows-x64_bin.zip</code>进行下载，然后同样解压至<code>D:\CodeEnv</code>目录下，将<code>D:\CodeEnv\jdk-11.0.10\bin</code>添加进 环境变量–&gt;系统变量–&gt;Path目录下，将 <code>D:\CodeEnv\jdk-11.0.10</code> 设置为新的系统变量 <code>JAVA_HOME</code>即可。可使用 <code>java --version</code> 进行验证：</p>
-<p><img data-src="image-20210211151810530.png" alt="image-20210211151810530"></p>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><p>我使用的是Anaconda用来管理Python，下载页面是<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">清华大学开源镜像站</a>，速度会快一些。由于它也是编程环境，所以我将其安装在<code>D:\CodeEnv\Anaconda3</code>目录下。</p>
-<p>安装完成后按照<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">镜像使用帮助</a>的步骤更改<code>.condarc</code>文件进行换源，换成国内源将会大大提高下载Python包的速度。</p>
-<p>然后同样将<code>D:\CodeEnv\Anaconda3</code>以及 <code>D:\CodeEnv\Anaconda3\Scripts</code> 两个路径添加进 环境变量–&gt;系统变量–&gt;Path 目录下，可使用 <code>python --version</code> 进行验证：</p>
-<p><img data-src="image-20210211152831704.png" alt="image-20210211152831704"></p>
-<p>下面列出一些常见命令，启动 Anaconda Prompt：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda update conda  	<span class="comment">#升级conda(升级Anaconda前需要先升级conda)：</span></span><br><span class="line">conda update anaconda  	<span class="comment">#升级anaconda</span></span><br><span class="line">conda update --all  	<span class="comment">#更新所有包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># conda 和 pip 常用命令对比，一般 pip 版本更新速度比 conda 版本更快，更推荐用 pip 来安装包</span></span><br><span class="line">conda install [package-name]        <span class="comment"># 安装名为[package-name]的包</span></span><br><span class="line">conda install [package-name]=X.X    <span class="comment"># 安装名为[package-name]的包并指定版本X.X</span></span><br><span class="line">conda update [package-name]         <span class="comment"># 更新名为[package-name]的包</span></span><br><span class="line">conda remove [package-name]         <span class="comment"># 删除名为[package-name]的包</span></span><br><span class="line">conda list                          <span class="comment"># 列出当前环境下已安装的所有包</span></span><br><span class="line">conda search [package-name]         <span class="comment"># 列出名为[package-name]的包在conda源中的所有可用版本</span></span><br><span class="line"></span><br><span class="line">pip install [package-name]              <span class="comment"># 安装名为[package-name]的包</span></span><br><span class="line">pip install [package-name]==X.X         <span class="comment"># 安装名为[package-name]的包并指定版本X.X</span></span><br><span class="line">pip install [package-name] --proxy=代理服务器IP:端口号         <span class="comment"># 使用代理服务器安装</span></span><br><span class="line">pip install [package-name] --upgrade    <span class="comment"># 更新名为[package-name]的包</span></span><br><span class="line">pip uninstall [package-name]            <span class="comment"># 删除名为[package-name]的包</span></span><br><span class="line">pip list                                <span class="comment"># 列出当前环境下已安装的所有包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 环境相关</span></span><br><span class="line">conda create --name [env-name]      <span class="comment"># 建立名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda activate [env-name]           <span class="comment"># 进入名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda deactivate                    <span class="comment"># 退出当前的Conda虚拟环境</span></span><br><span class="line">conda env remove --name [env-name]  <span class="comment"># 删除名为[env-name]的Conda虚拟环境</span></span><br><span class="line">conda env list                      <span class="comment"># 列出所有Conda虚拟环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># conda 中配置代理：在用户目录下的 .condarc 文件中添加以下内容：</span></span><br><span class="line">proxy_servers:</span><br><span class="line">    http: http://代理服务器IP:端口号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询某个 conda 指令使用-h后缀，如：</span></span><br><span class="line">conda update -h</span><br></pre></td></tr></table></figure>
-
-<p>例如，若想创建 TensorFlow2.0 并安装 CUDA 和 cuDNN 的环境：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda create --name tf2 python=3.8      <span class="comment"># “tf2”是你建立的conda虚拟环境的名字</span></span><br><span class="line">conda activate tf2                      <span class="comment"># 进入名为“tf2”的conda虚拟环境</span></span><br><span class="line">pip install tensorflow					<span class="comment"># 使用 Python 包管理器 pip 安装 TensorFlow。</span></span><br><span class="line"></span><br><span class="line">conda search cudatoolkit				<span class="comment">#安装前可先搜索一下版本号</span></span><br><span class="line">conda search cudnn</span><br><span class="line"></span><br><span class="line">conda install cudatoolkit=X.X			<span class="comment">#不加版本号默认安装最新的</span></span><br><span class="line">conda install cudnn=X.X.X</span><br></pre></td></tr></table></figure>
-
-<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://git-scm.com/">Git</a>，按照提示安装即可。下面列一下 SSH key 的生成以及 Github 的连接：</p>
-<p>首先配置用户名和邮箱，用户名和邮箱与你 Github 账号的一致，下面的 <code>[your-name]</code> 和 <code>[your-email-address]</code> 替换为你自己的用户名和邮箱。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;[your-name]&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;[your-email-address]&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后生成 SSH key：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;[your-email-address]&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>这行命令执行后会问你若干问题，不用管它，一律回车就行。然后在你的用户目录（Windows是 <code>C:\Users\[your-name]</code>）下就会生成一个 <code>.ssh</code> 的文件夹，打开后有两个文件：<code>id_rsa</code> 和 <code>id_rsa.pub</code>，分别是私钥和公钥。</p>
-<p><img data-src="image-20210213172115832.png" alt="image-20210213172115832"></p>
-<p>我们右键用记事本（或其他的编辑软件）打开公钥文件 <code>id_rsa.pub</code> ，并复制里面的全部内容。</p>
-<p>打开 Github，找到 Settings –&gt; SSH and GPG keys –&gt; New SSH key–&gt;在 Title 文本框中随便输入一个标题，并把刚才复制的内容复制到 <code>Key</code>的文本框中–&gt; Add SSH key即可。</p>
-<p><img data-src="image-20210213172828648.png" alt="image-20210213172828648"></p>
-<h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">Mysql 下载</a></p>
-<p><img data-src="image-20210211162119313.png" alt="image-20210211162119313"></p>
-<p>选择第一个，然后不用登录，点击 <code>No thanks, just start my download.</code></p>
-<p><img data-src="image-20210211162236180.png" alt="image-20210211162236180"></p>
-<p>同样解压至 <code>D:\CodeEnv</code>。</p>
-<p>使用管理员打开命令行（右键开始菜单，选择Windows PowerShell（管理员））</p>
-<p><img data-src="image-20210211162627719.png" alt="image-20210211162627719"></p>
-<p>依次执行下面的命令（<code>mysql-8.0.23-winx64</code>这个文件夹根据你自己的版本来改动）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> d:</span><br><span class="line"><span class="built_in">cd</span> D:\CodeEnv\mysql-8.0.23-winx64\bin	<span class="comment">#根据自己的文件夹进行调整</span></span><br><span class="line">.\mysqld --initialize --console  <span class="comment">#执行后最后一行有一个密码，一定要记住这个密码</span></span><br><span class="line">.\mysqld install  <span class="comment">#安装 mysql</span></span><br><span class="line">net start mysql  <span class="comment">#启动 mysql</span></span><br><span class="line">.\mysql -u root -p  <span class="comment">#进入 mysql 数据库，这里输入上面记住的密码（建议复制粘贴）</span></span><br><span class="line">ALTER USER root@localhost IDENTIFIED  BY <span class="string">&#x27;1234&#x27;</span>;  <span class="comment">#修改密码为 1234</span></span><br><span class="line"><span class="built_in">exit</span>  <span class="comment">#或 quit</span></span><br></pre></td></tr></table></figure>
-
-<p>如图：</p>
-<p><img data-src="console.png" alt="console"></p>
-<p>此时 mysql 就已经安装好了，并且登录密码也改为了 <code>1234</code>.</p>
-<p>接下来设置一下环境变量，将 <code>D:\CodeEnv\mysql-8.0.23-winx64\bin</code> 添加进 环境变量–&gt;系统变量–&gt;Path目录下，这样随意打开一个命令行窗口都可以通过 <code>mysql -u root -p</code>来登录 mysql 数据库了。</p>
-<p><img data-src="image-20210211163623992.png" alt="image-20210211163623992"></p>
-<p>最后一步，关闭 mysql 的开机自启动。安装 mysql 服务之后，默认服务启动方式是自动启动，每次开机时，mysql 服务会自动启动，这样会消耗电脑内存，导致电脑运行缓慢。而我们并不是每次开机都需要使用 mysql 的。</p>
-<p>首先打开服务列表：快捷键 Win+R 输入 <code>services.msc</code>（或者 右击我的电脑-&gt;管理-&gt;点击左侧服务和应用程序-&gt;服务），在服务列表里找到 Mysql，右键–&gt;属性，将启动类型改为手动。</p>
-<p><img data-src="image-20210211170130539.png" alt="image-20210211170130539"></p>
-<p>此时 mysql 就不会随着开机自启动，若想启动 mysql，只需使用管理员打开命令行窗口，输入<code>net start mysql</code>即可，关闭 mysql 服务可使用命令 <code>net stop mysql</code>。</p>
-<h2 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://www.mongodb.com/try/download/community">MongoDB Community Server</a>，选择 zip 包进行下载：</p>
-<p><img data-src="image-20210211173258946.png" alt="image-20210211173258946"></p>
-<p>同样，将其解压至 <code>D:\CodeEnv</code>，并将 <code>D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3\bin</code>添加进 环境变量–&gt;系统变量–&gt;Path 目录下。</p>
-<p>在<code>D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3</code>目录下新建两个文件夹<code>db</code> 和 <code>log</code>，创建数据库和日志文件的目录。然后在该目录下创建一个配置文件 <code>mongod.cfg</code>，其中指定 <code>systemLog.path</code> 和 <code>storage.dbPath</code>。具体配置内容如下：</p>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">systemLog</span>:</span><br><span class="line">    <span class="attribute">destination</span>: file</span><br><span class="line">    <span class="attribute">path</span>: D:\CodeEnv\mongodb-win<span class="number">32</span>-x<span class="number">86</span>_<span class="number">64</span>-windows-<span class="number">4</span>.<span class="number">4</span>.<span class="number">3</span>\log\mongod.log</span><br><span class="line"><span class="attribute">storage</span>:</span><br><span class="line">    <span class="attribute">dbPath</span>: D:\CodeEnv\mongodb-win<span class="number">32</span>-x<span class="number">86</span>_<span class="number">64</span>-windows-<span class="number">4</span>.<span class="number">4</span>.<span class="number">3</span>\db</span><br></pre></td></tr></table></figure>
-
-<p>注意这些路径都是绝对路径，使用相对路径会报错。</p>
-<p>接下来安装 MongoDB 服务，使用管理员打开命令行窗口（右键开始菜单，选择Windows PowerShell（管理员）），通过执行mongod.exe，使用–install选项来安装服务，使用–config选项来指定之前创建的配置文件。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> d:</span><br><span class="line"><span class="built_in">cd</span> D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3\bin</span><br><span class="line">.\mongod --config <span class="string">&quot;D:\CodeEnv\mongodb-win32-x86_64-windows-4.4.3\mongod.cfg&quot;</span> --install</span><br></pre></td></tr></table></figure>
-
-<p>启动 MongoDB 服务：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">net start mongodb</span><br></pre></td></tr></table></figure>
-
-<p>和 Mysql 一样，MongoDB 服务也是默认自启动的，也可以通过服务列表（快捷键 Win+R 输入 <code>services.msc</code>）来关闭它的自启动。之后通过管理员命令窗口输入 <code>net start mongodb</code> 和 <code>net stop mongodb</code> 来控制 MongoDB 服务的开启和关闭。</p>
-<p>可以输入 <code>mongo</code> 来进入数据库的Shell界面：</p>
-<p><img data-src="image-20210211180129178.png" alt="image-20210211180129178"></p>
-<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">maven 下载</a> </p>
-<p><img data-src="image-20210211170815254.png" alt="image-20210211170815254"></p>
-<p>选择最后一项，同样解压至 <code>D:\CodeEnv</code>，将 <code>D:\CodeEnv\apache-maven-3.6.3</code> 设置为新的系统变量 <code>MAVEN_HOME</code>。</p>
-<p>然后对 maven 进行一些设置，打开<code>D:\CodeEnv\apache-maven-3.6.3\conf\settings.xml</code>，找到被注释掉的 <code>localRepository</code>，在下面加一行</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>D:\CodeEnv\MavenRepository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>表示设置本地仓库位置为 <code>D:\CodeEnv\MavenRepository</code>，之后下载的 jar 包会保存在这里。</p>
-<p><img data-src="image-20210211171245855.png" alt="image-20210211171245855"></p>
-<p>然后找到 <code>&lt;mirrors&gt;</code> 标签，在标签内加入：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>aliyunmaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>阿里云公共仓库<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://maven.aliyun.com/repository/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><img data-src="image-20210211171450158.png" alt="image-20210211171450158"></p>
-<p>换成国内<a target="_blank" rel="noopener" href="https://maven.aliyun.com/mvn/guide">阿里</a>的源，下载速度会有所提升。</p>
-<p>另，maven 的 jar 包可在 <a target="_blank" rel="noopener" href="https://mvnrepository.com/">Maven Repository</a> 中找到</p>
-<h1 id="软件的配置"><a href="#软件的配置" class="headerlink" title="软件的配置"></a>软件的配置</h1><h2 id="微信"><a href="#微信" class="headerlink" title="微信"></a>微信</h2><p>设置中把文件的存储位置改到E盘自己设置的目录下：</p>
-<p><img data-src="image-20210211181035633.png" alt="image-20210211181035633"></p>
-<p>这样，微信的所有聊天文件都在E盘了，要找一些文件的时候可以直接去这个路径下面去找。</p>
-<h2 id="QQ"><a href="#QQ" class="headerlink" title="QQ"></a>QQ</h2><p>安装时自定义保存目录即可。</p>
-<p><img data-src="Snipaste_2021-02-11_18-15-57.png" alt="Snipaste_2021-02-11_18-15-57"></p>
-<p>该目录也可以在进入软件后自行设置。</p>
-<h2 id="关于重置电脑"><a href="#关于重置电脑" class="headerlink" title="关于重置电脑"></a>关于重置电脑</h2><p>有些人认为重置电脑就意味着所有文件都删除，这是不对的。Win10可以仅仅删除C盘（安装了Windows的驱动器盘）的内容，这就意味着虽然所有的软件都被删除了，但是软件的数据（包括浏览器等的下载数据和聊天数据）只要不在C盘，就可以被保留下来。</p>
-<p><img data-src="image-20210211182154052.png" alt="image-20210211182154052"></p>
-<p><img data-src="image-20210211182210574.png" alt="image-20210211182210574"></p>
-<p>所以微信和QQ的重要聊天数据请不要放在C盘，这样即使重置系统，所有的聊天记录也不会消失。在重新安装微信和QQ后，聊天记录的存储位置选择你原来数据的所在位置，软件就会提示你“有旧的数据，是否使用”，选择使用即可。</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>翻转链表</title>
-    <url>/posts/fan-zhuan-lian-biao/</url>
-    <content><![CDATA[<p>链表的结构：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    ListNode next;</span><br><span class="line"></span><br><span class="line">    ListNode() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    ListNode(<span class="keyword">int</span> val) &#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ListNode(<span class="keyword">int</span> val, ListNode next) &#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>翻转链表的算法：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseNode</span><span class="params">(ListNode l)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l == <span class="keyword">null</span> || l.next == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> l;</span><br><span class="line">    ListNode p = l, pre = <span class="keyword">null</span>, next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span> (p.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">        next = p.next;</span><br><span class="line">        p.next = pre;</span><br><span class="line">        pre = p;</span><br><span class="line">        p = next;</span><br><span class="line">    &#125;</span><br><span class="line">    p.next = pre;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>零钱兑换</title>
-    <url>/posts/ling-qian-dui-huan/</url>
-    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/coin-change/">leetcode 322</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
-<p>给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。</p>
-<p>你可以认为每种硬币的数量是无限的。</p>
-</blockquote>
-<p>示例1：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>], <span class="attr">amount</span> = <span class="number">11</span></span><br><span class="line">输出：<span class="number">3</span> </span><br><span class="line">解释：<span class="number">11</span> = <span class="number">5</span> + <span class="number">5</span> + <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>示例2：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">2</span>], <span class="attr">amount</span> = <span class="number">3</span></span><br><span class="line">输出：-<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>示例3：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">0</span></span><br><span class="line">输出：<span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<p>示例4：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">1</span></span><br><span class="line">输出：<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>示例5：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">2</span></span><br><span class="line">输出：<span class="number">2</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>提示：</strong></p>
-<ul>
-<li><code>1 &lt;= coins.length &lt;= 12</code></li>
-<li><code>1 &lt;= coins[i] &lt;= 2^31 - 1</code></li>
-<li><code>0 &lt;= amount &lt;= 10^4</code></li>
-</ul>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="暴力递归"><a href="#暴力递归" class="headerlink" title="暴力递归"></a>暴力递归</h3><p>首先，这个问题是动态规划问题，因为它具有「最优子结构」的。<strong>要符合「最优子结构」，子问题间必须互相独立</strong>。</p>
-<p>为什么说它符合最优子结构呢？比如你想求 <code>amount = 11</code> 时的最少硬币数（原问题），如果你知道凑出 <code>amount = 10</code> 的最少硬币数（子问题），你只需要把子问题的答案加一（再选一枚面值为 1 的硬币）就是原问题的答案。因为硬币的数量是没有限制的，所以子问题之间没有相互制约，是互相独立的。</p>
-<p>那么，既然知道了这是个动态规划问题，就要思考<strong>如何列出正确的状态转移方程</strong>？</p>
-<p>1、<strong>确定 base case</strong>，这个很简单，显然目标金额 <code>amount</code> 为 0 时算法返回 0，因为不需要任何硬币就已经凑出目标金额了。</p>
-<p>2、<strong>确定「状态」，也就是原问题和子问题中会变化的变量</strong>。由于硬币数量无限，硬币的面额也是题目给定的，只有目标金额会不断地向 base case 靠近，所以唯一的「状态」就是目标金额 <code>amount</code>。</p>
-<p>3、<strong>确定「选择」，也就是导致「状态」产生变化的行为</strong>。目标金额为什么变化呢，因为你在选择硬币，你每选择一枚硬币，就相当于减少了目标金额。所以说所有硬币的面值，就是你的「选择」。</p>
-<p>4、<strong>明确 <code>dp</code> 函数/数组的定义</strong>。我们这里讲的是自顶向下的解法，所以会有一个递归的 <code>dp</code> 函数，一般来说函数的参数就是状态转移中会变化的量，也就是上面说到的「状态」；函数的返回值就是题目要求我们计算的量。就本题来说，状态只有一个，即「目标金额」，题目要求我们计算凑出目标金额所需的最少硬币数量。所以我们可以这样定义 <code>dp</code> 函数：</p>
-<p><code>dp(n)</code> 的定义：输入一个目标金额 <code>n</code>，返回凑出目标金额 <code>n</code> 的最少硬币数量。</p>
-<p>java代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// base case</span></span><br><span class="line">    <span class="keyword">if</span> (amount == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (amount &lt; <span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 求最小值，所以初始化为正无穷</span></span><br><span class="line">    <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> p : coins) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = coinChange(coins, amount - p);</span><br><span class="line">        <span class="comment">//子问题无解，跳过</span></span><br><span class="line">        <span class="keyword">if</span>(tmp == -<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res = Math.min(res, <span class="number">1</span> + tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 问题无解时返回 -1</span></span><br><span class="line">    <span class="keyword">return</span> res == Integer.MAX_VALUE ? -<span class="number">1</span> : res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>至此，这个问题其实就解决了，只不过需要消除一下重叠子问题，因为画出递归树就会发现好多问题是被重复计算了的。</p>
-<p>当然，该程序直接交上去会超时。</p>
-<p><strong>递归算法的时间复杂度分析：子问题总数 x 每个子问题的时间</strong>。</p>
-<p>子问题总数为递归树节点个数，这个比较难看出来，是 O(n^k)，总之是指数级别的。每个子问题中含有一个 for 循环，复杂度为 O(k)。所以总时间复杂度为 O(k * n^k)，指数级别。</p>
-<h3 id="带备忘录的递归"><a href="#带备忘录的递归" class="headerlink" title="带备忘录的递归"></a>带备忘录的递归</h3><p>只需要稍加修改，就可以通过备忘录消除子问题：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HashMap&lt;Integer, Integer&gt; memo = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (amount == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (amount &lt; <span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 查找备忘录,避免重复计算</span></span><br><span class="line">    <span class="keyword">if</span>(memo.containsKey(amount))&#123;</span><br><span class="line">        <span class="keyword">return</span> memo.get(amount);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> p : coins) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = coinChange(coins, amount - p);</span><br><span class="line">        <span class="comment">//子问题无解，跳过</span></span><br><span class="line">        <span class="keyword">if</span>(tmp == -<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res = Math.min(res, <span class="number">1</span> + tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(res == Integer.MAX_VALUE)</span><br><span class="line">        res = -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 记入备忘录</span></span><br><span class="line">    memo.put(amount,res);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>显然「备忘录」大大减小了子问题数目，完全消除了子问题的冗余，所以子问题总数不会超过金额数 <code>n</code>，即子问题数目为 O(n)。处理一个子问题的时间不变，仍是 O(k)，所以总的时间复杂度是 O(kn)。</p>
-<p>这个代码交上去是OK的</p>
-<h3 id="dp-数组的迭代解法"><a href="#dp-数组的迭代解法" class="headerlink" title="dp 数组的迭代解法"></a>dp 数组的迭代解法</h3><p>当然，我们也可以自底向上使用 dp table 来消除重叠子问题，关于「状态」「选择」和 base case 与之前没有区别，<code>dp</code> 数组的定义和刚才 <code>dp</code> 函数类似，也是把「状态」，也就是目标金额作为变量。不过 <code>dp</code> 函数体现在函数参数，而 <code>dp</code> 数组体现在数组索引：</p>
-<p><strong><code>dp</code> 数组的定义：当目标金额为 <code>i</code> 时，至少需要 <code>dp[i]</code> 枚硬币凑出</strong>。</p>
-<p>根据我们文章开头给出的动态规划代码框架可以写出如下解法：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 数组的大小为 amount + 1，初始值也为 amount + 1</span></span><br><span class="line">    <span class="comment">// 因为凑成 amount 金额的硬币数最多只有 amount 个，所以可以初始化为 amount+1</span></span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[amount + <span class="number">1</span>];</span><br><span class="line">    Arrays.fill(dp, amount + <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// base case</span></span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//外层循环在遍历所有状态的取值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; amount + <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">//内层循环在求所有选择的最小值</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> coin : coins) &#123;</span><br><span class="line">            <span class="comment">// 子问题无解，跳过</span></span><br><span class="line">            <span class="keyword">if</span> (i - coin &lt; <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            dp[i] = Math.min(dp[i], <span class="number">1</span> + dp[i - coin]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (dp[amount] == amount + <span class="number">1</span>) ? -<span class="number">1</span> : dp[amount];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文展示了如何流程化确定「状态转移方程」，只要通过状态转移方程写出暴力递归解，剩下的也就是优化递归树，消除重叠子问题而已。</p>
-<p><strong>计算机解决问题其实没有任何奇技淫巧，它唯一的解决办法就是穷举</strong>，穷举所有可能性。算法设计无非就是先思考“如何穷举”，然后再追求“如何聪明地穷举”。</p>
-<p>列出动态转移方程，就是在解决“如何穷举”的问题。之所以说它难，一是因为很多穷举需要递归实现，二是因为有的问题本身的解空间复杂，不那么容易穷举完整。</p>
-<p>备忘录、DP table 就是在追求“如何聪明地穷举”。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://github.com/labuladong/fucking-algorithm/blob/master/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.md">动态规划详解</a></p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>leetcode</tag>
-        <tag>动态规划</tag>
       </tags>
   </entry>
   <entry>
