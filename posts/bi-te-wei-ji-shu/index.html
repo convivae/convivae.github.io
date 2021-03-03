@@ -22,19 +22,22 @@
     var CONFIG = {"hostname":"convivae.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Hello, World!">
+  <meta name="description" content="leetcode 338">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello world">
-<meta property="og:url" content="https://convivae.top/posts/hello-world/index.html">
+<meta property="og:title" content="比特位计数">
+<meta property="og:url" content="https://convivae.top/posts/bi-te-wei-ji-shu/index.html">
 <meta property="og:site_name" content="blog">
-<meta property="og:description" content="Hello, World!">
+<meta property="og:description" content="leetcode 338">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-03-10T11:03:46.000Z">
-<meta property="article:modified_time" content="2020-03-04T16:42:11.606Z">
+<meta property="article:published_time" content="2021-03-03T02:13:29.000Z">
+<meta property="article:modified_time" content="2021-03-03T13:14:07.294Z">
 <meta property="article:author" content="Convivae">
+<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="位运算">
+<meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://convivae.top/posts/hello-world/">
+<link rel="canonical" href="https://convivae.top/posts/bi-te-wei-ji-shu/">
 
 
 <script id="page-configurations">
@@ -47,7 +50,7 @@
   };
 </script>
 
-  <title>Hello world | blog</title>
+  <title>比特位计数 | blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135890512-1"></script>
     <script data-pjax>
@@ -216,7 +219,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://convivae.top/posts/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://convivae.top/posts/bi-te-wei-ji-shu/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -229,7 +232,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello world
+          比特位计数
         </h1>
 
         <div class="post-meta">
@@ -238,19 +241,22 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-03-10 19:03:46" itemprop="dateCreated datePublished" datetime="2019-03-10T19:03:46+08:00">2019-03-10</time>
+              <time title="创建时间：2021-03-03 10:13:29 / 修改时间：21:14:07" itemprop="dateCreated datePublished" datetime="2021-03-03T10:13:29+08:00">2021-03-03</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-05 00:42:11" itemprop="dateModified" datetime="2020-03-05T00:42:11+08:00">2020-03-05</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
 
           
-            <div class="post-description">Hello, World!</div>
+            <div class="post-description">leetcode 338</div>
 
         </div>
       </header>
@@ -261,9 +267,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <blockquote>
-<p>Today, Begining</p>
+        <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/counting-bits/">leetcode 338</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给定一个非负整数 <strong>num</strong>。对于 <strong>0 ≤ i ≤ num</strong> 范围中的每个数字 <strong>i</strong> ，计算其二进制数中的 1 的数目并将它们作为数组返回。</p>
 </blockquote>
+<p>示例1：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: 2</span></span><br><span class="line"><span class="section">输出: [0,1,1]</span></span><br></pre></td></tr></table></figure>
+
+<p>示例2：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">输入: 5</span></span><br><span class="line"><span class="section">输出: [0,1,1,2,1,2]</span></span><br></pre></td></tr></table></figure>
+
+<p>进阶:</p>
+<p>给出时间复杂度为O(n*sizeof(integer))的解答非常容易。但你可以在线性时间O(n)内用一趟扫描做到吗？<br>要求算法的空间复杂度为O(n)。<br>你能进一步完善解法吗？要求在C++或任何其他语言中不使用任何内置函数（如 C++ 中的 __builtin_popcount）来执行此操作。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这道题需要计算从 0 到 num 的每个数的二进制表示中的 1 的数目。最直观的方法是对每个数直接计算二进制表示中的 1 的数目，时间复杂度较高。也可以使用动态规划的方法，时间复杂度较低。</p>
+<p>为了表述简洁，下文用「一比特数」表示二进制表示中的 1 的数目。</p>
+<h3 id="法一：直接计算"><a href="#法一：直接计算" class="headerlink" title="法一：直接计算"></a>法一：直接计算</h3><p>最直观的方法是对从 0 到 num 的每个数直接计算「一比特数」。</p>
+<p>每个 int 型的数都可以用 32 位二进制数表示，只要遍历其二进制表示的每一位即可得到 1 的数目。</p>
+<p>利用位运算的技巧，可以在一定程度上提升计算速度。按位与运算（&amp;）的一个性质是：对于任意整数 x，令 $x=x&amp;(x−1)$，该运算将 x 的二进制表示的最后一个 1 变成 0。因此，对 x 重复该操作，直到 x 变成 0，则操作次数即为 x 的「一比特数」。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] bits = <span class="keyword">new</span> <span class="keyword">int</span>[num + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= num; i++) &#123;</span><br><span class="line">            bits[i] = countOnes(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bits;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countOnes</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> ones = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (x &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            x &amp;= (x - <span class="number">1</span>);</span><br><span class="line">            ones++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ones;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析</p>
+<p>时间复杂度：$O(k×num)$，其中 k 是 int 型的二进制位数，k=32。需要对从 0 到 num 的每个数使用 $O(k)$ 的时间计算「一比特数」，因此时间复杂度是 $O(k×num)$。</p>
+<p>空间复杂度：$O(1)$。除了返回的数组以外，空间复杂度为常数。</p>
+<h3 id="法二：分奇偶，找规律"><a href="#法二：分奇偶，找规律" class="headerlink" title="法二：分奇偶，找规律"></a>法二：分奇偶，找规律</h3><p>如果我们熟悉二进制，就会知道，偶数的二进制最后一位是0，奇数的二进制最后一位是1。</p>
+<p>且当奇数比偶数大1时，奇数的「一比特数」也会比偶数大1；偶数右移一位相当于除以2，「一比特数」不变。</p>
+<p>即我们有：</p>
+<ul>
+<li>如果 x 是偶数，则 $bits[x] = bits[x/2]$</li>
+<li>如果 x 是奇数，则 $bits[x] = bits[x-1] + 1 = bits[\lfloor x/2 \rfloor] + 1$</li>
+</ul>
+<p>基于此，我们有如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] bits = <span class="keyword">new</span> <span class="keyword">int</span>[num + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) &#123;</span><br><span class="line">            bits[i] = i % <span class="number">2</span> == <span class="number">0</span> ? bits[i &gt;&gt; <span class="number">1</span>] : bits[i - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bits;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述两种情况可以合并成：$bits[x]=bits[x&gt;&gt;1]+(x &amp; 1)$ </p>
+<p>所以代码可以简化为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] bits = <span class="keyword">new</span> <span class="keyword">int</span>[num + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) &#123;</span><br><span class="line">            bits[i] = bits[i &gt;&gt; <span class="number">1</span>] + (i &amp; <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bits;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析</p>
+<p>时间复杂度：$O(num)$。对于每个数，只需要 $O(1)$ 的时间计算「一比特数」。</p>
+<p>空间复杂度：$O(1)$。除了返回的数组以外，空间复杂度为常数。</p>
+<h3 id="法三：动态规划——最高有效位"><a href="#法三：动态规划——最高有效位" class="headerlink" title="法三：动态规划——最高有效位"></a>法三：动态规划——最高有效位</h3><p>当计算 $i$ 的「一比特数」时，如果存在 $0 \le j&lt;i$，$j$ 的「一比特数」已知，且 $i$ 和 $j$ 相比，$i$ 的二进制表示只多了一个 1，则可以快速得到 $ i $ 的「一比特数」。</p>
 
     </div>
 
@@ -271,6 +315,15 @@
     
     
       
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\ling-qian-dui-huan\" rel="bookmark">零钱兑换</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\er-cha-shu-zhong-de-zui-da-lu-jing-he\" rel="bookmark">二叉树中的最大路径和</a></div>
+    </li>
+  </ul>
 
         <div class="reward-container">
   <div>坚持原创技术分享，感谢您的支持和鼓励！</div>
@@ -301,7 +354,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://convivae.top/posts/hello-world/" title="Hello world">https://convivae.top/posts/hello-world/</a>
+    <a href="https://convivae.top/posts/bi-te-wei-ji-shu/" title="比特位计数">https://convivae.top/posts/bi-te-wei-ji-shu/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -311,17 +364,22 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+              <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="tag"># 位运算</a>
+              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
+          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/posts/zai-tan-bian-ma/" rel="next" title="再探编码">
-      再探编码 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/er-wei-qu-yu-he-jian-suo-ju-zhen-bu-ke-bian/" rel="prev" title="二维区域和检索-矩阵不可变">
+      <i class="fa fa-chevron-left"></i> 二维区域和检索-矩阵不可变
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -381,6 +439,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%95%E4%B8%80%EF%BC%9A%E7%9B%B4%E6%8E%A5%E8%AE%A1%E7%AE%97"><span class="nav-number">2.2.</span> <span class="nav-text">法一：直接计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%95%E4%BA%8C%EF%BC%9A%E5%88%86%E5%A5%87%E5%81%B6%EF%BC%8C%E6%89%BE%E8%A7%84%E5%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">法二：分奇偶，找规律</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%95%E4%B8%89%EF%BC%9A%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E2%80%94%E2%80%94%E6%9C%80%E9%AB%98%E6%9C%89%E6%95%88%E4%BD%8D"><span class="nav-number">2.4.</span> <span class="nav-text">法三：动态规划——最高有效位</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -616,6 +675,61 @@ if (document.querySelectorAll('pre.mermaid').length) {
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
@@ -630,7 +744,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'convivae.github.io',
       owner       : 'convivae',
       admin       : ['convivae'],
-      id          : '77d47bd19f0aec1761a15e04b3a249b1',
+      id          : '3933ce764da46736389cded796606730',
         language: '',
       distractionFreeMode: false
     });
