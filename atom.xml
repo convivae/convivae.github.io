@@ -6,7 +6,7 @@
   <link href="https://convivae.top/atom.xml" rel="self"/>
   
   <link href="https://convivae.top/"/>
-  <updated>2021-03-11T11:46:12.792Z</updated>
+  <updated>2021-03-12T08:05:00.806Z</updated>
   <id>https://convivae.top/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基本计算器 II</title>
+    <link href="https://convivae.top/posts/ji-ben-ji-suan-qi-ii/"/>
+    <id>https://convivae.top/posts/ji-ben-ji-suan-qi-ii/</id>
+    <published>2021-03-12T07:41:38.000Z</published>
+    <updated>2021-03-12T08:05:00.806Z</updated>
+    
+    
+    <summary type="html">leetcode 227</summary>
+    
+    
+    
+    <category term="算法" scheme="https://convivae.top/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="leetcode" scheme="https://convivae.top/tags/leetcode/"/>
+    
+    <category term="栈" scheme="https://convivae.top/tags/%E6%A0%88/"/>
+    
+    <category term="逆波兰表达式" scheme="https://convivae.top/tags/%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>比特位计数</title>
@@ -33,9 +56,9 @@
     
     <category term="leetcode" scheme="https://convivae.top/tags/leetcode/"/>
     
-    <category term="动态规划" scheme="https://convivae.top/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
-    
     <category term="位运算" scheme="https://convivae.top/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
+    
+    <category term="动态规划" scheme="https://convivae.top/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     
   </entry>
   
@@ -380,21 +403,6 @@
     
     
     <category term="电路" scheme="https://convivae.top/tags/%E7%94%B5%E8%B7%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu命令行安装zsh、oh-my-zsh、插件以及相关配置</title>
-    <link href="https://convivae.top/posts/ubuntu-ming-ling-xing-an-zhuang-zsh-oh-my-zsh-cha-jian-yi-ji-xiang-guan-pei-zhi/"/>
-    <id>https://convivae.top/posts/ubuntu-ming-ling-xing-an-zhuang-zsh-oh-my-zsh-cha-jian-yi-ji-xiang-guan-pei-zhi/</id>
-    <published>2020-02-23T13:50:57.000Z</published>
-    <updated>2020-06-26T05:05:28.221Z</updated>
-    
-    
-    <summary type="html">zsh 的安装使用</summary>
-    
-    
-    
     
   </entry>
   
