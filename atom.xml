@@ -6,7 +6,7 @@
   <link href="https://convivae.top/atom.xml" rel="self"/>
   
   <link href="https://convivae.top/"/>
-  <updated>2021-03-12T08:05:00.806Z</updated>
+  <updated>2021-03-13T13:12:59.908Z</updated>
   <id>https://convivae.top/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>验证二叉树的前序序列化</title>
+    <link href="https://convivae.top/posts/yan-zheng-er-cha-shu-de-qian-xu-xu-lie-hua/"/>
+    <id>https://convivae.top/posts/yan-zheng-er-cha-shu-de-qian-xu-xu-lie-hua/</id>
+    <published>2021-03-13T11:08:22.000Z</published>
+    <updated>2021-03-13T13:12:59.908Z</updated>
+    
+    
+    <summary type="html">leetcode 331</summary>
+    
+    
+    
+    <category term="算法" scheme="https://convivae.top/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="二叉树" scheme="https://convivae.top/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
+    
+    <category term="leetcode" scheme="https://convivae.top/tags/leetcode/"/>
+    
+    <category term="前序遍历" scheme="https://convivae.top/tags/%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>基本计算器 II</title>
     <link href="https://convivae.top/posts/ji-ben-ji-suan-qi-ii/"/>
     <id>https://convivae.top/posts/ji-ben-ji-suan-qi-ii/</id>
     <published>2021-03-12T07:41:38.000Z</published>
-    <updated>2021-03-12T08:05:00.806Z</updated>
+    <updated>2021-03-12T08:05:42.014Z</updated>
     
     
     <summary type="html">leetcode 227</summary>
@@ -377,25 +400,6 @@
     
     
     <summary type="html">简单电阻电路分析——电路前四章知识点总结</summary>
-    
-    
-    
-    <category term="电路" scheme="https://convivae.top/categories/%E7%94%B5%E8%B7%AF/"/>
-    
-    
-    <category term="电路" scheme="https://convivae.top/tags/%E7%94%B5%E8%B7%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>电路基础01</title>
-    <link href="https://convivae.top/posts/dian-lu-ji-chu-01/"/>
-    <id>https://convivae.top/posts/dian-lu-ji-chu-01/</id>
-    <published>2020-03-27T05:39:39.000Z</published>
-    <updated>2020-06-11T08:18:07.980Z</updated>
-    
-    
-    <summary type="html">电路模型和电路定律——电路前四章知识点总结</summary>
     
     
     
