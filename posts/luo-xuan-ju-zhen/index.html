@@ -22,17 +22,24 @@
     var CONFIG = {"hostname":"convivae.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":true,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="常见应用软件和编程语言中的正则表达式">
-<meta property="og:url" content="https://convivae.top/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/index.html">
+  <meta name="description" content="leetcode 54">
+<meta property="og:type" content="article">
+<meta property="og:title" content="螺旋矩阵">
+<meta property="og:url" content="https://convivae.top/posts/luo-xuan-ju-zhen/index.html">
 <meta property="og:site_name" content="blog">
+<meta property="og:description" content="leetcode 54">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-12-29T08:21:11.000Z">
-<meta property="article:modified_time" content="2020-12-29T08:21:11.084Z">
+<meta property="og:image" content="https://convivae.top/posts/luo-xuan-ju-zhen/spiral1.jpg">
+<meta property="og:image" content="https://convivae.top/posts/luo-xuan-ju-zhen/spiral.jpg">
+<meta property="article:published_time" content="2021-03-15T07:21:54.000Z">
+<meta property="article:modified_time" content="2021-03-15T07:36:35.349Z">
 <meta property="article:author" content="Convivae">
+<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="矩阵">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://convivae.top/posts/luo-xuan-ju-zhen/spiral1.jpg">
 
-<link rel="canonical" href="https://convivae.top/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/">
+<link rel="canonical" href="https://convivae.top/posts/luo-xuan-ju-zhen/">
 
 
 <script id="page-configurations">
@@ -45,7 +52,7 @@
   };
 </script>
 
-  <title>常见应用软件和编程语言中的正则表达式 | blog</title>
+  <title>螺旋矩阵 | blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135890512-1"></script>
     <script data-pjax>
@@ -214,7 +221,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://convivae.top/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/">
+    <link itemprop="mainEntityOfPage" href="https://convivae.top/posts/luo-xuan-ju-zhen/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -227,7 +234,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          常见应用软件和编程语言中的正则表达式
+          螺旋矩阵
         </h1>
 
         <div class="post-meta">
@@ -236,11 +243,22 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-12-29 16:21:11" itemprop="dateCreated datePublished" datetime="2020-12-29T16:21:11+08:00">2020-12-29</time>
+              <time title="创建时间：2021-03-15 15:21:54 / 修改时间：15:36:35" itemprop="dateCreated datePublished" datetime="2021-03-15T15:21:54+08:00">2021-03-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
             </span>
 
           
+            <div class="post-description">leetcode 54</div>
 
         </div>
       </header>
@@ -251,13 +269,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p> 题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/spiral-matrix/">leetcode 54</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个 <code>m</code> 行 <code>n</code> 列的矩阵 <code>matrix</code> ，请按照 <strong>顺时针螺旋顺序</strong> ，返回矩阵中的所有元素。</p>
+<p>示例 1：</p>
+<p><img data-src="spiral1.jpg" alt="img"></p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：matrix = <span class="comment">[<span class="comment">[1,2,3]</span>,<span class="comment">[4,5,6]</span>,<span class="comment">[7,8,9]</span>]</span></span><br><span class="line">输出：<span class="comment">[1,2,3,6,9,8,7,4,5]</span></span><br></pre></td></tr></table></figure>
+
+<p>示例 2：</p>
+<p><img data-src="spiral.jpg" alt="img"></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：matrix = [[<span class="number">1,2,3,4</span>],[<span class="number">5,6,7,8</span>],[<span class="number">9,10,11,12</span>]]</span><br><span class="line">输出：[<span class="number">1,2,3,4</span>,<span class="number">8,12,11,10</span>,<span class="number">9,5,6,7</span>]</span><br></pre></td></tr></table></figure>
+
+<p>提示：</p>
+<ul>
+<li>$m == matrix.length$</li>
+<li>$n == matrix[i].length$</li>
+<li>$1 &lt;= m, n &lt;= 10$</li>
+<li>$-100 &lt;= matrix[i][j] &lt;= 100$</li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>简单模拟：</p>
+<p>为了避免判断边界，需要在矩阵的最外侧围上一圈 1</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">spiralOrder</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (matrix == <span class="keyword">null</span> || matrix.length == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> list;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length, col = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">boolean</span>[][] visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[row + <span class="number">2</span>][col + <span class="number">2</span>];	<span class="comment">//记录该位置是否被遍历过</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//下面两个 for 循环在 visit矩阵外侧围一圈 1，表示已被访问过，不可再次访问</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; row + <span class="number">2</span>; i++) &#123;</span><br><span class="line">            visit[i][<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line">            visit[i][col + <span class="number">1</span>] = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; col + <span class="number">2</span>; j++) &#123;</span><br><span class="line">            visit[<span class="number">0</span>][j] = <span class="keyword">true</span>;</span><br><span class="line">            visit[row + <span class="number">1</span>][j] = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">1</span>;	<span class="comment">//由于外圈多围了一圈，所以初始位置从(0,0)变为了(1,1)</span></span><br><span class="line">        <span class="keyword">int</span> direction = <span class="number">3</span>;  <span class="comment">//定义一个变量，记录当前的方向，上下左右分别为：0，1，2，3</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (visit[i][j])	<span class="comment">//如果四个方向都无路可走了，程序就结束了</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            list.add(matrix[i - <span class="number">1</span>][j - <span class="number">1</span>]);	<span class="comment">//由于外圈加了一层，所以对应的matrix矩阵中的下标需要减一</span></span><br><span class="line">            visit[i][j] = <span class="keyword">true</span>;	<span class="comment">//标记当前的格子已被访问过</span></span><br><span class="line">            <span class="keyword">switch</span> (direction) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">if</span> (visit[i - <span class="number">1</span>][j]) &#123;	<span class="comment">// 如果沿着当前方向走会碰到墙，那么就换个方向</span></span><br><span class="line">                        direction = <span class="number">3</span>;</span><br><span class="line">                        j++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;	<span class="comment">//否则，继续沿着当前方向走</span></span><br><span class="line">                        i--;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                    <span class="keyword">if</span> (visit[i + <span class="number">1</span>][j]) &#123;</span><br><span class="line">                        direction = <span class="number">2</span>;</span><br><span class="line">                        j--;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        i++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                    <span class="keyword">if</span> (visit[i][j - <span class="number">1</span>]) &#123;</span><br><span class="line">                        direction = <span class="number">0</span>;</span><br><span class="line">                        i--;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        j--;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                    <span class="keyword">if</span> (visit[i][j + <span class="number">1</span>]) &#123;</span><br><span class="line">                        direction = <span class="number">1</span>;</span><br><span class="line">                        i++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        j++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
     
     
       
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\er-cha-shu-zhong-de-zui-da-lu-jing-he\" rel="bookmark">二叉树中的最大路径和</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\ji-ben-ji-suan-qi-ii\" rel="bookmark">基本计算器 II</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\bi-te-wei-ji-shu\" rel="bookmark">比特位计数</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\wu-chong-fu-zi-fu-de-zui-chang-zi-chuan\" rel="bookmark">无重复字符的最长子串</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\she-ji-ha-xi-ji-he-she-ji-ha-xi-ying-she\" rel="bookmark">设计哈希集合 && 设计哈希映射</a></div>
+    </li>
+  </ul>
 
         <div class="reward-container">
   <div>坚持原创技术分享，感谢您的支持和鼓励！</div>
@@ -288,7 +346,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://convivae.top/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/" title="常见应用软件和编程语言中的正则表达式">https://convivae.top/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/</a>
+    <a href="https://convivae.top/posts/luo-xuan-ju-zhen/" title="螺旋矩阵">https://convivae.top/posts/luo-xuan-ju-zhen/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -298,6 +356,10 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+              <a href="/tags/%E7%9F%A9%E9%98%B5/" rel="tag"># 矩阵</a>
+          </div>
 
         
 
@@ -305,13 +367,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/zheng-ze-biao-da-shi-zong-jie-yi/" rel="prev" title="正则表达式总结（一）">
-      <i class="fa fa-chevron-left"></i> 正则表达式总结（一）
+    <a href="/posts/wu-chong-fu-zi-fu-de-zui-chang-zi-chuan/" rel="prev" title="无重复字符的最长子串">
+      <i class="fa fa-chevron-left"></i> 无重复字符的最长子串
     </a></div>
-      <div class="post-nav-item">
-    <a href="/posts/zheng-ze-biao-da-shi-zong-jie-er/" rel="next" title="正则表达式总结（二）">
-      正则表达式总结（二） <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -371,6 +430,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -606,6 +666,61 @@ if (document.querySelectorAll('pre.mermaid').length) {
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
@@ -620,7 +735,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'convivae.github.io',
       owner       : 'convivae',
       admin       : ['convivae'],
-      id          : 'f17d3886326b0c120441e62f247f6683',
+      id          : '0fd57e73fb595880838b045677c81eed',
         language: '',
       distractionFreeMode: false
     });
