@@ -221,6 +221,22 @@
       </tags>
   </entry>
   <entry>
+    <title>2020年度总结</title>
+    <url>/posts/2020-nian-du-zong-jie/</url>
+    <content><![CDATA[<hr>
+<p>还没写完TAT，写完再放出</p>
+<hr>
+<p>也许，只有当考研成绩出来的这天，我才能够真正沉下心来完成这篇文章。</p>
+]]></content>
+      <categories>
+        <category>年度总结</category>
+      </categories>
+      <tags>
+        <tag>2020</tag>
+        <tag>年度总结</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>逆波兰表达式</title>
     <url>/posts/ni-bo-lan-biao-da-shi/</url>
     <content><![CDATA[<p>虽然数据结构比较简单，但是有些题遇到之后直接盲敲也并无十足的把握，往往还需要找些资料理清一下思路才敢去写；</p>
@@ -374,22 +390,6 @@
         <tag>栈</tag>
         <tag>表达式求值</tag>
         <tag>逆波兰表达式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2020年度总结</title>
-    <url>/posts/2020-nian-du-zong-jie/</url>
-    <content><![CDATA[<hr>
-<p>还没写完TAT，写完再放出</p>
-<hr>
-<p>也许，只有当考研成绩出来的这天，我才能够真正沉下心来完成这篇文章。</p>
-]]></content>
-      <categories>
-        <category>年度总结</category>
-      </categories>
-      <tags>
-        <tag>2020</tag>
-        <tag>年度总结</tag>
       </tags>
   </entry>
   <entry>
@@ -952,6 +952,110 @@
       </tags>
   </entry>
   <entry>
+    <title>Ubuntu命令行安装zsh、oh-my-zsh、插件以及相关配置</title>
+    <url>/posts/ubuntu-ming-ling-xing-an-zhuang-zsh-oh-my-zsh-cha-jian-yi-ji-xiang-guan-pei-zhi/</url>
+    <content><![CDATA[<p>鉴于网上的教程参差不齐，方法也都不太一样，我每次都需要找半天才能找到一个相对来说满意的教程。</p>
+<p>所以为了避免麻烦，我就自己写一个教程，以后再重置服务器系统就能快速安装了</p>
+<h2 id="1-安装-zsh"><a href="#1-安装-zsh" class="headerlink" title="1. 安装 zsh"></a>1. 安装 zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install zsh</span><br></pre></td></tr></table></figure>
+
+<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH">zsh-on-github-传送门</a></p>
+<p>把默认的 <code>shell</code> 改成 <code>zsh</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-安装-git"><a href="#2-安装-git" class="headerlink" title="2. 安装 git"></a>2. 安装 git</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-安装-oh-my-zsh"><a href="#3-安装-oh-my-zsh" class="headerlink" title="3. 安装 oh-my-zsh"></a>3. 安装 oh-my-zsh</h2><p>可以使用 <code>curl</code> 或 <code>wget</code> 两种方式来安装</p>
+<p><strong>via curl</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>via wget</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh">on-my-zsh-on-github-传送门</a></p>
+<blockquote>
+<p>注意：</p>
+<p>这一步有可能会报错，GitHub 的 raw.githubusercontent.com 无法连接，可直接修改 hosts：</p>
+<p>Ubuntu、CentOS 及 macOS 直接在终端输入：</p>
+<p><code>sudo vim /etc/hosts</code></p>
+<p>添加以下内容保存即可（IP地址可自行查询后修改为延时最低的，也可以直接复制下面的）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub Start</span></span><br><span class="line">52.74.223.119 github.com</span><br><span class="line">192.30.253.119 gist.github.com</span><br><span class="line">54.169.195.247 api.github.com</span><br><span class="line">185.199.111.153 assets-cdn.github.com</span><br><span class="line">151.101.76.133 raw.githubusercontent.com</span><br><span class="line">151.101.108.133 user-images.githubusercontent.com</span><br><span class="line">151.101.76.133 gist.githubusercontent.com</span><br><span class="line">151.101.76.133 cloud.githubusercontent.com</span><br><span class="line">151.101.76.133 camo.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars0.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars1.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars2.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars3.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars4.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars5.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars6.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars7.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars8.githubusercontent.com</span><br><span class="line"><span class="comment"># GitHub End</span></span><br></pre></td></tr></table></figure>
+
+
+<p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sinferwu/p/12726833.html">https://www.cnblogs.com/sinferwu/p/12726833.html</a></p>
+</blockquote>
+<h2 id="4-选择主题-agnoster"><a href="#4-选择主题-agnoster" class="headerlink" title="4. 选择主题 agnoster"></a>4. 选择主题 <code>agnoster</code></h2><p>编辑 <code>~/.zshrc</code> 文件，修改 <code>ZSH_THEME</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ZSH_THEME=<span class="string">&quot;agnoster&quot;</span> <span class="comment"># (this is one of the fancy ones)</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：许多主题需要安装字体 <a target="_blank" rel="noopener" href="https://github.com/powerline/fonts">Powerline Fonts</a> 才能正常显示：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install fonts-powerline</span><br></pre></td></tr></table></figure>
+
+<p>更多主题：<a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes#agnoster">传送门</a></p>
+<h2 id="5-安装-zsh-syntax-highlighting-语法高亮插件"><a href="#5-安装-zsh-syntax-highlighting-语法高亮插件" class="headerlink" title="5. 安装 zsh-syntax-highlighting 语法高亮插件"></a>5. 安装 <code>zsh-syntax-highlighting</code> 语法高亮插件</h2><ol>
+<li>将此项目下载到 <code>$ZSH_CUSTOM/plugins</code> (默认为： <code>~/.oh-my-zsh/custom/plugins</code>)</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改 <code>~/.zshrc</code>（添加该插件）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">plugins=( </span><br><span class="line">	[plugins...] </span><br><span class="line">	zsh-syntax-highlighting</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重启 zsh（比如重新打开命令窗口或执行 <code>source ~/.zshrc</code>）</li>
+</ol>
+<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md">github-传送门</a></p>
+<h2 id="6-安装-zsh-autosuggestions-自动提示插件"><a href="#6-安装-zsh-autosuggestions-自动提示插件" class="headerlink" title="6. 安装 zsh-autosuggestions 自动提示插件"></a>6. 安装 <code>zsh-autosuggestions</code> 自动提示插件</h2><ol>
+<li>将此项目下载到 <code>$ZSH_CUSTOM/plugins</code> (默认为： <code>~/.oh-my-zsh/custom/plugins</code>)</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改 <code>~/.zshrc</code>（添加该插件）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">plugins=( </span><br><span class="line">	[plugins...] </span><br><span class="line">	zsh-autosuggestions</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重启 zsh（比如重新打开命令窗口或执行 <code>source ~/.zshrc</code>）</li>
+</ol>
+<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md">github-传送门</a></p>
+<h2 id="7-安装-autojump-自动跳转插件"><a href="#7-安装-autojump-自动跳转插件" class="headerlink" title="7. 安装 autojump 自动跳转插件"></a>7. 安装 <code>autojump</code> 自动跳转插件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install autojump</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改 <code>~/.zshrc</code>（添加该插件）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#在最后一行加入，注意点后面是一个空格</span></span><br><span class="line">. /usr/share/autojump/autojump.sh</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重启 zsh（比如重新打开命令窗口或执行 <code>source ~/.zshrc</code>）</li>
+</ol>
+<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/wting/autojump">github-传送门</a></p>
+<h2 id="8-安装-zsh-completions-补全工具"><a href="#8-安装-zsh-completions-补全工具" class="headerlink" title="8. 安装 zsh-completions 补全工具"></a>8. 安装 <code>zsh-completions</code> 补全工具</h2><ol>
+<li>将此项目下载到 <code>$ZSH_CUSTOM/plugins</code> (默认为： <code>~/.oh-my-zsh/custom/plugins</code>)</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-completions <span class="variable">$&#123;ZSH_CUSTOM:=~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-completions</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改 <code>~/.zshrc</code>（添加该插件）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">plugins=(</span><br><span class="line">	[plugins...]</span><br><span class="line">	zsh-completions</span><br><span class="line">	)</span><br><span class="line"><span class="built_in">autoload</span> -U compinit &amp;&amp; compinit</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重启 zsh（比如重新打开命令窗口或执行 <code>source ~/.zshrc</code>）</li>
+</ol>
+<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-completions">github-传送门</a></p>
+<h2 id="9-修改阿里云服务器的主机名"><a href="#9-修改阿里云服务器的主机名" class="headerlink" title="9. 修改阿里云服务器的主机名"></a>9. 修改阿里云服务器的主机名</h2><ol>
+<li><p>查看当前主机名</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hostname</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改主机名</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hostnamectl set-hostname XXX</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启服务器（或断开重连）</p>
+</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title>Spring学习笔记02</title>
     <url>/posts/spring-xue-xi-bi-ji-02/</url>
     <content><![CDATA[<h2 id="Spring-中-IOC-的常用注解"><a href="#Spring-中-IOC-的常用注解" class="headerlink" title="Spring 中 IOC 的常用注解"></a>Spring 中 IOC 的常用注解</h2><p>上一节介绍的 xml 配置：</p>
@@ -1059,110 +1163,6 @@
       <tags>
         <tag>Spring</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu命令行安装zsh、oh-my-zsh、插件以及相关配置</title>
-    <url>/posts/ubuntu-ming-ling-xing-an-zhuang-zsh-oh-my-zsh-cha-jian-yi-ji-xiang-guan-pei-zhi/</url>
-    <content><![CDATA[<p>鉴于网上的教程参差不齐，方法也都不太一样，我每次都需要找半天才能找到一个相对来说满意的教程。</p>
-<p>所以为了避免麻烦，我就自己写一个教程，以后再重置服务器系统就能快速安装了</p>
-<h2 id="1-安装-zsh"><a href="#1-安装-zsh" class="headerlink" title="1. 安装 zsh"></a>1. 安装 zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install zsh</span><br></pre></td></tr></table></figure>
-
-<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH">zsh-on-github-传送门</a></p>
-<p>把默认的 <code>shell</code> 改成 <code>zsh</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-安装-git"><a href="#2-安装-git" class="headerlink" title="2. 安装 git"></a>2. 安装 git</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-安装-oh-my-zsh"><a href="#3-安装-oh-my-zsh" class="headerlink" title="3. 安装 oh-my-zsh"></a>3. 安装 oh-my-zsh</h2><p>可以使用 <code>curl</code> 或 <code>wget</code> 两种方式来安装</p>
-<p><strong>via curl</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>via wget</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh">on-my-zsh-on-github-传送门</a></p>
-<blockquote>
-<p>注意：</p>
-<p>这一步有可能会报错，GitHub 的 raw.githubusercontent.com 无法连接，可直接修改 hosts：</p>
-<p>Ubuntu、CentOS 及 macOS 直接在终端输入：</p>
-<p><code>sudo vim /etc/hosts</code></p>
-<p>添加以下内容保存即可（IP地址可自行查询后修改为延时最低的，也可以直接复制下面的）</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub Start</span></span><br><span class="line">52.74.223.119 github.com</span><br><span class="line">192.30.253.119 gist.github.com</span><br><span class="line">54.169.195.247 api.github.com</span><br><span class="line">185.199.111.153 assets-cdn.github.com</span><br><span class="line">151.101.76.133 raw.githubusercontent.com</span><br><span class="line">151.101.108.133 user-images.githubusercontent.com</span><br><span class="line">151.101.76.133 gist.githubusercontent.com</span><br><span class="line">151.101.76.133 cloud.githubusercontent.com</span><br><span class="line">151.101.76.133 camo.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars0.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars1.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars2.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars3.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars4.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars5.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars6.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars7.githubusercontent.com</span><br><span class="line">151.101.76.133 avatars8.githubusercontent.com</span><br><span class="line"><span class="comment"># GitHub End</span></span><br></pre></td></tr></table></figure>
-
-
-<p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sinferwu/p/12726833.html">https://www.cnblogs.com/sinferwu/p/12726833.html</a></p>
-</blockquote>
-<h2 id="4-选择主题-agnoster"><a href="#4-选择主题-agnoster" class="headerlink" title="4. 选择主题 agnoster"></a>4. 选择主题 <code>agnoster</code></h2><p>编辑 <code>~/.zshrc</code> 文件，修改 <code>ZSH_THEME</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ZSH_THEME=<span class="string">&quot;agnoster&quot;</span> <span class="comment"># (this is one of the fancy ones)</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：许多主题需要安装字体 <a target="_blank" rel="noopener" href="https://github.com/powerline/fonts">Powerline Fonts</a> 才能正常显示：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install fonts-powerline</span><br></pre></td></tr></table></figure>
-
-<p>更多主题：<a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes#agnoster">传送门</a></p>
-<h2 id="5-安装-zsh-syntax-highlighting-语法高亮插件"><a href="#5-安装-zsh-syntax-highlighting-语法高亮插件" class="headerlink" title="5. 安装 zsh-syntax-highlighting 语法高亮插件"></a>5. 安装 <code>zsh-syntax-highlighting</code> 语法高亮插件</h2><ol>
-<li>将此项目下载到 <code>$ZSH_CUSTOM/plugins</code> (默认为： <code>~/.oh-my-zsh/custom/plugins</code>)</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>修改 <code>~/.zshrc</code>（添加该插件）</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">plugins=( </span><br><span class="line">	[plugins...] </span><br><span class="line">	zsh-syntax-highlighting</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>重启 zsh（比如重新打开命令窗口或执行 <code>source ~/.zshrc</code>）</li>
-</ol>
-<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md">github-传送门</a></p>
-<h2 id="6-安装-zsh-autosuggestions-自动提示插件"><a href="#6-安装-zsh-autosuggestions-自动提示插件" class="headerlink" title="6. 安装 zsh-autosuggestions 自动提示插件"></a>6. 安装 <code>zsh-autosuggestions</code> 自动提示插件</h2><ol>
-<li>将此项目下载到 <code>$ZSH_CUSTOM/plugins</code> (默认为： <code>~/.oh-my-zsh/custom/plugins</code>)</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>修改 <code>~/.zshrc</code>（添加该插件）</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">plugins=( </span><br><span class="line">	[plugins...] </span><br><span class="line">	zsh-autosuggestions</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>重启 zsh（比如重新打开命令窗口或执行 <code>source ~/.zshrc</code>）</li>
-</ol>
-<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md">github-传送门</a></p>
-<h2 id="7-安装-autojump-自动跳转插件"><a href="#7-安装-autojump-自动跳转插件" class="headerlink" title="7. 安装 autojump 自动跳转插件"></a>7. 安装 <code>autojump</code> 自动跳转插件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install autojump</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>修改 <code>~/.zshrc</code>（添加该插件）</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#在最后一行加入，注意点后面是一个空格</span></span><br><span class="line">. /usr/share/autojump/autojump.sh</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>重启 zsh（比如重新打开命令窗口或执行 <code>source ~/.zshrc</code>）</li>
-</ol>
-<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/wting/autojump">github-传送门</a></p>
-<h2 id="8-安装-zsh-completions-补全工具"><a href="#8-安装-zsh-completions-补全工具" class="headerlink" title="8. 安装 zsh-completions 补全工具"></a>8. 安装 <code>zsh-completions</code> 补全工具</h2><ol>
-<li>将此项目下载到 <code>$ZSH_CUSTOM/plugins</code> (默认为： <code>~/.oh-my-zsh/custom/plugins</code>)</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-completions <span class="variable">$&#123;ZSH_CUSTOM:=~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-completions</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>修改 <code>~/.zshrc</code>（添加该插件）</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">plugins=(</span><br><span class="line">	[plugins...]</span><br><span class="line">	zsh-completions</span><br><span class="line">	)</span><br><span class="line"><span class="built_in">autoload</span> -U compinit &amp;&amp; compinit</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>重启 zsh（比如重新打开命令窗口或执行 <code>source ~/.zshrc</code>）</li>
-</ol>
-<p>其他系统的安装地址 <a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-completions">github-传送门</a></p>
-<h2 id="9-修改阿里云服务器的主机名"><a href="#9-修改阿里云服务器的主机名" class="headerlink" title="9. 修改阿里云服务器的主机名"></a>9. 修改阿里云服务器的主机名</h2><ol>
-<li><p>查看当前主机名</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hostname</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改主机名</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hostnamectl set-hostname XXX</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重启服务器（或断开重连）</p>
-</li>
-</ol>
-]]></content>
   </entry>
   <entry>
     <title>jdbc学习笔记01</title>
@@ -1430,6 +1430,11 @@
       </tags>
   </entry>
   <entry>
+    <title>常见应用软件和编程语言中的正则表达式</title>
+    <url>/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>jdbc学习笔记02</title>
     <url>/posts/jdbc-xue-xi-bi-ji-02/</url>
     <content><![CDATA[<h2 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h2><h3 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h3><blockquote>
@@ -1606,11 +1611,6 @@
       <tags>
         <tag>JDBC</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>常见应用软件和编程语言中的正则表达式</title>
-    <url>/posts/chang-jian-ying-yong-ruan-jian-he-bian-cheng-yu-yan-zhong-de-zheng-ze-biao-da-shi/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>正则表达式总结（一）</title>
@@ -2193,190 +2193,6 @@
       </tags>
   </entry>
   <entry>
-    <title>电路基础03</title>
-    <url>/posts/dian-lu-ji-chu-03/</url>
-    <content><![CDATA[<h2 id="一般电路的网孔电流法"><a href="#一般电路的网孔电流法" class="headerlink" title="一般电路的网孔电流法"></a>一般电路的网孔电流法</h2><h3 id="支路电流法"><a href="#支路电流法" class="headerlink" title="支路电流法"></a>支路电流法</h3><p><strong>以支路电流为未知量</strong>，根据 KCL、KVL 列关于支路电流的方程，进行求解的过程</p>
-<ul>
-<li>支路：任意一段无分支的电路</li>
-<li>节点：三条及三条以上支路的连接点</li>
-</ul>
-<h4 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h4><ol>
-<li><p>选定<strong>各支路</strong>电流参考方向，列出各节点的 KCL 方程</p>
-</li>
-<li><p>对独立回路列关于支路电流的 KVL 方程</p>
-<blockquote>
-<p>独立回路的选取</p>
-<ul>
-<li><p>充分条件：当每个回路中均具有一条其他回路不具有的新支路时，这一组回路互相独立</p>
-</li>
-<li><p>平面电路（画在平面中不出现交叉导线的电路）：内网孔是一组独立回路</p>
-</li>
-</ul>
-</blockquote>
-</li>
-<li><p>求解</p>
-</li>
-</ol>
-<p>缺点：未知量过多</p>
-<h3 id="网孔电流法"><a href="#网孔电流法" class="headerlink" title="网孔电流法"></a>网孔电流法</h3><p><strong>以网孔电流作为独立变量</strong>，根据 KVL 列出关于网孔电流的电路方程，进行求解的过程</p>
-<blockquote>
-<p>网孔电流：假想沿着电路中网孔边界流动的电流</p>
-<ul>
-<li>对于一个节点数为 n，支路数为 b 的平面电路，其网孔数为 $b-n+1$ 个，网孔电流数也为 $b-n+1$ 个</li>
-<li>网孔电流的特点<ul>
-<li>独立性：网孔电流自动满足 KCL，而且相互独立</li>
-<li>完备性：电路中所有支路电流都可以用网孔电流来表示</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<p>例：</p>
-<p><img data-src="01.png" alt="例题"></p>
-<h4 id="基本步骤-1"><a href="#基本步骤-1" class="headerlink" title="基本步骤"></a>基本步骤</h4><ol>
-<li>指定网孔电流的参考方向，并以此作为列写 KVL 方程的回路绕行方向</li>
-<li>根据 KVL 列写关于网孔电流的电路方程</li>
-</ol>
-<p>如上图：<br>$$<br>\begin{cases}<br>R_1I_{m1}+R_5(I_{m1}-I_{m2})+U_{s4}+R_4(I_{m1}-I_{m3})-U_{s1}=0 \<br>R_2I_{m2}+U_{s2}+R_6(I_{m2}-I_{m3})+R_5(I_{m2}-I_{m1})=0 \<br>R_4(I_{m3}-I_{m1})-U_{s4}+R_6(I_{m3}-I_{m2})-U_{s3}+R_3I_{m3}=0 \<br>\end{cases}<br>$$</p>
-<p>$$<br>\begin{matrix}<br>\Downarrow<br>\end{matrix}<br>$$</p>
-<p>$$<br>\begin{cases}<br>(R_1+R_5+R_4)I_{m1}-R_5I_{m2}-R_4I_{m3}=U_{s1}-U_{s4} \<br>-R_5I_{m1}+(R_2+R_5+R_6)I_{m2}-R_6I_{m3}=-U_{s2} \<br>-R_4I_{m1}-R_6I_{m2}+(R_3+R_4+R_6)I_{m3}=U_{s3}+U_{s4} \<br>\end{cases}<br>$$</p>
-<p>$$<br>\begin{matrix}<br>\Downarrow<br>\end{matrix}<br>$$</p>
-<p>$$<br>\begin{bmatrix}<br>R_1+R_4+R_5 &amp; -R_5 &amp; -R_4 \<br>-R_5 &amp; R_2+R_5+R_6 &amp; -R_6 \<br>-R_4 &amp; -R_6 &amp; R_3+R_4+R_6<br>\end{bmatrix}<br>\begin{bmatrix}<br>I_{m1} \<br>I_{m2} \<br>I_{m3}<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>U_{s1}-U_{s4} \<br>-U_{s2} \<br>U_{s3}+U_{s4} \<br>\end{bmatrix}<br>$$</p>
-<h4 id="网孔电流方程的一般形式"><a href="#网孔电流方程的一般形式" class="headerlink" title="网孔电流方程的一般形式"></a>网孔电流方程的一般形式</h4><p>$$<br>\begin{bmatrix}<br>R_{11} &amp; R_{12} &amp; R_{13} \<br>R_{21} &amp; R_{22} &amp; R_{23} \<br>R_{31} &amp; R_{32} &amp; R_{33} \<br>\end{bmatrix}<br>\begin{bmatrix}<br>I_{m1} \<br>I_{m2} \<br>I_{m3}<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>U_{s11} \<br>U_{s22} \<br>U_{s33} \<br>\end{bmatrix}<br>$$</p>
-<p>解释：</p>
-<ul>
-<li><p>系数矩阵主对角线上的元素：$R_{ij}(i=j)$ 称为<strong>自电阻</strong>，为第 $i$ 个网孔中各支路的电阻之和，<strong>值恒为正</strong></p>
-<blockquote>
-<p>如上图中的：</p>
-<p>$R_{11}=R_1+R_4+R_5$</p>
-<p>$R_{22}=R_2+R_5+R_6$</p>
-<p>$R_{33}=R_3+R_4+R_6$</p>
-</blockquote>
-</li>
-<li><p>系数矩阵非主对角线上的元素：$R_{ij}(i\not=j)$ 称为<strong>互电阻</strong>，为第 $i$ 个与第 $j$ 个网孔之间公共支路的电阻之和，值可正可负，<strong>当相邻网孔电流在公共支路上流向一致为正，不一致时为负</strong>。</p>
-</li>
-<li><p>不含受控源的电路系数矩阵为对称阵。</p>
-</li>
-<li><p>$U_{sii}$ 为第 $i$ 个网孔中的<strong>等效电压源</strong>，其值为该网孔中各支路电压源电压值的代数和。<strong>当电压源方向与绕行方向一致时取负，不一致时取正</strong> （这是由于把电压源由方程左端搬到方程右端所导致的）。</p>
-</li>
-</ul>
-<h4 id="网孔电流法的分析步骤"><a href="#网孔电流法的分析步骤" class="headerlink" title="网孔电流法的分析步骤"></a>网孔电流法的分析步骤</h4><p>一般电路<strong>（电路中仅含电压源）</strong>的网孔法：</p>
-<ol>
-<li><p>选取各网孔电流绕行方向</p>
-</li>
-<li><p>利用直接观察法（自电阻、互电阻、等效电源）形成方程</p>
-<blockquote>
-<p>$$<br>\begin{aligned}<br>\sum(\text{自电阻}\times\text{本网孔电流})\pm\sum{(\text{互电阻}\times\text{相邻网孔电流})} \<br>=\sum{\text{本网孔电压源代数和}}<br>\end{aligned}<br>$$</p>
-</blockquote>
-</li>
-<li><p>方程求解</p>
-</li>
-</ol>
-<h2 id="含理想电流源支路的网孔电流法"><a href="#含理想电流源支路的网孔电流法" class="headerlink" title="含理想电流源支路的网孔电流法"></a>含理想电流源支路的网孔电流法</h2><p>第一类：含实际电流源：电源等效变换，按一般电路网孔电流分析方法进行电路分析</p>
-<p>第二类：含理想电流源，分以下两种情况</p>
-<ol>
-<li><p>理想电流源支路位于网孔边沿支路（网孔电流等于电流源电流）</p>
-<p><img data-src="02.png" alt="case1"></p>
-<blockquote>
-<ul>
-<li>选取网孔电流绕行方向，其中含理想电流源支路的网孔为已知量 $$I_{m2}=-I_s$$</li>
-<li>对不含电流源支路的网孔根据直接观察法列方程：$$(R_1+R_3)I_{m1}-R_3I_{m2}=U_s$$</li>
-<li>注意：若对含理想电流源支路的网孔列网孔电流方程时必须考虑理想电流源的端电压</li>
-</ul>
-</blockquote>
-</li>
-<li><p>理想电流源支路位于网孔公共支路</p>
-<p><img data-src="03.png" alt="case2"></p>
-<blockquote>
-<ul>
-<li><p>选取网孔电流绕行方向，虚设电流源电压 $U$</p>
-</li>
-<li><p>根据直接观察法列方程：<br>$$<br>\begin{cases}<br>(R_1+R_2)I_{m1}-R_2I_{m2}+U=U_s \<br>-R_2+(R_2+R_3)I_{m2}-U=0 \<br>\end{cases}<br>$$</p>
-</li>
-<li><p>添加约束方程：$$I_{m2}-I_{m1}=I_s$$</p>
-</li>
-<li><p>求解</p>
-</li>
-</ul>
-</blockquote>
-<p><del>为啥我觉得直接列 KCL 和 KVL 方程更简单直接呢？</del></p>
-</li>
-</ol>
-<h2 id="含受控源电路的网孔电流法"><a href="#含受控源电路的网孔电流法" class="headerlink" title="含受控源电路的网孔电流法"></a>含受控源电路的网孔电流法</h2><p>注意：系数矩阵不再是对称矩阵</p>
-<h2 id="含理想电流源支路的回路电流法"><a href="#含理想电流源支路的回路电流法" class="headerlink" title="含理想电流源支路的回路电流法"></a>含理想电流源支路的回路电流法</h2><p>以回路电流作为电路独立变量进行电路分析的方法称为<strong>回路电流法</strong></p>
-<blockquote>
-<ul>
-<li>适用于多个理想电流源支路的电路</li>
-<li>回路电流是在一个回路中连续流动的假想电流</li>
-<li>电路中的独立回路数即为网孔数</li>
-<li>一个具有 b 条支路和 n 个节点的电路，其独立回路数为 $$(b-n+1)$$</li>
-</ul>
-</blockquote>
-<p><img data-src="04.png" alt="例题"></p>
-<p>解：</p>
-<ul>
-<li><p>适当选取回路，使独立电源支路只有一个回路电流流过：</p>
-<p>$$I_{l1}=2A;,I_{l2}=3A;,I_{l3}=1A$$</p>
-</li>
-<li><p>对回路 4 列写回路电流方程：</p>
-<p>$$<br>\begin{matrix}<br>-2I_{l1}-2I_{l2}+3I_{l3}+5I_{l4}&amp;=5+1+3 \<br>&amp;\Rightarrow I_{l4}=3.2A \<br>\therefore I=I_{l4}=3.2A<br>\end{matrix}<br>$$</p>
-</li>
-</ul>
-<h2 id="一般电路的节点电压法"><a href="#一般电路的节点电压法" class="headerlink" title="一般电路的节点电压法"></a>一般电路的节点电压法</h2><ul>
-<li>以独立节点的电压作为独立变量，根据 KCL 列出关于节点电压的电路方程，进行求解的过程</li>
-<li>节点电压法适用于结构复杂、非平面电路、独立回路选择麻烦、以及节点少、回路多的电路的分析求解。</li>
-</ul>
-<blockquote>
-<p>节点电压：</p>
-<p>在电路中任意选择一个节点为参考节点（也称非独立节点）. 其它节点即为独立节点。独立节点与参考点之间的电压,称为该节点的节点电压. </p>
-<p>节点电压的两个特点：</p>
-<ul>
-<li><p>独立性：节点电压自动满足 KVL，且相互独立</p>
-</li>
-<li><p>完备性：电路中所有支路电压都可以用节点电压表示</p>
-</li>
-</ul>
-</blockquote>
-<h3 id="节点电压方程的一般形式"><a href="#节点电压方程的一般形式" class="headerlink" title="节点电压方程的一般形式"></a>节点电压方程的一般形式</h3><p>$$<br>\begin{bmatrix}<br>G_{11} &amp; G_{12} &amp; G_{13} \<br>G_{21} &amp; G_{22} &amp; G_{23} \<br>G_{31} &amp; G_{32} &amp; G_{33} \<br>\end{bmatrix}<br>\begin{bmatrix}<br>U_{n1} \<br>U_{n2} \<br>U_{n3}<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>I_{s11} \<br>I_{s22} \<br>I_{s33} \<br>\end{bmatrix}<br>$$</p>
-<p>解释：</p>
-<ul>
-<li><p>系数矩阵主对角线上的元素：$G_{ij}(i=j)$ 称为<strong>自电导</strong>，为连接到第 $i$ 个节点中各支路的电导之和，<strong>值恒为正</strong></p>
-</li>
-<li><p>系数矩阵非主对角线上的元素：$G_{ij}(i\not=j)$ 称为<strong>互电导</strong>，为连接于节点 $i$ 个与节点 $j$ 之间支路上的电导之和，<strong>值恒为负</strong>。</p>
-</li>
-<li><p>不含受控源的电路系数矩阵为对称阵。</p>
-</li>
-<li><p>$I_{sii}$ 为流入第 $i$ 个节点的各支路电流源电流值代数和。<strong>流入取正，流出取负</strong> （这是由于把电流源由方程左端搬到方程右端所导致的）。</p>
-</li>
-</ul>
-<h3 id="节点电压法的分析步骤"><a href="#节点电压法的分析步骤" class="headerlink" title="节点电压法的分析步骤"></a>节点电压法的分析步骤</h3><ol>
-<li><p>指定电路中某一节点为参考点，标出各独立节点电位（符号）</p>
-</li>
-<li><p>利用直接观察法形成方程</p>
-<blockquote>
-<p>$$<br>\begin{aligned}<br>\sum(自电导\times本节点电压)-\sum{(互电导\times相邻节点电压)} \<br>=\sum{流入本节点的电流源代数和（流入节点取正，流出取负）} \<br>\end{aligned}<br>$$</p>
-<p>列写第 n 个节点电压方程时</p>
-<ul>
-<li><p>与 n 节点相连接的支路上的电阻元件的电导之和（自电导）一律取 “+” 号</p>
-</li>
-<li><p>与 n 节点相关联支路的电阻元件的电导（互电导）一律取 “-” 号。流入 n 节点的理想电流源的电流取 “+” 号，流出的取 “-” 号。</p>
-</li>
-</ul>
-</blockquote>
-</li>
-<li><p>方程求解</p>
-</li>
-</ol>
-<h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><p><img data-src="05.png" alt="例题"></p>
-<p><img data-src="06.png" alt="例题"></p>
-]]></content>
-      <categories>
-        <category>电路</category>
-      </categories>
-      <tags>
-        <tag>电路</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>电路基础04</title>
     <url>/posts/dian-lu-ji-chu-04/</url>
     <content><![CDATA[<h2 id="叠加定理"><a href="#叠加定理" class="headerlink" title="叠加定理"></a>叠加定理</h2><ul>
@@ -2680,6 +2496,190 @@
       </tags>
   </entry>
   <entry>
+    <title>电路基础03</title>
+    <url>/posts/dian-lu-ji-chu-03/</url>
+    <content><![CDATA[<h2 id="一般电路的网孔电流法"><a href="#一般电路的网孔电流法" class="headerlink" title="一般电路的网孔电流法"></a>一般电路的网孔电流法</h2><h3 id="支路电流法"><a href="#支路电流法" class="headerlink" title="支路电流法"></a>支路电流法</h3><p><strong>以支路电流为未知量</strong>，根据 KCL、KVL 列关于支路电流的方程，进行求解的过程</p>
+<ul>
+<li>支路：任意一段无分支的电路</li>
+<li>节点：三条及三条以上支路的连接点</li>
+</ul>
+<h4 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h4><ol>
+<li><p>选定<strong>各支路</strong>电流参考方向，列出各节点的 KCL 方程</p>
+</li>
+<li><p>对独立回路列关于支路电流的 KVL 方程</p>
+<blockquote>
+<p>独立回路的选取</p>
+<ul>
+<li><p>充分条件：当每个回路中均具有一条其他回路不具有的新支路时，这一组回路互相独立</p>
+</li>
+<li><p>平面电路（画在平面中不出现交叉导线的电路）：内网孔是一组独立回路</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>求解</p>
+</li>
+</ol>
+<p>缺点：未知量过多</p>
+<h3 id="网孔电流法"><a href="#网孔电流法" class="headerlink" title="网孔电流法"></a>网孔电流法</h3><p><strong>以网孔电流作为独立变量</strong>，根据 KVL 列出关于网孔电流的电路方程，进行求解的过程</p>
+<blockquote>
+<p>网孔电流：假想沿着电路中网孔边界流动的电流</p>
+<ul>
+<li>对于一个节点数为 n，支路数为 b 的平面电路，其网孔数为 $b-n+1$ 个，网孔电流数也为 $b-n+1$ 个</li>
+<li>网孔电流的特点<ul>
+<li>独立性：网孔电流自动满足 KCL，而且相互独立</li>
+<li>完备性：电路中所有支路电流都可以用网孔电流来表示</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>例：</p>
+<p><img data-src="01.png" alt="例题"></p>
+<h4 id="基本步骤-1"><a href="#基本步骤-1" class="headerlink" title="基本步骤"></a>基本步骤</h4><ol>
+<li>指定网孔电流的参考方向，并以此作为列写 KVL 方程的回路绕行方向</li>
+<li>根据 KVL 列写关于网孔电流的电路方程</li>
+</ol>
+<p>如上图：<br>$$<br>\begin{cases}<br>R_1I_{m1}+R_5(I_{m1}-I_{m2})+U_{s4}+R_4(I_{m1}-I_{m3})-U_{s1}=0 \<br>R_2I_{m2}+U_{s2}+R_6(I_{m2}-I_{m3})+R_5(I_{m2}-I_{m1})=0 \<br>R_4(I_{m3}-I_{m1})-U_{s4}+R_6(I_{m3}-I_{m2})-U_{s3}+R_3I_{m3}=0 \<br>\end{cases}<br>$$</p>
+<p>$$<br>\begin{matrix}<br>\Downarrow<br>\end{matrix}<br>$$</p>
+<p>$$<br>\begin{cases}<br>(R_1+R_5+R_4)I_{m1}-R_5I_{m2}-R_4I_{m3}=U_{s1}-U_{s4} \<br>-R_5I_{m1}+(R_2+R_5+R_6)I_{m2}-R_6I_{m3}=-U_{s2} \<br>-R_4I_{m1}-R_6I_{m2}+(R_3+R_4+R_6)I_{m3}=U_{s3}+U_{s4} \<br>\end{cases}<br>$$</p>
+<p>$$<br>\begin{matrix}<br>\Downarrow<br>\end{matrix}<br>$$</p>
+<p>$$<br>\begin{bmatrix}<br>R_1+R_4+R_5 &amp; -R_5 &amp; -R_4 \<br>-R_5 &amp; R_2+R_5+R_6 &amp; -R_6 \<br>-R_4 &amp; -R_6 &amp; R_3+R_4+R_6<br>\end{bmatrix}<br>\begin{bmatrix}<br>I_{m1} \<br>I_{m2} \<br>I_{m3}<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>U_{s1}-U_{s4} \<br>-U_{s2} \<br>U_{s3}+U_{s4} \<br>\end{bmatrix}<br>$$</p>
+<h4 id="网孔电流方程的一般形式"><a href="#网孔电流方程的一般形式" class="headerlink" title="网孔电流方程的一般形式"></a>网孔电流方程的一般形式</h4><p>$$<br>\begin{bmatrix}<br>R_{11} &amp; R_{12} &amp; R_{13} \<br>R_{21} &amp; R_{22} &amp; R_{23} \<br>R_{31} &amp; R_{32} &amp; R_{33} \<br>\end{bmatrix}<br>\begin{bmatrix}<br>I_{m1} \<br>I_{m2} \<br>I_{m3}<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>U_{s11} \<br>U_{s22} \<br>U_{s33} \<br>\end{bmatrix}<br>$$</p>
+<p>解释：</p>
+<ul>
+<li><p>系数矩阵主对角线上的元素：$R_{ij}(i=j)$ 称为<strong>自电阻</strong>，为第 $i$ 个网孔中各支路的电阻之和，<strong>值恒为正</strong></p>
+<blockquote>
+<p>如上图中的：</p>
+<p>$R_{11}=R_1+R_4+R_5$</p>
+<p>$R_{22}=R_2+R_5+R_6$</p>
+<p>$R_{33}=R_3+R_4+R_6$</p>
+</blockquote>
+</li>
+<li><p>系数矩阵非主对角线上的元素：$R_{ij}(i\not=j)$ 称为<strong>互电阻</strong>，为第 $i$ 个与第 $j$ 个网孔之间公共支路的电阻之和，值可正可负，<strong>当相邻网孔电流在公共支路上流向一致为正，不一致时为负</strong>。</p>
+</li>
+<li><p>不含受控源的电路系数矩阵为对称阵。</p>
+</li>
+<li><p>$U_{sii}$ 为第 $i$ 个网孔中的<strong>等效电压源</strong>，其值为该网孔中各支路电压源电压值的代数和。<strong>当电压源方向与绕行方向一致时取负，不一致时取正</strong> （这是由于把电压源由方程左端搬到方程右端所导致的）。</p>
+</li>
+</ul>
+<h4 id="网孔电流法的分析步骤"><a href="#网孔电流法的分析步骤" class="headerlink" title="网孔电流法的分析步骤"></a>网孔电流法的分析步骤</h4><p>一般电路<strong>（电路中仅含电压源）</strong>的网孔法：</p>
+<ol>
+<li><p>选取各网孔电流绕行方向</p>
+</li>
+<li><p>利用直接观察法（自电阻、互电阻、等效电源）形成方程</p>
+<blockquote>
+<p>$$<br>\begin{aligned}<br>\sum(\text{自电阻}\times\text{本网孔电流})\pm\sum{(\text{互电阻}\times\text{相邻网孔电流})} \<br>=\sum{\text{本网孔电压源代数和}}<br>\end{aligned}<br>$$</p>
+</blockquote>
+</li>
+<li><p>方程求解</p>
+</li>
+</ol>
+<h2 id="含理想电流源支路的网孔电流法"><a href="#含理想电流源支路的网孔电流法" class="headerlink" title="含理想电流源支路的网孔电流法"></a>含理想电流源支路的网孔电流法</h2><p>第一类：含实际电流源：电源等效变换，按一般电路网孔电流分析方法进行电路分析</p>
+<p>第二类：含理想电流源，分以下两种情况</p>
+<ol>
+<li><p>理想电流源支路位于网孔边沿支路（网孔电流等于电流源电流）</p>
+<p><img data-src="02.png" alt="case1"></p>
+<blockquote>
+<ul>
+<li>选取网孔电流绕行方向，其中含理想电流源支路的网孔为已知量 $$I_{m2}=-I_s$$</li>
+<li>对不含电流源支路的网孔根据直接观察法列方程：$$(R_1+R_3)I_{m1}-R_3I_{m2}=U_s$$</li>
+<li>注意：若对含理想电流源支路的网孔列网孔电流方程时必须考虑理想电流源的端电压</li>
+</ul>
+</blockquote>
+</li>
+<li><p>理想电流源支路位于网孔公共支路</p>
+<p><img data-src="03.png" alt="case2"></p>
+<blockquote>
+<ul>
+<li><p>选取网孔电流绕行方向，虚设电流源电压 $U$</p>
+</li>
+<li><p>根据直接观察法列方程：<br>$$<br>\begin{cases}<br>(R_1+R_2)I_{m1}-R_2I_{m2}+U=U_s \<br>-R_2+(R_2+R_3)I_{m2}-U=0 \<br>\end{cases}<br>$$</p>
+</li>
+<li><p>添加约束方程：$$I_{m2}-I_{m1}=I_s$$</p>
+</li>
+<li><p>求解</p>
+</li>
+</ul>
+</blockquote>
+<p><del>为啥我觉得直接列 KCL 和 KVL 方程更简单直接呢？</del></p>
+</li>
+</ol>
+<h2 id="含受控源电路的网孔电流法"><a href="#含受控源电路的网孔电流法" class="headerlink" title="含受控源电路的网孔电流法"></a>含受控源电路的网孔电流法</h2><p>注意：系数矩阵不再是对称矩阵</p>
+<h2 id="含理想电流源支路的回路电流法"><a href="#含理想电流源支路的回路电流法" class="headerlink" title="含理想电流源支路的回路电流法"></a>含理想电流源支路的回路电流法</h2><p>以回路电流作为电路独立变量进行电路分析的方法称为<strong>回路电流法</strong></p>
+<blockquote>
+<ul>
+<li>适用于多个理想电流源支路的电路</li>
+<li>回路电流是在一个回路中连续流动的假想电流</li>
+<li>电路中的独立回路数即为网孔数</li>
+<li>一个具有 b 条支路和 n 个节点的电路，其独立回路数为 $$(b-n+1)$$</li>
+</ul>
+</blockquote>
+<p><img data-src="04.png" alt="例题"></p>
+<p>解：</p>
+<ul>
+<li><p>适当选取回路，使独立电源支路只有一个回路电流流过：</p>
+<p>$$I_{l1}=2A;,I_{l2}=3A;,I_{l3}=1A$$</p>
+</li>
+<li><p>对回路 4 列写回路电流方程：</p>
+<p>$$<br>\begin{matrix}<br>-2I_{l1}-2I_{l2}+3I_{l3}+5I_{l4}&amp;=5+1+3 \<br>&amp;\Rightarrow I_{l4}=3.2A \<br>\therefore I=I_{l4}=3.2A<br>\end{matrix}<br>$$</p>
+</li>
+</ul>
+<h2 id="一般电路的节点电压法"><a href="#一般电路的节点电压法" class="headerlink" title="一般电路的节点电压法"></a>一般电路的节点电压法</h2><ul>
+<li>以独立节点的电压作为独立变量，根据 KCL 列出关于节点电压的电路方程，进行求解的过程</li>
+<li>节点电压法适用于结构复杂、非平面电路、独立回路选择麻烦、以及节点少、回路多的电路的分析求解。</li>
+</ul>
+<blockquote>
+<p>节点电压：</p>
+<p>在电路中任意选择一个节点为参考节点（也称非独立节点）. 其它节点即为独立节点。独立节点与参考点之间的电压,称为该节点的节点电压. </p>
+<p>节点电压的两个特点：</p>
+<ul>
+<li><p>独立性：节点电压自动满足 KVL，且相互独立</p>
+</li>
+<li><p>完备性：电路中所有支路电压都可以用节点电压表示</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="节点电压方程的一般形式"><a href="#节点电压方程的一般形式" class="headerlink" title="节点电压方程的一般形式"></a>节点电压方程的一般形式</h3><p>$$<br>\begin{bmatrix}<br>G_{11} &amp; G_{12} &amp; G_{13} \<br>G_{21} &amp; G_{22} &amp; G_{23} \<br>G_{31} &amp; G_{32} &amp; G_{33} \<br>\end{bmatrix}<br>\begin{bmatrix}<br>U_{n1} \<br>U_{n2} \<br>U_{n3}<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>I_{s11} \<br>I_{s22} \<br>I_{s33} \<br>\end{bmatrix}<br>$$</p>
+<p>解释：</p>
+<ul>
+<li><p>系数矩阵主对角线上的元素：$G_{ij}(i=j)$ 称为<strong>自电导</strong>，为连接到第 $i$ 个节点中各支路的电导之和，<strong>值恒为正</strong></p>
+</li>
+<li><p>系数矩阵非主对角线上的元素：$G_{ij}(i\not=j)$ 称为<strong>互电导</strong>，为连接于节点 $i$ 个与节点 $j$ 之间支路上的电导之和，<strong>值恒为负</strong>。</p>
+</li>
+<li><p>不含受控源的电路系数矩阵为对称阵。</p>
+</li>
+<li><p>$I_{sii}$ 为流入第 $i$ 个节点的各支路电流源电流值代数和。<strong>流入取正，流出取负</strong> （这是由于把电流源由方程左端搬到方程右端所导致的）。</p>
+</li>
+</ul>
+<h3 id="节点电压法的分析步骤"><a href="#节点电压法的分析步骤" class="headerlink" title="节点电压法的分析步骤"></a>节点电压法的分析步骤</h3><ol>
+<li><p>指定电路中某一节点为参考点，标出各独立节点电位（符号）</p>
+</li>
+<li><p>利用直接观察法形成方程</p>
+<blockquote>
+<p>$$<br>\begin{aligned}<br>\sum(自电导\times本节点电压)-\sum{(互电导\times相邻节点电压)} \<br>=\sum{流入本节点的电流源代数和（流入节点取正，流出取负）} \<br>\end{aligned}<br>$$</p>
+<p>列写第 n 个节点电压方程时</p>
+<ul>
+<li><p>与 n 节点相连接的支路上的电阻元件的电导之和（自电导）一律取 “+” 号</p>
+</li>
+<li><p>与 n 节点相关联支路的电阻元件的电导（互电导）一律取 “-” 号。流入 n 节点的理想电流源的电流取 “+” 号，流出的取 “-” 号。</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>方程求解</p>
+</li>
+</ol>
+<h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><p><img data-src="05.png" alt="例题"></p>
+<p><img data-src="06.png" alt="例题"></p>
+]]></content>
+      <categories>
+        <category>电路</category>
+      </categories>
+      <tags>
+        <tag>电路</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>二叉树中的最大路径和</title>
     <url>/posts/er-cha-shu-zhong-de-zui-da-lu-jing-he/</url>
     <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/">leetcode 124</a></p>
@@ -2859,6 +2859,79 @@
       </tags>
   </entry>
   <entry>
+    <title>无重复字符的最长子串</title>
+    <url>/posts/wu-chong-fu-zi-fu-de-zui-chang-zi-chuan/</url>
+    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">leetcode 3</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个字符串，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+<p>示例 1：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: s = &quot;abcabcbb&quot;</span></span><br><span class="line"><span class="section">输出: 3 </span></span><br><span class="line"><span class="section">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span></span><br></pre></td></tr></table></figure>
+
+<p>示例 2：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: s = &quot;bbbbb&quot;</span></span><br><span class="line"><span class="section">输出: 1</span></span><br><span class="line"><span class="section">解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。</span></span><br></pre></td></tr></table></figure>
+
+<p>示例 3：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: s = &quot;pwwkew&quot;</span></span><br><span class="line"><span class="section">输出: 3</span></span><br><span class="line"><span class="section">解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。</span></span><br><span class="line">     请注意，你的答案必须是 子串 的长度，<span class="string">&quot;pwke&quot;</span> 是一个子序列，不是子串。</span><br></pre></td></tr></table></figure>
+
+<p>示例 4：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: s = &quot;&quot;</span></span><br><span class="line"><span class="section">输出: 0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li>$0 &lt;= s.length &lt;= 5 * 10^4$</li>
+<li><code>s</code> 由英文字母、数字、符号和空格组成</li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="法一：手动模拟"><a href="#法一：手动模拟" class="headerlink" title="法一：手动模拟"></a>法一：手动模拟</h3><p>先上一下我随手写的暴力代码吧，提交能够通过，击败25%左右的人：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> max_res = <span class="number">0</span>, n = s.length(), res = <span class="number">0</span>;</span><br><span class="line">        LinkedList&lt;Character&gt; list = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (list.contains(s.charAt(i))) &#123;</span><br><span class="line">                Iterator&lt;Character&gt; it = list.iterator();</span><br><span class="line">                <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">                    <span class="keyword">char</span> c = it.next();</span><br><span class="line">                    it.remove();</span><br><span class="line">                    <span class="keyword">if</span> (c == s.charAt(i))</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            list.add(s.charAt(i));</span><br><span class="line">            res = list.size();</span><br><span class="line">            max_res = Integer.max(res, max_res);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max_res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体思路很简单，就是模仿我自己去找的一个过程：从头开始遍历，每读到一个字符就先判断它是不是在之前出现过。</p>
+<ul>
+<li>如果没出现过，就把它加入到待定序列中</li>
+<li>如果出现过，就把待定序列从头开始一直到这个字符全部删掉，再把它加入到待定序列中</li>
+</ul>
+<p>在这个过程中记录待定序列的长度并计算最大值即可。</p>
+<p>所以我采用的是链表，这样便于从链表的头部进行删除。另外，注意一下边遍历边删除的处理，<strong>切不可写成下面的代码</strong>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(list.contains(s.charAt(i)))&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> c : list)&#123;</span><br><span class="line">            list.remove(c);</span><br><span class="line">            <span class="keyword">if</span>(c == s.charAt(i))</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：$O(n^2)$，因为 $list.contains()$ 函数本质上也是一层遍历，所以和外层的 $for$ 循环构成了双层的遍历</li>
+<li>空间复杂度：$O(n)$，链表的最大长度即为字符串的长度</li>
+</ul>
+<h3 id="法二：滑动窗口"><a href="#法二：滑动窗口" class="headerlink" title="法二：滑动窗口"></a>法二：滑动窗口</h3><ul>
+<li><p>我们使用两个指针表示字符串中的某个子串（或窗口）的左右边界。</p>
+</li>
+<li><p>在每一步的操作中，我们会将左指针向右移动一格，表示我们开始枚举下一个字符作为起始位置，然后我们可以不断地向右移动右指针，但需要保证这两个指针对应的子串中没有重复的字符。在移动结束后，这个子串就对应着 以左指针开始的，不包含重复字符的最长子串。我们记录下这个子串的长度；</p>
+</li>
+<li><p>在枚举结束后，我们找到的最长的子串的长度即为答案。</p>
+</li>
+</ul>
+<p>在上面的流程中，我们还需要使用一种数据结构来判断是否有重复的字符，常用的数据结构为哈希集合（即 C++ 中的 $std::unordered_set$，Java 中的 $HashSet$，Python 中的 $set$, JavaScript 中的 $Set$）。在左指针向右移动的时候，我们从哈希集合中移除一个字符，在右指针向右移动的时候，我们往哈希集合中添加一个字符。</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 哈希集合，记录每个字符是否出现过</span></span><br><span class="line">        Set&lt;Character&gt; occ = <span class="keyword">new</span> HashSet&lt;Character&gt;();</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="comment">// 右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动</span></span><br><span class="line">        <span class="keyword">int</span> rk = -<span class="number">1</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 左指针向右移动一格，移除一个字符</span></span><br><span class="line">                occ.remove(s.charAt(i - <span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (rk + <span class="number">1</span> &lt; n &amp;&amp; !occ.contains(s.charAt(rk + <span class="number">1</span>))) &#123;</span><br><span class="line">                <span class="comment">// 不断地移动右指针</span></span><br><span class="line">                occ.add(s.charAt(rk + <span class="number">1</span>));</span><br><span class="line">                ++rk;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 第 i 到 rk 个字符是一个极长的无重复字符子串</span></span><br><span class="line">            ans = Math.max(ans, rk - i + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外，由于本题的数据集最多是所有的 ASCII 码（在 $[0,128)$ 的范围内），我们可以用数组来代替 $Set$</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] ascii = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">128</span>];	<span class="comment">// 记录对应的ASCII字符在子串中出现的次数</span></span><br><span class="line">        <span class="keyword">int</span> max_res = <span class="number">0</span>, n = s.length(), right = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != <span class="number">0</span>) &#123;</span><br><span class="line">                ascii[s.charAt(i - <span class="number">1</span>)]--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (right + <span class="number">1</span> &lt; n &amp;&amp; ascii[s.charAt(right + <span class="number">1</span>)] == <span class="number">0</span>) &#123;</span><br><span class="line">                ascii[s.charAt(right + <span class="number">1</span>)]++;</span><br><span class="line">                right++;</span><br><span class="line">            &#125;</span><br><span class="line">            max_res = Math.max(max_res, right - i + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max_res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>进一步优化代码，我们可以看到，当出现重复字符时，左指针并不需要依次递增（$i++$），即多了很多无谓的循环。 发现有重复字符时，可以直接把左指针移动到第一个重复字符的下一个位置即可。</p>
+<p>优化后的代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] ascii = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">128</span>];	<span class="comment">//记录对应的ASCII字符在 s 中的位置</span></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, n = s.length();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            i = Math.max(ascii[s.charAt(j)], i);</span><br><span class="line">            res = Math.max(res, j - i + <span class="number">1</span>);</span><br><span class="line">            ascii[s.charAt(j)] = j + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/wu-zhong-fu-zi-fu-de-zui-chang-zi-chuan-by-leetc-2/">LeetCode-Solution</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/longest-substring-without-repeating-characters-b-2/">ikaruga</a></p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>leetcode</tag>
+        <tag>字符串处理</tag>
+        <tag>滑动窗口</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>比特位计数</title>
     <url>/posts/bi-te-wei-ji-shu/</url>
     <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/counting-bits/">leetcode 338</a></p>
@@ -2939,79 +3012,6 @@
       </tags>
   </entry>
   <entry>
-    <title>无重复字符的最长子串</title>
-    <url>/posts/wu-chong-fu-zi-fu-de-zui-chang-zi-chuan/</url>
-    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">leetcode 3</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个字符串，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
-<p>示例 1：</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: s = &quot;abcabcbb&quot;</span></span><br><span class="line"><span class="section">输出: 3 </span></span><br><span class="line"><span class="section">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span></span><br></pre></td></tr></table></figure>
-
-<p>示例 2：</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: s = &quot;bbbbb&quot;</span></span><br><span class="line"><span class="section">输出: 1</span></span><br><span class="line"><span class="section">解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。</span></span><br></pre></td></tr></table></figure>
-
-<p>示例 3：</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: s = &quot;pwwkew&quot;</span></span><br><span class="line"><span class="section">输出: 3</span></span><br><span class="line"><span class="section">解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。</span></span><br><span class="line">     请注意，你的答案必须是 子串 的长度，<span class="string">&quot;pwke&quot;</span> 是一个子序列，不是子串。</span><br></pre></td></tr></table></figure>
-
-<p>示例 4：</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">输入: s = &quot;&quot;</span></span><br><span class="line"><span class="section">输出: 0</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>提示：</strong></p>
-<ul>
-<li>$0 &lt;= s.length &lt;= 5 * 10^4$</li>
-<li><code>s</code> 由英文字母、数字、符号和空格组成</li>
-</ul>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="法一：手动模拟"><a href="#法一：手动模拟" class="headerlink" title="法一：手动模拟"></a>法一：手动模拟</h3><p>先上一下我随手写的暴力代码吧，提交能够通过，击败25%左右的人：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> max_res = <span class="number">0</span>, n = s.length(), res = <span class="number">0</span>;</span><br><span class="line">        LinkedList&lt;Character&gt; list = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (list.contains(s.charAt(i))) &#123;</span><br><span class="line">                Iterator&lt;Character&gt; it = list.iterator();</span><br><span class="line">                <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">                    <span class="keyword">char</span> c = it.next();</span><br><span class="line">                    it.remove();</span><br><span class="line">                    <span class="keyword">if</span> (c == s.charAt(i))</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            list.add(s.charAt(i));</span><br><span class="line">            res = list.size();</span><br><span class="line">            max_res = Integer.max(res, max_res);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max_res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>具体思路很简单，就是模仿我自己去找的一个过程：从头开始遍历，每读到一个字符就先判断它是不是在之前出现过。</p>
-<ul>
-<li>如果没出现过，就把它加入到待定序列中</li>
-<li>如果出现过，就把待定序列从头开始一直到这个字符全部删掉，再把它加入到待定序列中</li>
-</ul>
-<p>在这个过程中记录待定序列的长度并计算最大值即可。</p>
-<p>所以我采用的是链表，这样便于从链表的头部进行删除。另外，注意一下边遍历边删除的处理，<strong>切不可写成下面的代码</strong>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(list.contains(s.charAt(i)))&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> c : list)&#123;</span><br><span class="line">            list.remove(c);</span><br><span class="line">            <span class="keyword">if</span>(c == s.charAt(i))</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>复杂度分析：</p>
-<ul>
-<li>时间复杂度：$O(n^2)$，因为 $list.contains()$ 函数本质上也是一层遍历，所以和外层的 $for$ 循环构成了双层的遍历</li>
-<li>空间复杂度：$O(n)$，链表的最大长度即为字符串的长度</li>
-</ul>
-<h3 id="法二：滑动窗口"><a href="#法二：滑动窗口" class="headerlink" title="法二：滑动窗口"></a>法二：滑动窗口</h3><ul>
-<li><p>我们使用两个指针表示字符串中的某个子串（或窗口）的左右边界。</p>
-</li>
-<li><p>在每一步的操作中，我们会将左指针向右移动一格，表示我们开始枚举下一个字符作为起始位置，然后我们可以不断地向右移动右指针，但需要保证这两个指针对应的子串中没有重复的字符。在移动结束后，这个子串就对应着 以左指针开始的，不包含重复字符的最长子串。我们记录下这个子串的长度；</p>
-</li>
-<li><p>在枚举结束后，我们找到的最长的子串的长度即为答案。</p>
-</li>
-</ul>
-<p>在上面的流程中，我们还需要使用一种数据结构来判断是否有重复的字符，常用的数据结构为哈希集合（即 C++ 中的 $std::unordered_set$，Java 中的 $HashSet$，Python 中的 $set$, JavaScript 中的 $Set$）。在左指针向右移动的时候，我们从哈希集合中移除一个字符，在右指针向右移动的时候，我们往哈希集合中添加一个字符。</p>
-<p>代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 哈希集合，记录每个字符是否出现过</span></span><br><span class="line">        Set&lt;Character&gt; occ = <span class="keyword">new</span> HashSet&lt;Character&gt;();</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="comment">// 右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动</span></span><br><span class="line">        <span class="keyword">int</span> rk = -<span class="number">1</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 左指针向右移动一格，移除一个字符</span></span><br><span class="line">                occ.remove(s.charAt(i - <span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (rk + <span class="number">1</span> &lt; n &amp;&amp; !occ.contains(s.charAt(rk + <span class="number">1</span>))) &#123;</span><br><span class="line">                <span class="comment">// 不断地移动右指针</span></span><br><span class="line">                occ.add(s.charAt(rk + <span class="number">1</span>));</span><br><span class="line">                ++rk;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 第 i 到 rk 个字符是一个极长的无重复字符子串</span></span><br><span class="line">            ans = Math.max(ans, rk - i + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>另外，由于本题的数据集最多是所有的 ASCII 码（在 $[0,128)$ 的范围内），我们可以用数组来代替 $Set$</p>
-<p>代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] ascii = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">128</span>];	<span class="comment">// 记录对应的ASCII字符在子串中出现的次数</span></span><br><span class="line">        <span class="keyword">int</span> max_res = <span class="number">0</span>, n = s.length(), right = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != <span class="number">0</span>) &#123;</span><br><span class="line">                ascii[s.charAt(i - <span class="number">1</span>)]--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (right + <span class="number">1</span> &lt; n &amp;&amp; ascii[s.charAt(right + <span class="number">1</span>)] == <span class="number">0</span>) &#123;</span><br><span class="line">                ascii[s.charAt(right + <span class="number">1</span>)]++;</span><br><span class="line">                right++;</span><br><span class="line">            &#125;</span><br><span class="line">            max_res = Math.max(max_res, right - i + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max_res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>进一步优化代码，我们可以看到，当出现重复字符时，左指针并不需要依次递增（$i++$），即多了很多无谓的循环。 发现有重复字符时，可以直接把左指针移动到第一个重复字符的下一个位置即可。</p>
-<p>优化后的代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] ascii = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">128</span>];	<span class="comment">//记录对应的ASCII字符在 s 中的位置</span></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, n = s.length();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            i = Math.max(ascii[s.charAt(j)], i);</span><br><span class="line">            res = Math.max(res, j - i + <span class="number">1</span>);</span><br><span class="line">            ascii[s.charAt(j)] = j + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/wu-zhong-fu-zi-fu-de-zui-chang-zi-chuan-by-leetc-2/">LeetCode-Solution</a></p>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/longest-substring-without-repeating-characters-b-2/">ikaruga</a></p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>leetcode</tag>
-        <tag>字符串处理</tag>
-        <tag>滑动窗口</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>翻转链表</title>
     <url>/posts/fan-zhuan-lian-biao/</url>
     <content><![CDATA[<p>链表的结构：</p>
@@ -3032,8 +3032,8 @@
   <entry>
     <title>螺旋矩阵</title>
     <url>/posts/luo-xuan-ju-zhen/</url>
-    <content><![CDATA[<p> 题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/spiral-matrix/">leetcode 54</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个 <code>m</code> 行 <code>n</code> 列的矩阵 <code>matrix</code> ，请按照 <strong>顺时针螺旋顺序</strong> ，返回矩阵中的所有元素。</p>
+    <content><![CDATA[<p> 题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/spiral-matrix/">leetcode 54</a>，<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/spiral-matrix-ii/">leetcode 59</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="leetcode-54：螺旋矩阵"><a href="#leetcode-54：螺旋矩阵" class="headerlink" title="leetcode 54：螺旋矩阵"></a>leetcode 54：螺旋矩阵</h3><p>给你一个 <code>m</code> 行 <code>n</code> 列的矩阵 <code>matrix</code> ，请按照 <strong>顺时针螺旋顺序</strong> ，返回矩阵中的所有元素。</p>
 <p>示例 1：</p>
 <p><img data-src="spiral1.jpg" alt="img"></p>
 <figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">输入：matrix = <span class="comment">[<span class="comment">[1,2,3]</span>,<span class="comment">[4,5,6]</span>,<span class="comment">[7,8,9]</span>]</span></span><br><span class="line">输出：<span class="comment">[1,2,3,6,9,8,7,4,5]</span></span><br></pre></td></tr></table></figure>
@@ -3049,10 +3049,28 @@
 <li>$1 &lt;= m, n &lt;= 10$</li>
 <li>$-100 &lt;= matrix[i][j] &lt;= 100$</li>
 </ul>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>简单模拟：</p>
+<h3 id="leetcode-59：螺旋矩阵-II"><a href="#leetcode-59：螺旋矩阵-II" class="headerlink" title="leetcode 59：螺旋矩阵 II"></a>leetcode 59：螺旋矩阵 II</h3><blockquote>
+<p>给你一个正整数 <code>n</code> ，生成一个包含 <code>1</code> 到 <code>n2</code> 所有元素，且元素按顺时针顺序螺旋排列的 <code>n x n</code> 正方形矩阵 <code>matrix</code> 。</p>
+</blockquote>
+<p>示例 1：</p>
+<p><img data-src="spiraln.jpg" alt="img"></p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">输入：n = <span class="number">3</span></span><br><span class="line">输出：<span class="string">[[1,2,3],[8,9,4],[7,6,5]]</span></span><br></pre></td></tr></table></figure>
+
+<p>示例 2：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">输入：n = <span class="number">1</span></span><br><span class="line">输出：<span class="string">[[1]]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 20</code></li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="leetcode-54：螺旋矩阵-1"><a href="#leetcode-54：螺旋矩阵-1" class="headerlink" title="leetcode 54：螺旋矩阵"></a>leetcode 54：螺旋矩阵</h3><p>简单模拟：</p>
 <p>为了避免判断边界，需要在矩阵的最外侧围上一圈 1</p>
 <p>代码：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">spiralOrder</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (matrix == <span class="keyword">null</span> || matrix.length == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> list;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length, col = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">boolean</span>[][] visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[row + <span class="number">2</span>][col + <span class="number">2</span>];	<span class="comment">//记录该位置是否被遍历过</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//下面两个 for 循环在 visit矩阵外侧围一圈 1，表示已被访问过，不可再次访问</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; row + <span class="number">2</span>; i++) &#123;</span><br><span class="line">            visit[i][<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line">            visit[i][col + <span class="number">1</span>] = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; col + <span class="number">2</span>; j++) &#123;</span><br><span class="line">            visit[<span class="number">0</span>][j] = <span class="keyword">true</span>;</span><br><span class="line">            visit[row + <span class="number">1</span>][j] = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">1</span>;	<span class="comment">//由于外圈多围了一圈，所以初始位置从(0,0)变为了(1,1)</span></span><br><span class="line">        <span class="keyword">int</span> direction = <span class="number">3</span>;  <span class="comment">//定义一个变量，记录当前的方向，上下左右分别为：0，1，2，3</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (visit[i][j])	<span class="comment">//如果四个方向都无路可走了，程序就结束了</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            list.add(matrix[i - <span class="number">1</span>][j - <span class="number">1</span>]);	<span class="comment">//由于外圈加了一层，所以对应的matrix矩阵中的下标需要减一</span></span><br><span class="line">            visit[i][j] = <span class="keyword">true</span>;	<span class="comment">//标记当前的格子已被访问过</span></span><br><span class="line">            <span class="keyword">switch</span> (direction) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">0</span>:		<span class="comment">//上</span></span><br><span class="line">                    <span class="keyword">if</span> (visit[i - <span class="number">1</span>][j]) &#123;	<span class="comment">// 如果沿着当前方向走会碰到墙，那么就换个方向</span></span><br><span class="line">                        direction = <span class="number">3</span>;	<span class="comment">//上面走不通，向右</span></span><br><span class="line">                        j++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;	<span class="comment">//否则，继续沿着当前方向走</span></span><br><span class="line">                        i--;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">1</span>:		<span class="comment">//下</span></span><br><span class="line">                    <span class="keyword">if</span> (visit[i + <span class="number">1</span>][j]) &#123;</span><br><span class="line">                        direction = <span class="number">2</span>;	<span class="comment">//下面走不通，向左</span></span><br><span class="line">                        j--;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        i++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">2</span>:		<span class="comment">//左</span></span><br><span class="line">                    <span class="keyword">if</span> (visit[i][j - <span class="number">1</span>]) &#123;</span><br><span class="line">                        direction = <span class="number">0</span>;	<span class="comment">//左面走不通，向上</span></span><br><span class="line">                        i--;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        j--;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">3</span>:		<span class="comment">//右</span></span><br><span class="line">                    <span class="keyword">if</span> (visit[i][j + <span class="number">1</span>]) &#123;</span><br><span class="line">                        direction = <span class="number">1</span>;	<span class="comment">//右面走不通，向下</span></span><br><span class="line">                        i++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        j++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="leetcode-59：螺旋矩阵-II-1"><a href="#leetcode-59：螺旋矩阵-II-1" class="headerlink" title="leetcode 59：螺旋矩阵 II"></a>leetcode 59：螺旋矩阵 II</h3><p>代码把上面的代码热热还能用：</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][] generateMatrix(<span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">int</span>[][] matrix = <span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        <span class="keyword">boolean</span>[][] visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[n + <span class="number">2</span>][n + <span class="number">2</span>];    <span class="comment">//记录该位置是否被遍历过</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//下面两个 for 循环在 visit矩阵外侧围一圈 1，表示已被访问过，不可再次访问</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n + <span class="number">2</span>; i++) &#123;</span><br><span class="line">            visit[i][<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line">            visit[i][n + <span class="number">1</span>] = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n + <span class="number">2</span>; j++) &#123;</span><br><span class="line">            visit[<span class="number">0</span>][j] = <span class="keyword">true</span>;</span><br><span class="line">            visit[n + <span class="number">1</span>][j] = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">1</span>;    <span class="comment">//由于外圈多围了一圈，所以初始位置从(0,0)变为了(1,1)</span></span><br><span class="line">        <span class="keyword">int</span> direction = <span class="number">3</span>;  <span class="comment">//定义一个变量，记录当前的方向，上下左右分别为：0，1，2，3</span></span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">1</span>;        <span class="comment">//将要填的数字</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (visit[i][j])    <span class="comment">//如果四个方向都无路可走了，程序就结束了</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            matrix[i - <span class="number">1</span>][j - <span class="number">1</span>] = num++;    <span class="comment">//由于外圈加了一层，所以对应的matrix矩阵中的下标需要减一</span></span><br><span class="line">            visit[i][j] = <span class="keyword">true</span>;             <span class="comment">//标记当前的格子已被访问过</span></span><br><span class="line">            <span class="keyword">switch</span> (direction) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">0</span>:        <span class="comment">//上</span></span><br><span class="line">                    <span class="keyword">if</span> (visit[i - <span class="number">1</span>][j]) &#123;    <span class="comment">// 如果沿着当前方向走会碰到墙，那么就换个方向</span></span><br><span class="line">                        direction = <span class="number">3</span>;    <span class="comment">//上面走不通，向右</span></span><br><span class="line">                        j++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;    <span class="comment">//否则，继续沿着当前方向走</span></span><br><span class="line">                        i--;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">1</span>:        <span class="comment">//下</span></span><br><span class="line">                    <span class="keyword">if</span> (visit[i + <span class="number">1</span>][j]) &#123;</span><br><span class="line">                        direction = <span class="number">2</span>;    <span class="comment">//下面走不通，向左</span></span><br><span class="line">                        j--;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        i++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">2</span>:        <span class="comment">//左</span></span><br><span class="line">                    <span class="keyword">if</span> (visit[i][j - <span class="number">1</span>]) &#123;</span><br><span class="line">                        direction = <span class="number">0</span>;    <span class="comment">//左面走不通，向上</span></span><br><span class="line">                        i--;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        j--;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="number">3</span>:        <span class="comment">//右</span></span><br><span class="line">                    <span class="keyword">if</span> (visit[i][j + <span class="number">1</span>]) &#123;</span><br><span class="line">                        direction = <span class="number">1</span>;    <span class="comment">//右面走不通，向下</span></span><br><span class="line">                        i++;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        j++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> matrix;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -3064,65 +3082,73 @@
       </tags>
   </entry>
   <entry>
-    <title>设计哈希集合 &amp;&amp; 设计哈希映射</title>
-    <url>/posts/she-ji-ha-xi-ji-he-she-ji-ha-xi-ying-she/</url>
-    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-hashset/">leetcode 705</a> <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-hashmap/">leetcode 706</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="leetcode-705-设计哈希集合"><a href="#leetcode-705-设计哈希集合" class="headerlink" title="leetcode 705 设计哈希集合"></a>leetcode 705 设计哈希集合</h3><p>不使用任何内建的哈希表库设计一个哈希集合（HashSet）。</p>
-<p>实现 MyHashSet 类：</p>
-<ul>
-<li>void add(key) 向哈希集合中插入值 key 。</li>
-<li>bool contains(key) 返回哈希集合中是否存在这个值 key 。</li>
-<li>void remove(key) 将给定值 key 从哈希集合中删除。如果哈希集合中没有这个值，什么也不做。</li>
-</ul>
+    <title>零钱兑换</title>
+    <url>/posts/ling-qian-dui-huan/</url>
+    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/coin-change/">leetcode 322</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。</p>
+<p>你可以认为每种硬币的数量是无限的。</p>
+</blockquote>
+<p>示例1：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>], <span class="attr">amount</span> = <span class="number">11</span></span><br><span class="line">输出：<span class="number">3</span> </span><br><span class="line">解释：<span class="number">11</span> = <span class="number">5</span> + <span class="number">5</span> + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>示例2：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">2</span>], <span class="attr">amount</span> = <span class="number">3</span></span><br><span class="line">输出：-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>示例3：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">0</span></span><br><span class="line">输出：<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>示例4：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">1</span></span><br><span class="line">输出：<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>示例5：</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">2</span></span><br><span class="line">输出：<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
 <p><strong>提示：</strong></p>
 <ul>
-<li><code>0 &lt;= key &lt;= 106</code></li>
-<li>最多调用 <code>104</code> 次 <code>add</code>、<code>remove</code> 和 <code>contains</code> 。</li>
+<li><code>1 &lt;= coins.length &lt;= 12</code></li>
+<li><code>1 &lt;= coins[i] &lt;= 2^31 - 1</code></li>
+<li><code>0 &lt;= amount &lt;= 10^4</code></li>
 </ul>
-<h3 id="leetcode-706-设计哈希映射"><a href="#leetcode-706-设计哈希映射" class="headerlink" title="leetcode 706 设计哈希映射"></a>leetcode 706 设计哈希映射</h3><p>不使用任何内建的哈希表库设计一个哈希映射（HashMap）。</p>
-<p>实现 MyHashMap 类：</p>
-<ul>
-<li>MyHashMap() 用空映射初始化对象</li>
-<li>void put(int key, int value) 向 HashMap 插入一个键值对 (key, value) 。如果 key 已经存在于映射中，则更新其对应的值 value 。</li>
-<li>int get(int key) 返回特定的 key 所映射的 value ；如果映射中不包含 key 的映射，返回 -1 。</li>
-<li>void remove(key) 如果映射中存在 key 的映射，则移除 key 和它所对应的 value 。</li>
-</ul>
-<p><strong>提示：</strong></p>
-<ul>
-<li><code>0 &lt;= key, value &lt;= 106</code></li>
-<li>最多调用 <code>104</code> 次 <code>put</code>、<code>get</code> 和 <code>remove</code> 方法</li>
-</ul>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>哈希函数和冲突处理是最基本的数据结构，教材里都会讲到：</p>
-<ul>
-<li>哈希函数：能够将集合中任意可能的元素映射到一个固定范围的整数值，并将该元素存储到整数值对应的地址上。</li>
-<li>冲突处理：由于不同元素可能映射到相同的整数值，因此需要在整数值出现「冲突」时，需要进行冲突处理。总的来说，有以下几种策略解决冲突：<ul>
-<li>链地址法：为每个哈希值维护一个链表，并将具有相同哈希值的元素都放入这一链表当中。</li>
-<li>开放地址法：当发现哈希值 h 处产生冲突时，根据某种策略，从 h 出发找到下一个不冲突的位置。例如，一种最简单的策略是，不断地检查 h+1,h+2,h+3… 这些整数对应的位置。</li>
-<li>再哈希法：当发现哈希冲突后，使用另一个哈希函数产生一个新的地址。</li>
-<li>扩容：当哈希表元素过多时，冲突的概率将越来越大，而在哈希表中查询一个元素的效率也会越来越低。因此，需要开辟一块更大的空间，来缓解哈希表中发生的冲突。</li>
-</ul>
-</li>
-</ul>
-<p>下面我们使用链地址法来进行处理：</p>
-<p>设哈希表的大小为 base，则可以设计一个简单的哈希函数：$\text{hash}(x) = x \bmod \textit{base}$。</p>
-<p>我们开辟一个大小为 base 的数组，数组的每个位置是一个链表。当计算出哈希值之后，就插入到对应位置的链表当中。</p>
-<p>由于我们使用整数除法作为哈希函数，为了尽可能避免冲突，应当将 base 取为一个质数。在这里，我们取 $\textit{base}=857$。</p>
-<h3 id="leetcode-705-设计哈希集合-1"><a href="#leetcode-705-设计哈希集合-1" class="headerlink" title="leetcode 705 设计哈希集合"></a>leetcode 705 设计哈希集合</h3><p>代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyHashSet</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> base = <span class="number">857</span>;</span><br><span class="line">    <span class="keyword">private</span> LinkedList[] data;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Initialize your data structure here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyHashSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        data = <span class="keyword">new</span> LinkedList[base];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; base; i++) &#123;</span><br><span class="line">            data[i] = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> k % base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Integer&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Integer element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element == key) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        data[pos].offerLast(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Integer&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Integer element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element == key) &#123;</span><br><span class="line">                data[pos].remove(element);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns true if this set contains the specified element</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Integer&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Integer element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element == key) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="暴力递归"><a href="#暴力递归" class="headerlink" title="暴力递归"></a>暴力递归</h3><p>首先，这个问题是动态规划问题，因为它具有「最优子结构」的。<strong>要符合「最优子结构」，子问题间必须互相独立</strong>。</p>
+<p>为什么说它符合最优子结构呢？比如你想求 <code>amount = 11</code> 时的最少硬币数（原问题），如果你知道凑出 <code>amount = 10</code> 的最少硬币数（子问题），你只需要把子问题的答案加一（再选一枚面值为 1 的硬币）就是原问题的答案。因为硬币的数量是没有限制的，所以子问题之间没有相互制约，是互相独立的。</p>
+<p>那么，既然知道了这是个动态规划问题，就要思考<strong>如何列出正确的状态转移方程</strong>？</p>
+<p>1、<strong>确定 base case</strong>，这个很简单，显然目标金额 <code>amount</code> 为 0 时算法返回 0，因为不需要任何硬币就已经凑出目标金额了。</p>
+<p>2、<strong>确定「状态」，也就是原问题和子问题中会变化的变量</strong>。由于硬币数量无限，硬币的面额也是题目给定的，只有目标金额会不断地向 base case 靠近，所以唯一的「状态」就是目标金额 <code>amount</code>。</p>
+<p>3、<strong>确定「选择」，也就是导致「状态」产生变化的行为</strong>。目标金额为什么变化呢，因为你在选择硬币，你每选择一枚硬币，就相当于减少了目标金额。所以说所有硬币的面值，就是你的「选择」。</p>
+<p>4、<strong>明确 <code>dp</code> 函数/数组的定义</strong>。我们这里讲的是自顶向下的解法，所以会有一个递归的 <code>dp</code> 函数，一般来说函数的参数就是状态转移中会变化的量，也就是上面说到的「状态」；函数的返回值就是题目要求我们计算的量。就本题来说，状态只有一个，即「目标金额」，题目要求我们计算凑出目标金额所需的最少硬币数量。所以我们可以这样定义 <code>dp</code> 函数：</p>
+<p><code>dp(n)</code> 的定义：输入一个目标金额 <code>n</code>，返回凑出目标金额 <code>n</code> 的最少硬币数量。</p>
+<p>java代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// base case</span></span><br><span class="line">    <span class="keyword">if</span> (amount == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (amount &lt; <span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 求最小值，所以初始化为正无穷</span></span><br><span class="line">    <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> p : coins) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = coinChange(coins, amount - p);</span><br><span class="line">        <span class="comment">//子问题无解，跳过</span></span><br><span class="line">        <span class="keyword">if</span>(tmp == -<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res = Math.min(res, <span class="number">1</span> + tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 问题无解时返回 -1</span></span><br><span class="line">    <span class="keyword">return</span> res == Integer.MAX_VALUE ? -<span class="number">1</span> : res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="leetcode-706-设计哈希映射-1"><a href="#leetcode-706-设计哈希映射-1" class="headerlink" title="leetcode 706 设计哈希映射"></a>leetcode 706 设计哈希映射</h3><p>「设计哈希映射」与「设计哈希集合」解法接近，唯一的区别在于我们存储的不是 $\textit{key}$ 本身，而是 $(\textit{key}, \textit{value})$ 对。除此之外，代码基本是类似的。</p>
-<p>代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyHashMap</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Pair</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> key;</span><br><span class="line">        <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.key = key;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> key;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> base = <span class="number">857</span>;</span><br><span class="line">    <span class="keyword">private</span> LinkedList[] data;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Initialize your data structure here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyHashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        data = <span class="keyword">new</span> LinkedList[base];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; base; i++) &#123;</span><br><span class="line">            data[i] = <span class="keyword">new</span> LinkedList&lt;Pair&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> k % base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * value will always be non-negative.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Pair&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Pair element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element.key == key) &#123;</span><br><span class="line">                element.setValue(value);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        data[pos].offerLast(<span class="keyword">new</span> Pair(key, value));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Pair&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Pair element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element.key == key) &#123;</span><br><span class="line">                <span class="keyword">return</span> element.value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Removes the mapping of the specified value key if this map contains a mapping for the key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Pair&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Pair element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element.key == key) &#123;</span><br><span class="line">                data[pos].remove(element);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，这个问题其实就解决了，只不过需要消除一下重叠子问题，因为画出递归树就会发现好多问题是被重复计算了的。</p>
+<p>当然，该程序直接交上去会超时。</p>
+<p><strong>递归算法的时间复杂度分析：子问题总数 x 每个子问题的时间</strong>。</p>
+<p>子问题总数为递归树节点个数，这个比较难看出来，是 O(n^k)，总之是指数级别的。每个子问题中含有一个 for 循环，复杂度为 O(k)。所以总时间复杂度为 O(k * n^k)，指数级别。</p>
+<h3 id="带备忘录的递归"><a href="#带备忘录的递归" class="headerlink" title="带备忘录的递归"></a>带备忘录的递归</h3><p>只需要稍加修改，就可以通过备忘录消除子问题：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HashMap&lt;Integer, Integer&gt; memo = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (amount == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (amount &lt; <span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 查找备忘录,避免重复计算</span></span><br><span class="line">    <span class="keyword">if</span>(memo.containsKey(amount))&#123;</span><br><span class="line">        <span class="keyword">return</span> memo.get(amount);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> p : coins) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = coinChange(coins, amount - p);</span><br><span class="line">        <span class="comment">//子问题无解，跳过</span></span><br><span class="line">        <span class="keyword">if</span>(tmp == -<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res = Math.min(res, <span class="number">1</span> + tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(res == Integer.MAX_VALUE)</span><br><span class="line">        res = -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 记入备忘录</span></span><br><span class="line">    memo.put(amount,res);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-hashset/solution/she-ji-ha-xi-ji-he-by-leetcode-solution-xp4t/">设计哈希集合</a></p>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-hashmap/solution/she-ji-ha-xi-ying-she-by-leetcode-soluti-klu9/">设计哈希映射</a></p>
+<p>显然「备忘录」大大减小了子问题数目，完全消除了子问题的冗余，所以子问题总数不会超过金额数 <code>n</code>，即子问题数目为 O(n)。处理一个子问题的时间不变，仍是 O(k)，所以总的时间复杂度是 O(kn)。</p>
+<p>这个代码交上去是OK的</p>
+<h3 id="dp-数组的迭代解法"><a href="#dp-数组的迭代解法" class="headerlink" title="dp 数组的迭代解法"></a>dp 数组的迭代解法</h3><p>当然，我们也可以自底向上使用 dp table 来消除重叠子问题，关于「状态」「选择」和 base case 与之前没有区别，<code>dp</code> 数组的定义和刚才 <code>dp</code> 函数类似，也是把「状态」，也就是目标金额作为变量。不过 <code>dp</code> 函数体现在函数参数，而 <code>dp</code> 数组体现在数组索引：</p>
+<p><strong><code>dp</code> 数组的定义：当目标金额为 <code>i</code> 时，至少需要 <code>dp[i]</code> 枚硬币凑出</strong>。</p>
+<p>根据我们文章开头给出的动态规划代码框架可以写出如下解法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 数组的大小为 amount + 1，初始值也为 amount + 1</span></span><br><span class="line">    <span class="comment">// 因为凑成 amount 金额的硬币数最多只有 amount 个，所以可以初始化为 amount+1</span></span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[amount + <span class="number">1</span>];</span><br><span class="line">    Arrays.fill(dp, amount + <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// base case</span></span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//外层循环在遍历所有状态的取值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; amount + <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">//内层循环在求所有选择的最小值</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> coin : coins) &#123;</span><br><span class="line">            <span class="comment">// 子问题无解，跳过</span></span><br><span class="line">            <span class="keyword">if</span> (i - coin &lt; <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            dp[i] = Math.min(dp[i], <span class="number">1</span> + dp[i - coin]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (dp[amount] == amount + <span class="number">1</span>) ? -<span class="number">1</span> : dp[amount];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文展示了如何流程化确定「状态转移方程」，只要通过状态转移方程写出暴力递归解，剩下的也就是优化递归树，消除重叠子问题而已。</p>
+<p><strong>计算机解决问题其实没有任何奇技淫巧，它唯一的解决办法就是穷举</strong>，穷举所有可能性。算法设计无非就是先思考“如何穷举”，然后再追求“如何聪明地穷举”。</p>
+<p>列出动态转移方程，就是在解决“如何穷举”的问题。之所以说它难，一是因为很多穷举需要递归实现，二是因为有的问题本身的解空间复杂，不那么容易穷举完整。</p>
+<p>备忘录、DP table 就是在追求“如何聪明地穷举”。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://github.com/labuladong/fucking-algorithm/blob/master/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.md">动态规划详解</a></p>
 ]]></content>
       <categories>
         <category>算法</category>
       </categories>
       <tags>
         <tag>leetcode</tag>
-        <tag>哈希</tag>
+        <tag>动态规划</tag>
       </tags>
   </entry>
   <entry>
@@ -3246,73 +3272,65 @@
 ]]></content>
   </entry>
   <entry>
-    <title>零钱兑换</title>
-    <url>/posts/ling-qian-dui-huan/</url>
-    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/coin-change/">leetcode 322</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
-<p>给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。</p>
-<p>你可以认为每种硬币的数量是无限的。</p>
-</blockquote>
-<p>示例1：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>], <span class="attr">amount</span> = <span class="number">11</span></span><br><span class="line">输出：<span class="number">3</span> </span><br><span class="line">解释：<span class="number">11</span> = <span class="number">5</span> + <span class="number">5</span> + <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>示例2：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">2</span>], <span class="attr">amount</span> = <span class="number">3</span></span><br><span class="line">输出：-<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>示例3：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">0</span></span><br><span class="line">输出：<span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<p>示例4：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">1</span></span><br><span class="line">输出：<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>示例5：</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">输入：<span class="attr">coins</span> = [<span class="number">1</span>], <span class="attr">amount</span> = <span class="number">2</span></span><br><span class="line">输出：<span class="number">2</span></span><br></pre></td></tr></table></figure>
-
+    <title>设计哈希集合 &amp;&amp; 设计哈希映射</title>
+    <url>/posts/she-ji-ha-xi-ji-he-she-ji-ha-xi-ying-she/</url>
+    <content><![CDATA[<p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-hashset/">leetcode 705</a> <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-hashmap/">leetcode 706</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="leetcode-705-设计哈希集合"><a href="#leetcode-705-设计哈希集合" class="headerlink" title="leetcode 705 设计哈希集合"></a>leetcode 705 设计哈希集合</h3><p>不使用任何内建的哈希表库设计一个哈希集合（HashSet）。</p>
+<p>实现 MyHashSet 类：</p>
+<ul>
+<li>void add(key) 向哈希集合中插入值 key 。</li>
+<li>bool contains(key) 返回哈希集合中是否存在这个值 key 。</li>
+<li>void remove(key) 将给定值 key 从哈希集合中删除。如果哈希集合中没有这个值，什么也不做。</li>
+</ul>
 <p><strong>提示：</strong></p>
 <ul>
-<li><code>1 &lt;= coins.length &lt;= 12</code></li>
-<li><code>1 &lt;= coins[i] &lt;= 2^31 - 1</code></li>
-<li><code>0 &lt;= amount &lt;= 10^4</code></li>
+<li><code>0 &lt;= key &lt;= 106</code></li>
+<li>最多调用 <code>104</code> 次 <code>add</code>、<code>remove</code> 和 <code>contains</code> 。</li>
 </ul>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><h3 id="暴力递归"><a href="#暴力递归" class="headerlink" title="暴力递归"></a>暴力递归</h3><p>首先，这个问题是动态规划问题，因为它具有「最优子结构」的。<strong>要符合「最优子结构」，子问题间必须互相独立</strong>。</p>
-<p>为什么说它符合最优子结构呢？比如你想求 <code>amount = 11</code> 时的最少硬币数（原问题），如果你知道凑出 <code>amount = 10</code> 的最少硬币数（子问题），你只需要把子问题的答案加一（再选一枚面值为 1 的硬币）就是原问题的答案。因为硬币的数量是没有限制的，所以子问题之间没有相互制约，是互相独立的。</p>
-<p>那么，既然知道了这是个动态规划问题，就要思考<strong>如何列出正确的状态转移方程</strong>？</p>
-<p>1、<strong>确定 base case</strong>，这个很简单，显然目标金额 <code>amount</code> 为 0 时算法返回 0，因为不需要任何硬币就已经凑出目标金额了。</p>
-<p>2、<strong>确定「状态」，也就是原问题和子问题中会变化的变量</strong>。由于硬币数量无限，硬币的面额也是题目给定的，只有目标金额会不断地向 base case 靠近，所以唯一的「状态」就是目标金额 <code>amount</code>。</p>
-<p>3、<strong>确定「选择」，也就是导致「状态」产生变化的行为</strong>。目标金额为什么变化呢，因为你在选择硬币，你每选择一枚硬币，就相当于减少了目标金额。所以说所有硬币的面值，就是你的「选择」。</p>
-<p>4、<strong>明确 <code>dp</code> 函数/数组的定义</strong>。我们这里讲的是自顶向下的解法，所以会有一个递归的 <code>dp</code> 函数，一般来说函数的参数就是状态转移中会变化的量，也就是上面说到的「状态」；函数的返回值就是题目要求我们计算的量。就本题来说，状态只有一个，即「目标金额」，题目要求我们计算凑出目标金额所需的最少硬币数量。所以我们可以这样定义 <code>dp</code> 函数：</p>
-<p><code>dp(n)</code> 的定义：输入一个目标金额 <code>n</code>，返回凑出目标金额 <code>n</code> 的最少硬币数量。</p>
-<p>java代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// base case</span></span><br><span class="line">    <span class="keyword">if</span> (amount == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (amount &lt; <span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 求最小值，所以初始化为正无穷</span></span><br><span class="line">    <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> p : coins) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = coinChange(coins, amount - p);</span><br><span class="line">        <span class="comment">//子问题无解，跳过</span></span><br><span class="line">        <span class="keyword">if</span>(tmp == -<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res = Math.min(res, <span class="number">1</span> + tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 问题无解时返回 -1</span></span><br><span class="line">    <span class="keyword">return</span> res == Integer.MAX_VALUE ? -<span class="number">1</span> : res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="leetcode-706-设计哈希映射"><a href="#leetcode-706-设计哈希映射" class="headerlink" title="leetcode 706 设计哈希映射"></a>leetcode 706 设计哈希映射</h3><p>不使用任何内建的哈希表库设计一个哈希映射（HashMap）。</p>
+<p>实现 MyHashMap 类：</p>
+<ul>
+<li>MyHashMap() 用空映射初始化对象</li>
+<li>void put(int key, int value) 向 HashMap 插入一个键值对 (key, value) 。如果 key 已经存在于映射中，则更新其对应的值 value 。</li>
+<li>int get(int key) 返回特定的 key 所映射的 value ；如果映射中不包含 key 的映射，返回 -1 。</li>
+<li>void remove(key) 如果映射中存在 key 的映射，则移除 key 和它所对应的 value 。</li>
+</ul>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>0 &lt;= key, value &lt;= 106</code></li>
+<li>最多调用 <code>104</code> 次 <code>put</code>、<code>get</code> 和 <code>remove</code> 方法</li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>哈希函数和冲突处理是最基本的数据结构，教材里都会讲到：</p>
+<ul>
+<li>哈希函数：能够将集合中任意可能的元素映射到一个固定范围的整数值，并将该元素存储到整数值对应的地址上。</li>
+<li>冲突处理：由于不同元素可能映射到相同的整数值，因此需要在整数值出现「冲突」时，需要进行冲突处理。总的来说，有以下几种策略解决冲突：<ul>
+<li>链地址法：为每个哈希值维护一个链表，并将具有相同哈希值的元素都放入这一链表当中。</li>
+<li>开放地址法：当发现哈希值 h 处产生冲突时，根据某种策略，从 h 出发找到下一个不冲突的位置。例如，一种最简单的策略是，不断地检查 h+1,h+2,h+3… 这些整数对应的位置。</li>
+<li>再哈希法：当发现哈希冲突后，使用另一个哈希函数产生一个新的地址。</li>
+<li>扩容：当哈希表元素过多时，冲突的概率将越来越大，而在哈希表中查询一个元素的效率也会越来越低。因此，需要开辟一块更大的空间，来缓解哈希表中发生的冲突。</li>
+</ul>
+</li>
+</ul>
+<p>下面我们使用链地址法来进行处理：</p>
+<p>设哈希表的大小为 base，则可以设计一个简单的哈希函数：$\text{hash}(x) = x \bmod \textit{base}$。</p>
+<p>我们开辟一个大小为 base 的数组，数组的每个位置是一个链表。当计算出哈希值之后，就插入到对应位置的链表当中。</p>
+<p>由于我们使用整数除法作为哈希函数，为了尽可能避免冲突，应当将 base 取为一个质数。在这里，我们取 $\textit{base}=857$。</p>
+<h3 id="leetcode-705-设计哈希集合-1"><a href="#leetcode-705-设计哈希集合-1" class="headerlink" title="leetcode 705 设计哈希集合"></a>leetcode 705 设计哈希集合</h3><p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyHashSet</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> base = <span class="number">857</span>;</span><br><span class="line">    <span class="keyword">private</span> LinkedList[] data;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Initialize your data structure here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyHashSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        data = <span class="keyword">new</span> LinkedList[base];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; base; i++) &#123;</span><br><span class="line">            data[i] = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> k % base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Integer&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Integer element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element == key) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        data[pos].offerLast(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Integer&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Integer element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element == key) &#123;</span><br><span class="line">                data[pos].remove(element);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns true if this set contains the specified element</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Integer&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Integer element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element == key) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>至此，这个问题其实就解决了，只不过需要消除一下重叠子问题，因为画出递归树就会发现好多问题是被重复计算了的。</p>
-<p>当然，该程序直接交上去会超时。</p>
-<p><strong>递归算法的时间复杂度分析：子问题总数 x 每个子问题的时间</strong>。</p>
-<p>子问题总数为递归树节点个数，这个比较难看出来，是 O(n^k)，总之是指数级别的。每个子问题中含有一个 for 循环，复杂度为 O(k)。所以总时间复杂度为 O(k * n^k)，指数级别。</p>
-<h3 id="带备忘录的递归"><a href="#带备忘录的递归" class="headerlink" title="带备忘录的递归"></a>带备忘录的递归</h3><p>只需要稍加修改，就可以通过备忘录消除子问题：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HashMap&lt;Integer, Integer&gt; memo = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (amount == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (amount &lt; <span class="number">0</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 查找备忘录,避免重复计算</span></span><br><span class="line">    <span class="keyword">if</span>(memo.containsKey(amount))&#123;</span><br><span class="line">        <span class="keyword">return</span> memo.get(amount);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> res = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> p : coins) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = coinChange(coins, amount - p);</span><br><span class="line">        <span class="comment">//子问题无解，跳过</span></span><br><span class="line">        <span class="keyword">if</span>(tmp == -<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">        res = Math.min(res, <span class="number">1</span> + tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(res == Integer.MAX_VALUE)</span><br><span class="line">        res = -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 记入备忘录</span></span><br><span class="line">    memo.put(amount,res);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="leetcode-706-设计哈希映射-1"><a href="#leetcode-706-设计哈希映射-1" class="headerlink" title="leetcode 706 设计哈希映射"></a>leetcode 706 设计哈希映射</h3><p>「设计哈希映射」与「设计哈希集合」解法接近，唯一的区别在于我们存储的不是 $\textit{key}$ 本身，而是 $(\textit{key}, \textit{value})$ 对。除此之外，代码基本是类似的。</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyHashMap</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Pair</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> key;</span><br><span class="line">        <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.key = key;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> key;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> base = <span class="number">857</span>;</span><br><span class="line">    <span class="keyword">private</span> LinkedList[] data;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Initialize your data structure here.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyHashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        data = <span class="keyword">new</span> LinkedList[base];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; base; i++) &#123;</span><br><span class="line">            data[i] = <span class="keyword">new</span> LinkedList&lt;Pair&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> k % base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * value will always be non-negative.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Pair&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Pair element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element.key == key) &#123;</span><br><span class="line">                element.setValue(value);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        data[pos].offerLast(<span class="keyword">new</span> Pair(key, value));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Pair&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Pair element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element.key == key) &#123;</span><br><span class="line">                <span class="keyword">return</span> element.value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Removes the mapping of the specified value key if this map contains a mapping for the key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = hash(key);</span><br><span class="line">        Iterator&lt;Pair&gt; it = data[pos].iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">            Pair element = it.next();</span><br><span class="line">            <span class="keyword">if</span> (element.key == key) &#123;</span><br><span class="line">                data[pos].remove(element);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>显然「备忘录」大大减小了子问题数目，完全消除了子问题的冗余，所以子问题总数不会超过金额数 <code>n</code>，即子问题数目为 O(n)。处理一个子问题的时间不变，仍是 O(k)，所以总的时间复杂度是 O(kn)。</p>
-<p>这个代码交上去是OK的</p>
-<h3 id="dp-数组的迭代解法"><a href="#dp-数组的迭代解法" class="headerlink" title="dp 数组的迭代解法"></a>dp 数组的迭代解法</h3><p>当然，我们也可以自底向上使用 dp table 来消除重叠子问题，关于「状态」「选择」和 base case 与之前没有区别，<code>dp</code> 数组的定义和刚才 <code>dp</code> 函数类似，也是把「状态」，也就是目标金额作为变量。不过 <code>dp</code> 函数体现在函数参数，而 <code>dp</code> 数组体现在数组索引：</p>
-<p><strong><code>dp</code> 数组的定义：当目标金额为 <code>i</code> 时，至少需要 <code>dp[i]</code> 枚硬币凑出</strong>。</p>
-<p>根据我们文章开头给出的动态规划代码框架可以写出如下解法：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 数组的大小为 amount + 1，初始值也为 amount + 1</span></span><br><span class="line">    <span class="comment">// 因为凑成 amount 金额的硬币数最多只有 amount 个，所以可以初始化为 amount+1</span></span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[amount + <span class="number">1</span>];</span><br><span class="line">    Arrays.fill(dp, amount + <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// base case</span></span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//外层循环在遍历所有状态的取值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; amount + <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">//内层循环在求所有选择的最小值</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> coin : coins) &#123;</span><br><span class="line">            <span class="comment">// 子问题无解，跳过</span></span><br><span class="line">            <span class="keyword">if</span> (i - coin &lt; <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            dp[i] = Math.min(dp[i], <span class="number">1</span> + dp[i - coin]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (dp[amount] == amount + <span class="number">1</span>) ? -<span class="number">1</span> : dp[amount];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文展示了如何流程化确定「状态转移方程」，只要通过状态转移方程写出暴力递归解，剩下的也就是优化递归树，消除重叠子问题而已。</p>
-<p><strong>计算机解决问题其实没有任何奇技淫巧，它唯一的解决办法就是穷举</strong>，穷举所有可能性。算法设计无非就是先思考“如何穷举”，然后再追求“如何聪明地穷举”。</p>
-<p>列出动态转移方程，就是在解决“如何穷举”的问题。之所以说它难，一是因为很多穷举需要递归实现，二是因为有的问题本身的解空间复杂，不那么容易穷举完整。</p>
-<p>备忘录、DP table 就是在追求“如何聪明地穷举”。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://github.com/labuladong/fucking-algorithm/blob/master/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.md">动态规划详解</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-hashset/solution/she-ji-ha-xi-ji-he-by-leetcode-solution-xp4t/">设计哈希集合</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/design-hashmap/solution/she-ji-ha-xi-ying-she-by-leetcode-soluti-klu9/">设计哈希映射</a></p>
 ]]></content>
       <categories>
         <category>算法</category>
       </categories>
       <tags>
         <tag>leetcode</tag>
-        <tag>动态规划</tag>
+        <tag>哈希</tag>
       </tags>
   </entry>
   <entry>
